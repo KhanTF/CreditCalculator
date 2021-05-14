@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="empty" />
+    <string name="format_month">%d месяц</string>
+
+    <string name="calculate_payment">Расчитать ежемесячный платеж</string>
+    <string name="calculate_payment_description">Расчитайте ежемесячный платеж по сумме кредита, процентной ставке и сроку кредита</string>
+
+    <string name="calculate_percent">Расчитать процентную ставку</string>
+    <string name="calculate_percent_description">Расчитайте процентную ставку по сумме кредита, ежемесячному платежу и сроку кредита</string>
+
+    <string name="saved_calculations">Мои расчеты</string>
+    <string name="saved_calculations_description">Сохраненяйте результаты расчетов для последующего их сравнения</string>
+
+    <string name="settings">Настройки</string>
+    <string name="settings_description">Настройте приложение под себя</string>
+
+    <string name="help">Помощь</string>
+    <string name="help_description">Если у вас возникли вопросы, то возможно вы поличте отеты на них</string>
+
+</resources>

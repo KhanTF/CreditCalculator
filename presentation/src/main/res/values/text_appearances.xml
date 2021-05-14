@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="Text.Medium">
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Medium.14">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Medium.16">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Medium.18">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Medium.20">
+        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="Text.Regular">
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.Regular.14">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.Regular.16">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.Regular.18">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Text.Light">
+        <item name="fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="Text.Light.14">
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="Text.Light.16">
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="Text.Light.18">
+        <item name="android:textSize">@dimen/text_size_18</item>
+    </style>
+
+    <style name="Text.Light.20">
+        <item name="android:textSize">@dimen/text_size_20</item>=
+    </style>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FloatingHintEditText">
+        <attr name="android:hint" format="string" />
+        <attr name="android:text" format="string" />
+        <attr name="android:textAppearance" format="reference" />
+        <attr name="hintTextAppearance" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleTextView">
+        <attr name="title" format="string" />
+        <attr name="android:text" format="string" />
+        <attr name="android:textAppearance" format="reference" />
+        <attr name="titleTextAppearance" format="reference" />
+        <attr name="android:textColor" format="color" />
+        <attr name="titleTextColor" format="color" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_back"
+                app:onNavigationClick="@{()-> viewModel.onBack()}"
+                app:title="@string/calculate_payment" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_top_corners"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/credit_type_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
+                    android:layout_marginTop="@dimen/margin_16"
+                    app:array="@{viewModel.typeArray}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:selectedItem="@={viewModel.selectedType}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_amount_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:hint="Сумма кредита"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_type_spinner">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_amount"
+                        android:drawablePadding="@dimen/padding_8"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.creditAmountLiveData}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_rate_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
+                    android:layout_marginTop="@dimen/margin_vertical_default"
+                    android:hint="Процентная ставка"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_amount_layout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_percent"
+                        android:drawablePadding="@dimen/padding_8"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.creditRateLiveData}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_term_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
+                    android:layout_marginTop="@dimen/margin_vertical_default"
+                    android:hint="Срок кредита"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_rate_layout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_term"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_term"
+                        android:drawablePadding="@dimen/padding_8"
+                        android:inputType="number"
+                        android:text="@={viewModel.creditTermLiveData}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    style="@style/CreditMaterialButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
+                    android:layout_marginTop="@dimen/margin_vertical_default"
+                    android:text="Расчитать"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_term_layout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

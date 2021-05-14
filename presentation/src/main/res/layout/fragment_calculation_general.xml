@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
+
+        <variable
+            name="viewModel"
+            type="ru.rager.credit.presentation.ui.calculation.CalculationViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_16">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:cardElevation="@dimen/dp_8">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_16"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{context.getString(BindingConverters.creditCalculationPercentTypeToIntString(viewModel.creditCalculationType))}"
+                            app:label="@string/credit_calculation_type" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditSum)}"
+                            app:label="@string/credit_sum" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_percent(viewModel.creditRate)}"
+                            app:label="@string/credit_rate" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:layout_marginBottom="@dimen/dp_16"
+                            android:text="@{@plurals/format_month(viewModel.creditTerm,viewModel.creditTerm)}"
+                            app:label="@string/credit_term" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:cardElevation="@dimen/dp_8">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/dp_8"
+                        android:paddingBottom="@dimen/dp_16">
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditFirstPayment)}"
+                            android:visibility="@{viewModel.creditFirstPayment > 0 ? View.VISIBLE : View.GONE}"
+                            app:label="@string/credit_first_payment" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditLastPayment)}"
+                            android:visibility="@{viewModel.creditLastPayment > 0 ? View.VISIBLE : View.GONE}"
+                            app:label="@string/credit_last_payment" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditMonthPayment)}"
+                            android:visibility="@{viewModel.creditMonthPayment > 0 ? View.VISIBLE : View.GONE}"
+                            app:label="@string/credit_month_payment" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditSumPayments)}"
+                            app:label="@string/credit_total_payments" />
+
+                        <ru.rager.credit.presentation.view.LabeledTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:text="@{@string/format_sum(viewModel.creditOverpayments)}"
+                            app:label="@string/credit_over_payments" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

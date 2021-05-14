@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
+
         <variable
             name="viewModel"
             type="ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorViewModel" />
@@ -43,20 +45,20 @@
                     android:id="@+id/credit_type_spinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                    android:layout_marginTop="@dimen/margin_16"
-                    app:array="@{viewModel.typeArray}"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    app:arrayResources="@{BindingConverters.creditCalculationPercentTypeListToIntStringList(viewModel.creditCalculationTypeList)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:selectedItem="@={viewModel.selectedType}" />
+                    app:selectedItem="@={viewModel.creditCalculationTypeSelectedLiveData}" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/credit_amount_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:hint="Сумма кредита"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -67,9 +69,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_amount"
-                        android:drawablePadding="@dimen/padding_8"
+                        android:drawablePadding="@dimen/dp_8"
                         android:inputType="numberDecimal"
-                        android:text="@={viewModel.creditAmountLiveData}"
+                        android:text="@={viewModel.creditSumLiveData}"
                         android:textAppearance="@style/Text.Light.16"
                         app:drawableTint="?attr/colorPrimaryVariant" />
 
@@ -79,8 +81,8 @@
                     android:id="@+id/credit_rate_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                    android:layout_marginTop="@dimen/margin_vertical_default"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:hint="Процентная ставка"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_percent"
-                        android:drawablePadding="@dimen/padding_8"
+                        android:drawablePadding="@dimen/dp_8"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.creditRateLiveData}"
                         android:textAppearance="@style/Text.Light.16"
@@ -103,8 +105,8 @@
                     android:id="@+id/credit_term_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                    android:layout_marginTop="@dimen/margin_vertical_default"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:hint="Срок кредита"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_term"
-                        android:drawablePadding="@dimen/padding_8"
+                        android:drawablePadding="@dimen/dp_8"
                         android:inputType="number"
                         android:text="@={viewModel.creditTermLiveData}"
                         android:textAppearance="@style/Text.Light.16"
@@ -127,13 +129,14 @@
                     style="@style/CreditMaterialButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                    android:layout_marginTop="@dimen/margin_vertical_default"
-                    android:onClick="@{() -> viewModel.onCalculate()}"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:text="Расчитать"
+                    android:enabled="@{viewModel.isCalculateAvailable}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/credit_term_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/credit_term_layout"
+                    app:onClickAndHideKeyboard="@{() -> viewModel.onCalculate()}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

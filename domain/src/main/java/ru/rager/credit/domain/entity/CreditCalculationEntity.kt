@@ -1,9 +1,19 @@
 package ru.rager.credit.domain.entity
 
+import ru.rager.credit.domain.entity.enums.CreditCalculationType
+
 data class CreditCalculationEntity(
-    val creditCalculationPercentType: CreditCalculationPercentType,
+    val creditCalculationType: CreditCalculationType,
     val creditSum: Double,
-    val creditPercentRate: Double,
+    val creditRate: Double,
     val creditTerm: Int,
-    val creditPayments: List<CreditPaymentEntity>
-)
+    val creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
+) {
+
+    fun getSumPayments() = creditCalculationPaymentList.sumByDouble { it.creditPayment }
+
+    fun isAnnuity() = creditCalculationType == CreditCalculationType.ANNUITY
+
+    fun isDifferentiated() = creditCalculationType == CreditCalculationType.DIFFERENTIATED
+
+}

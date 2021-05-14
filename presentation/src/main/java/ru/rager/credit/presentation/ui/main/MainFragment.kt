@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.databinding.FragmentMainBinding
-import ru.rager.credit.presentation.model.MainMenuItem
+import ru.rager.credit.presentation.model.MainMenuModel
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
-import ru.rager.credit.presentation.adapters.MainMenuAdapter
+import ru.rager.credit.presentation.adapters.recyclerview.MainMenuAdapter
 import ru.rager.credit.presentation.util.itemdecorations.LinearSpaceItemDecoration
 
 class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
@@ -38,9 +38,9 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
             adapter = mainMenuAdapter
             addItemDecoration(
                 LinearSpaceItemDecoration(
-                    start = R.dimen.margin_16,
-                    top = R.dimen.margin_16,
-                    space = R.dimen.margin_16
+                    start = R.dimen.dp_16,
+                    top = R.dimen.dp_16,
+                    space = R.dimen.dp_16
                 )
             )
         }
@@ -49,9 +49,9 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
         }
     }
 
-    override fun onMainMenu(mainMenuItem: MainMenuItem) {
-        when (mainMenuItem) {
-            is MainMenuItem.CalculatePaymentMainMenuItem -> viewModel.onOpenPaymentCalculator()
+    override fun onMainMenu(mainMenuModel: MainMenuModel) {
+        when (mainMenuModel) {
+            is MainMenuModel.CalculatePaymentMainMenuModel -> viewModel.onOpenPaymentCalculator()
         }
     }
 

@@ -1,7 +1,7 @@
 package ru.rager.credit.presentation.screen
 
 import com.github.terrakok.cicerone.Screen
-import ru.rager.credit.presentation.model.CalculationParameters
+import ru.rager.credit.domain.entity.CreditCalculationEntity
 
 interface ScreenFactory {
 
@@ -9,6 +9,6 @@ interface ScreenFactory {
 
     fun getPaymentCalculatorScreen(): Screen
 
-    fun getCalculationResultScreen(calculationParameters: CalculationParameters): Screen
+    fun getCalculationResultScreen(creditCalculationEntity: CreditCalculationEntity): Screen
 
 }

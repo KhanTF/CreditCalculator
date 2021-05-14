@@ -9,11 +9,11 @@
 
         <variable
             name="model"
-            type="ru.rager.credit.presentation.model.MainMenuItem" />
+            type="ru.rager.credit.presentation.model.MainMenuModel" />
 
         <variable
             name="listener"
-            type="ru.rager.credit.presentation.adapters.MainMenuAdapter.MainMenuListener" />
+            type="ru.rager.credit.presentation.adapters.recyclerview.MainMenuAdapter.MainMenuListener" />
 
     </data>
 
@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="@dimen/corners_8"
-        app:cardElevation="@dimen/elevation_8"
-        tools:layout_margin="@dimen/margin_16">
+        app:cardCornerRadius="@dimen/dp_8"
+        app:cardElevation="@dimen/dp_8"
+        tools:layout_margin="@dimen/dp_16">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
                 android:src="@{model.icon}"
                 android:tint="?attr/colorSecondary"
@@ -51,9 +51,9 @@
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/dp_16"
                 android:text="@{model.title}"
                 android:textAppearance="@style/Text.Light"
                 android:textSize="@dimen/text_size_20"
@@ -67,9 +67,9 @@
                 android:id="@+id/subtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:layout_marginBottom="@dimen/margin_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
                 android:text='@{model.subtitle}'
                 android:textAppearance="@style/Text.Light"
                 android:textSize="@dimen/text_size_14"

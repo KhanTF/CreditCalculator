@@ -1,39 +1,59 @@
 package ru.rager.credit.presentation.ui.paymentcalculator
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.github.terrakok.cicerone.Router
-import ru.rager.credit.domain.entity.CreditCalculationPercentType
-import ru.rager.credit.domain.entity.CreditPaymentEntity
-import ru.rager.credit.domain.usecase.GetCreditCalculationResultUseCase
-import ru.rager.credit.presentation.model.CalculationParameters
+import ru.rager.credit.domain.entity.enums.CreditCalculationType
+import ru.rager.credit.domain.usecase.CalculateMonthPaymentUseCase
+import ru.rager.credit.domain.utils.CreditConstants.isCreditRateValid
+import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
+import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
-import ru.rager.credit.presentation.util.livedata.combinedNotNullLiveData
+import ru.rager.credit.presentation.util.getDoubleValue
+import ru.rager.credit.presentation.util.getIntValue
+import ru.rager.credit.presentation.util.livedata.combinedLiveData
+import ru.rager.credit.presentation.util.map
 import javax.inject.Inject
 
 class PaymentCalculatorViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
-    private val getCreditCalculationResultUseCase: GetCreditCalculationResultUseCase
+    private val calculateMonthPaymentUseCase: CalculateMonthPaymentUseCase
 ) : BaseViewModel(router) {
 
-    val typeArray = MutableLiveData<List<String>>().apply {
-        value = listOf("Аннуитетный", "Дифференцированный")
-    }
-    val selectedType = MutableLiveData<Int>()
-    val creditAmountLiveData = MutableLiveData<String>()
+    val creditCalculationTypeList = CreditCalculationType.values().toList()
+    val creditCalculationTypeSelectedLiveData = MutableLiveData<Int>()
+    val creditSumLiveData = MutableLiveData<String>()
     val creditRateLiveData = MutableLiveData<String>()
     val creditTermLiveData = MutableLiveData<String>()
+    val isCalculateAvailable = combinedLiveData(
+        creditCalculationTypeSelectedLiveData,
+        creditSumLiveData,
+        creditRateLiveData,
+        creditTermLiveData
+    ).map { (selectedType: Int?, creditSum: String?, creditRate: String?, creditTerm: String?) ->
+        val isSelectedTypeValid = selectedType != null && selectedType >= 0 && selectedType < creditCalculationTypeList.size
+        val creditSumValue = creditSum?.toDoubleOrNull()
+        val creditRateValue = creditRate?.toDoubleOrNull()
+        val creditTermValue = creditTerm?.toIntOrNull()
+        isSelectedTypeValid && isCreditSumValid(creditSumValue) && isCreditRateValid(creditRateValue) && isCreditTermValid(creditTermValue)
+    }
 
     fun onCalculate() {
-        val calculationParameters = CalculationParameters(
-            CreditCalculationPercentType.ANNUITY,
-            creditAmountLiveData.value?.toDoubleOrNull() ?: return,
-            creditRateLiveData.value?.toDoubleOrNull() ?: return,
-            creditTermLiveData.value?.toInt() ?: return
-        )
-        router.navigateTo(screenFactory.getCalculationResultScreen(calculationParameters))
+        val creditCalculationPercentTypeSelected = creditCalculationTypeSelectedLiveData.value ?: return
+        val creditCalculationPercentType = creditCalculationTypeList.getOrNull(creditCalculationPercentTypeSelected) ?: return
+        val creditSum = creditSumLiveData.getDoubleValue() ?: return
+        val creditRate = creditRateLiveData.getDoubleValue() ?: return
+        val creditTerm = creditTermLiveData.getIntValue() ?: return
+        val creditCalculationEntity = when (creditCalculationPercentType) {
+            CreditCalculationType.ANNUITY -> calculateMonthPaymentUseCase.getAnnuityCalculation(
+                creditSum, creditRate, creditTerm
+            )
+            CreditCalculationType.DIFFERENTIATED -> calculateMonthPaymentUseCase.getDifferentiatedCalculation(
+                creditSum, creditRate, creditTerm
+            )
+        }
+        router.navigateTo(screenFactory.getCalculationResultScreen(creditCalculationEntity))
     }
 
 }

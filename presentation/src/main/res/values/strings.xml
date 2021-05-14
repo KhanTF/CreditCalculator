@@ -2,7 +2,17 @@
 <resources>
 
     <string name="empty" />
-    <string name="format_month">%d месяц</string>
+
+    <plurals name="format_month">
+        <item quantity="one">%d месяц</item>
+        <item quantity="few">%d месяца</item>
+        <item quantity="many">%d месяцев</item>
+    </plurals>
+    <string name="format_percent">%.2f %%</string>
+    <string name="format_sum">%.2f</string>
+    <string name="format_number_month">%d месяц</string>
+
+    <string name="calculation_result">Расчет</string>
 
     <string name="calculate_payment">Расчитать ежемесячный платеж</string>
     <string name="calculate_payment_description">Расчитайте ежемесячный платеж по сумме кредита, процентной ставке и сроку кредита</string>
@@ -16,7 +26,22 @@
     <string name="settings">Настройки</string>
     <string name="settings_description">Настройте приложение под себя</string>
 
-    <string name="help">Помощь</string>
-    <string name="help_description">Если у вас возникли вопросы, то возможно вы поличте отеты на них</string>
+    <string name="annuity">Аннуитетный</string>
+    <string name="differential">Дифференцированный</string>
+
+    <string name="credit_calculation_type">Способ расчета процентной ставки</string>
+    <string name="credit_sum">Сумма кредита</string>
+    <string name="credit_rate">Процентная ставка</string>
+    <string name="credit_term">Срок кредита</string>
+    <string name="credit_first_payment">Первый платеж</string>
+    <string name="credit_last_payment">Последний платеж</string>
+    <string name="credit_month_payment">Ежемесячный платеж</string>
+    <string name="credit_total_payments">Всего выплат</string>
+    <string name="credit_over_payments">Переплата</string>
+
+    <string name="credit_payment">Платеж</string>
+    <string name="credit_payment_for_percent">Платеж в счет процентов</string>
+    <string name="credit_payment_for_debt">Платеж в счет долга</string>
+    <string name="credit_remaining_debt">Остаток долга</string>
 
 </resources>

@@ -48,7 +48,7 @@
 
     <style name="CreditSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textAppearance">@style/Text.Light.16</item>
-        <item name="android:padding">@dimen/padding_16</item>
+        <item name="android:padding">@dimen/dp_16</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
@@ -64,7 +64,7 @@
     </style>
 
     <style name="CreditLabeledTextView">
-        <item name="android:textAppearance">@style/Text.Light.18</item>
+        <item name="android:textAppearance">@style/Text.Regular.18</item>
         <item name="labelTextAppearance">@style/Text.Light.12</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="labelTextColor">?android:attr/textColorPrimary</item>

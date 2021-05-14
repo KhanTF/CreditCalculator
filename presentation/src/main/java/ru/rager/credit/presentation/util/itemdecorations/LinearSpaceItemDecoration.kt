@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.rager.credit.presentation.R
 
 class LinearSpaceItemDecoration(
-    @DimenRes private val start: Int = R.dimen.margin_8,
+    @DimenRes private val start: Int = R.dimen.dp_8,
     @DimenRes private val end: Int = start,
-    @DimenRes private val top: Int = R.dimen.margin_8,
+    @DimenRes private val top: Int = R.dimen.dp_8,
     @DimenRes private val bottom: Int = top,
-    @DimenRes private val space: Int = R.dimen.margin_8
+    @DimenRes private val space: Int = R.dimen.dp_8
 ) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {

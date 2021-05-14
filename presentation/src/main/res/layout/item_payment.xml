@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="ru.rager.credit.domain.entity.CreditPaymentEntity" />
+            type="ru.rager.credit.domain.entity.CreditCalculationPaymentEntity" />
 
         <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
 
@@ -16,12 +16,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-        android:layout_marginTop="@dimen/margin_4"
-        android:layout_marginBottom="@dimen/margin_4"
-        app:cardCornerRadius="@dimen/corners_8"
-        app:cardElevation="@dimen/elevation_4"
-        tools:layout_margin="@dimen/margin_16">
+        app:cardCornerRadius="@dimen/dp_8"
+        app:cardElevation="@dimen/dp_8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,12 +27,50 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_horizontal_default"
-                android:layout_marginTop="@dimen/margin_vertical_default"
-                android:text="@{String.format(@string/format_month, data.creditMonthNumber)}"
-                android:textAppearance="@style/Text.Light"
-                android:textSize="@dimen/text_size_20"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_number_month(data.creditMonthNumber)}"
+                android:textAppearance="@style/Text.Medium.18"
                 tools:text="1 месяц" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_sum(data.creditPayment)}"
+                app:label="@string/credit_payment" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_sum(data.creditPercentPartOfPayment)}"
+                app:label="@string/credit_payment_for_percent" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_sum(data.creditDebtPartOfPayment)}"
+                app:label="@string/credit_payment_for_debt" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:text="@{@string/format_sum(data.creditDebtReminder)}"
+                app:label="@string/credit_remaining_debt" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

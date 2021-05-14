@@ -1,22 +1,21 @@
 package ru.rager.credit.presentation.util.binding.converters
 
-import androidx.databinding.InverseMethod
+import ru.rager.credit.domain.entity.enums.CreditCalculationType
+import ru.rager.credit.presentation.R
 
 object BindingConverters {
 
-    @InverseMethod("stringToDouble")
     @JvmStatic
-    fun doubleToString(new: Double): String {
-        return new.toString()
+    fun creditCalculationPercentTypeToIntString(creditCalculationType: CreditCalculationType): Int {
+        return when (creditCalculationType) {
+            CreditCalculationType.ANNUITY -> R.string.annuity
+            CreditCalculationType.DIFFERENTIATED -> R.string.differential
+        }
     }
 
     @JvmStatic
-    fun stringToDouble(new: String): Double {
-        return if (new.isBlank()) {
-            0.0
-        } else {
-            new.toDouble()
-        }
+    fun creditCalculationPercentTypeListToIntStringList(creditCalculationTypeList: List<CreditCalculationType>): List<Int> {
+        return creditCalculationTypeList.map(this::creditCalculationPercentTypeToIntString)
     }
 
 }

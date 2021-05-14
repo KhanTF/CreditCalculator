@@ -7,11 +7,11 @@
 
         <variable
             name="pagerAdapter"
-            type="ru.rager.credit.presentation.ui.calculationresult.CalculationResultPagerAdapter" />
+            type="ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter" />
 
         <variable
             name="viewModel"
-            type="ru.rager.credit.presentation.ui.calculationresult.CalculationResultViewModel" />
+            type="ru.rager.credit.presentation.ui.calculation.CalculationViewModel" />
 
     </data>
 
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/ic_back"
                 app:onNavigationClick="@{()-> viewModel.onBack()}"
-                app:title="@string/calculate_payment" />
+                app:title="@string/calculation_result" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -46,8 +46,8 @@
             android:background="@drawable/rect_top_corners"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:pager_adapter="@{pagerAdapter}"
-            app:with_tab_layout="@{tabs}"
-            app:tab_array="@{@stringArray/tab_names}"/>
+            app:tab_array="@{@stringArray/tab_names}"
+            app:with_tab_layout="@{tabs}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

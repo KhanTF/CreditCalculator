@@ -17,9 +17,9 @@ class GridSpaceItemDecoration(
 
     companion object {
         fun getDefault() = GridSpaceItemDecoration(
-            start = R.dimen.margin_8,
-            top = R.dimen.margin_8,
-            space = R.dimen.margin_8
+            start = R.dimen.dp_8,
+            top = R.dimen.dp_8,
+            space = R.dimen.dp_8
         )
     }
 

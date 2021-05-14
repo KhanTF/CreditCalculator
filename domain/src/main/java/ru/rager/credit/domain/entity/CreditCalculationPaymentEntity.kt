@@ -1,6 +1,6 @@
 package ru.rager.credit.domain.entity
 
-class CreditPaymentEntity(
+class CreditCalculationPaymentEntity(
     val creditMonthNumber: Int,
     val creditPayment: Double,
     val creditPercentPartOfPayment: Double,

@@ -3,7 +3,7 @@ package ru.rager.credit.presentation.util.binding.adapters
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 
-object ImageViewAdapters {
+object ImageViewAdapter {
 
     @JvmStatic
     @BindingAdapter("android:src")

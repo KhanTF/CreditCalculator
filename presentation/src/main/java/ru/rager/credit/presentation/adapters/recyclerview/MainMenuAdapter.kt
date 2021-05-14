@@ -1,14 +1,14 @@
-package ru.rager.credit.presentation.adapters
+package ru.rager.credit.presentation.adapters.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.rager.credit.presentation.databinding.ItemMainMenuBinding
-import ru.rager.credit.presentation.model.MainMenuItem
+import ru.rager.credit.presentation.model.MainMenuModel
 import ru.rager.credit.presentation.util.getLayoutInflater
 
 class MainMenuAdapter(private val listener: MainMenuListener) : RecyclerView.Adapter<MainMenuAdapter.MainMenuViewHolder>() {
 
-    var mainMenuList = emptyList<MainMenuItem>()
+    var mainMenuList = emptyList<MainMenuModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainMenuViewHolder {
         return MainMenuViewHolder(
@@ -28,14 +28,14 @@ class MainMenuAdapter(private val listener: MainMenuListener) : RecyclerView.Ada
         private val listener: MainMenuListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(mainMenuItem: MainMenuItem) {
-            binding.model = mainMenuItem
+        fun bind(mainMenuModel: MainMenuModel) {
+            binding.model = mainMenuModel
             binding.listener = listener
         }
 
     }
 
     interface MainMenuListener {
-        fun onMainMenu(mainMenuItem: MainMenuItem)
+        fun onMainMenu(mainMenuModel: MainMenuModel)
     }
 }

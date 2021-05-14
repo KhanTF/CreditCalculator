@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import ru.rager.credit.presentation.databinding.FragmentPaymentCalculatorBinding
-import ru.rager.credit.presentation.ui.base.BaseFragment
+import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 
-class PaymentCalculatorFragment : BaseFragment<PaymentCalculatorViewModel, FragmentPaymentCalculatorBinding>() {
+class PaymentCalculatorFragment : BaseIndependentFragment<PaymentCalculatorViewModel, FragmentPaymentCalculatorBinding>() {
 
     companion object {
         fun getInstance() = PaymentCalculatorFragment()

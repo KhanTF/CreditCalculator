@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <attr name="colorMaterialButtonRipple" format="color"/>
+    <attr name="colorMaterialButtonRipple" format="color" />
+    <attr name="labeledTextView" format="reference" />
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarSize">@dimen/dp_64</item>
@@ -22,15 +23,19 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
 
         <item name="colorMaterialButtonRipple">@color/blue_grey_100</item>
-
-        <item name="android:windowBackground">@color/blue_grey_500</item>
         <item name="android:textColorPrimary">@color/blue_grey_700</item>
         <item name="android:textColorHint">@color/blue_grey_200</item>
         <item name="buttonStyle">@style/CreditButton</item>
+        <item name="labeledTextView">@style/CreditLabeledTextView</item>
+        <item name="tabStyle">@style/CreditTabLayout</item>
 
         <item name="toolbarStyle">@style/CreditToolbar</item>
         <item name="textInputStyle">@style/CreditTextInputLayout</item>
         <item name="android:spinnerItemStyle">@style/CreditSpinnerItem</item>
+    </style>
+
+    <style name="AppTheme.Credit.PrimaryWindow">
+        <item name="android:windowBackground">?attr/colorPrimary</item>
     </style>
 
     <style name="CreditToolbar" parent="Widget.MaterialComponents.Toolbar">
@@ -39,11 +44,12 @@
         <item name="minHeight">64dp</item>
     </style>
 
-    <style name="CreditTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"></style>
+    <style name="CreditTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
     <style name="CreditSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
         <item name="android:textAppearance">@style/Text.Light.16</item>
         <item name="android:padding">@dimen/padding_16</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="CreditMaterialButton" parent="Widget.MaterialComponents.Button.TextButton">
@@ -55,6 +61,17 @@
     <style name="CreditButton" parent="Widget.AppCompat.Button">
         <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+
+    <style name="CreditLabeledTextView">
+        <item name="android:textAppearance">@style/Text.Light.18</item>
+        <item name="labelTextAppearance">@style/Text.Light.12</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="labelTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CreditTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextColor">@color/selector_material_tab_text_color</item>
     </style>
 
 </resources>

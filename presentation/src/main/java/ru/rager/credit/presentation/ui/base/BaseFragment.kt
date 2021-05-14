@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -15,14 +14,9 @@ import dagger.android.HasAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+import javax.inject.Provider
 
-abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding> : DaggerFragment(), HasAndroidInjector {
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding> : DaggerFragment() {
 
     protected val viewModel: ViewModel
         get() = requireNotNull(viewModelInternal)
@@ -30,18 +24,13 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
     protected val binding: Binding
         get() = requireNotNull(bindingInternal)
 
-    protected abstract val viewModelClass: Class<ViewModel>
-
     private var viewModelInternal: ViewModel? = null
 
     private var bindingInternal: Binding? = null
 
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector
-
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
         super.onAttach(context)
-        viewModelInternal = ViewModelProvider(this, viewModelFactory).get(viewModelClass)
+        viewModelInternal = getViewModelInstance()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,10 +45,21 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
         bindingInternal = null
     }
 
-    protected abstract fun getViewDataBindingInstance(inflater: LayoutInflater, container: ViewGroup?): Binding
-
     protected inline fun <T> LiveData<T>.observe(crossinline action: (T) -> Unit) {
         observe(this@BaseFragment, { action(it) })
+    }
+
+    internal open fun getViewModelInstance() = getParentViewModel()
+
+    internal abstract fun getViewDataBindingInstance(inflater: LayoutInflater, container: ViewGroup?): Binding
+
+    @Suppress("UNCHECKED_CAST")
+    private fun getParentViewModel(): ViewModel {
+        val parentFragment = parentFragment as? BaseFragment<*, *>
+        val parentActivity = activity as? BaseActivity<*, *>
+        val parentFragmentViewModel = parentFragment?.getViewModelInstance() as? ViewModel
+        val prentActivityViewModel = parentActivity?.getViewModelInstance() as? ViewModel
+        return parentFragmentViewModel ?: prentActivityViewModel ?: throw IllegalArgumentException("ViewModel not found")
     }
 
 }

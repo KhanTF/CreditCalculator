@@ -7,11 +7,7 @@ object BindingConverters {
     @InverseMethod("stringToDouble")
     @JvmStatic
     fun doubleToString(new: Double): String {
-        return if (new <= 0) {
-            ""
-        } else {
-            new.toInt().toString()
-        }
+        return new.toString()
     }
 
     @JvmStatic

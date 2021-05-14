@@ -52,6 +52,10 @@
         <item name="fontFamily">sans-serif-light</item>
     </style>
 
+    <style name="Text.Light.12">
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
     <style name="Text.Light.14">
         <item name="android:textSize">@dimen/text_size_14</item>
     </style>

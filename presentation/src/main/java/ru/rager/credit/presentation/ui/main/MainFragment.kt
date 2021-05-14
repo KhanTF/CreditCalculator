@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.databinding.FragmentMainBinding
 import ru.rager.credit.presentation.model.MainMenuItem
-import ru.rager.credit.presentation.ui.base.BaseFragment
+import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 import ru.rager.credit.presentation.adapters.MainMenuAdapter
 import ru.rager.credit.presentation.util.itemdecorations.LinearSpaceItemDecoration
 
-class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
+class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
 
     companion object {
         fun getInstance() = MainFragment()

@@ -14,6 +14,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
+import javax.inject.Provider
 
 abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding> : AppCompatActivity(), HasAndroidInjector {
 
@@ -21,10 +22,10 @@ abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var navigatorHolder: NavigatorHolder
 
     @Inject
-    lateinit var navigatorHolder: NavigatorHolder
+    lateinit var viewModelProvider: Provider<ViewModel>
 
     protected abstract val viewModelClass: Class<ViewModel>
 
@@ -45,7 +46,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        viewModelInternal = ViewModelProvider(this, viewModelFactory).get(viewModelClass)
+        viewModelInternal = getViewModelInstance()
         val binding = getViewDataBindingInstance()
         binding.lifecycleOwner = this
         bindingInternal = binding
@@ -67,6 +68,13 @@ abstract class BaseActivity<ViewModel : BaseViewModel, Binding : ViewDataBinding
         bindingInternal = null
     }
 
-    protected abstract fun getViewDataBindingInstance(): Binding
+    internal open fun getViewModelInstance() = ViewModelProvider(this, object : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : androidx.lifecycle.ViewModel?> create(modelClass: Class<T>): T {
+            return viewModelProvider.get() as T
+        }
+    }).get(viewModelClass)
+
+    internal abstract fun getViewDataBindingInstance(): Binding
 
 }

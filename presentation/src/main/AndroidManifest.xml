@@ -4,7 +4,10 @@
 
     <application android:theme="@style/AppTheme.Credit">
 
-        <activity android:name=".ui.RootActivity">
+        <activity
+            android:name=".ui.RootActivity"
+            android:theme="@style/AppTheme.Credit.PrimaryWindow">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

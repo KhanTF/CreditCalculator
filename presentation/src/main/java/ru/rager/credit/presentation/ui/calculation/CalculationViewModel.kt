@@ -2,10 +2,10 @@ package ru.rager.credit.presentation.ui.calculation
 
 import com.github.terrakok.cicerone.Router
 import ru.rager.credit.domain.entity.CreditCalculationEntity
+import ru.rager.credit.domain.entity.enums.CreditCalculationType
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.util.NEGATIVE_DOUBLE
-import ru.rager.credit.presentation.util.zeroIfNegative
 import javax.inject.Inject
 
 class CalculationViewModel @Inject constructor(
@@ -15,22 +15,22 @@ class CalculationViewModel @Inject constructor(
 ) : BaseViewModel(router) {
 
     val creditCalculationType = creditCalculationEntity.creditCalculationType
-    val creditSum = creditCalculationEntity.creditSum
-    val creditRate = creditCalculationEntity.creditRate
-    val creditTerm = creditCalculationEntity.creditTerm
+    val creditSum = creditCalculationEntity.creditCalculationParameter.creditSum
+    val creditRate = creditCalculationEntity.creditCalculationParameter.creditRate
+    val creditTerm = creditCalculationEntity.creditCalculationParameter.creditTerm
     val creditPaymentList = creditCalculationEntity.creditCalculationPaymentList
     val creditSumPayments = creditCalculationEntity.getSumPayments()
-    val creditOverpayments = creditCalculationEntity.getOverpayments()
-    val creditMonthPayment = when {
-        creditCalculationEntity.isAnnuity() -> creditCalculationEntity.creditCalculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
+    val creditOverpayments = creditCalculationEntity.getOverPayments()
+    val creditMonthPayment = when (creditCalculationEntity.creditCalculationType) {
+        CreditCalculationType.ANNUITY -> creditCalculationEntity.creditCalculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
         else -> NEGATIVE_DOUBLE
     }
-    val creditFirstPayment = when {
-        creditCalculationEntity.isDifferentiated() -> creditCalculationEntity.creditCalculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
+    val creditFirstPayment = when (creditCalculationEntity.creditCalculationType) {
+        CreditCalculationType.DIFFERENTIATED -> creditCalculationEntity.creditCalculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
         else -> NEGATIVE_DOUBLE
     }
-    val creditLastPayment = when {
-        creditCalculationEntity.isDifferentiated() -> creditCalculationEntity.creditCalculationPaymentList.lastOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
+    val creditLastPayment = when (creditCalculationEntity.creditCalculationType) {
+        CreditCalculationType.DIFFERENTIATED -> creditCalculationEntity.creditCalculationPaymentList.lastOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
         else -> NEGATIVE_DOUBLE
     }
 

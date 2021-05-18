@@ -30,7 +30,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{@string/format_number_month(data.creditMonthNumber)}"
+                android:text="@{@string/format_number_month(data.creditPaymentOrder)}"
                 android:textAppearance="@style/Text.Medium.18"
                 tools:text="1 месяц" />
 

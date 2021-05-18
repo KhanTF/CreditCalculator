@@ -59,7 +59,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
 
     api "com.github.terrakok:cicerone:$cicerone_version"
 

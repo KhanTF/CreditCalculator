@@ -15,7 +15,7 @@ data class CalculationPaymentEntityDto(
 ) : Parcelable, Provider<CreditCalculationPaymentEntity> {
 
     constructor(creditCalculationPaymentEntity: CreditCalculationPaymentEntity) : this(
-        creditMonthNumber = creditCalculationPaymentEntity.creditMonthNumber,
+        creditMonthNumber = creditCalculationPaymentEntity.creditPaymentOrder,
         creditPayment = creditCalculationPaymentEntity.creditPayment,
         creditPercentPartOfPayment = creditCalculationPaymentEntity.creditPercentPartOfPayment,
         creditDebtPartOfPayment = creditCalculationPaymentEntity.creditDebtPartOfPayment,
@@ -23,7 +23,7 @@ data class CalculationPaymentEntityDto(
     )
 
     override fun get() = CreditCalculationPaymentEntity(
-        creditMonthNumber = creditMonthNumber,
+        creditPaymentOrder = creditMonthNumber,
         creditPayment = creditPayment,
         creditPercentPartOfPayment = creditPercentPartOfPayment,
         creditDebtPartOfPayment = creditDebtPartOfPayment,

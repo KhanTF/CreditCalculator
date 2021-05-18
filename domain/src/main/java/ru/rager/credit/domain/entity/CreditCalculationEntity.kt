@@ -2,27 +2,35 @@ package ru.rager.credit.domain.entity
 
 import ru.rager.credit.domain.entity.enums.CreditCalculationType
 
-data class CreditCalculationEntity(
+sealed class CreditCalculationEntity constructor(
     val creditCalculationType: CreditCalculationType,
-    val creditSum: Double,
-    val creditRate: Double,
-    val creditTerm: Int,
+    val creditCalculationParameter: CreditCalculationParameterEntity,
     val creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
 ) {
 
+    class TempCreditCalculationEntity(
+        creditCalculationType: CreditCalculationType,
+        creditCalculationParameter: CreditCalculationParameterEntity,
+        creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
+    ) : CreditCalculationEntity(creditCalculationType, creditCalculationParameter, creditCalculationPaymentList)
+
+    class SavedCreditCalculationEntity(
+        val creditCalculationId: Long,
+        val creditCalculationName: String,
+        creditCalculationType: CreditCalculationType,
+        creditCalculationParameter: CreditCalculationParameterEntity,
+        creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
+    ) : CreditCalculationEntity(creditCalculationType, creditCalculationParameter, creditCalculationPaymentList)
+
     fun getSumPayments() = creditCalculationPaymentList.sumByDouble { it.creditPayment }
 
-    fun getOverpayments(): Double {
-        val overpayments = getSumPayments() - creditSum
-        return if (overpayments < 0) {
+    fun getOverPayments(): Double {
+        val overPayments = getSumPayments() - creditCalculationParameter.creditSum
+        return if (overPayments < 0) {
             0.0
         } else {
-            overpayments
+            overPayments
         }
     }
-
-    fun isAnnuity() = creditCalculationType == CreditCalculationType.ANNUITY
-
-    fun isDifferentiated() = creditCalculationType == CreditCalculationType.DIFFERENTIATED
 
 }

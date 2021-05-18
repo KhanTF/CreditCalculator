@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import ru.rager.credit.domain.entity.CreditCalculationEntity
 import ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationBinding
-import ru.rager.credit.presentation.model.dto.CalculationResultEntityDto
+import ru.rager.credit.presentation.model.dto.CalculationEntityDto
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 
 class CalculationFragment : BaseIndependentFragment<CalculationViewModel, FragmentCalculationBinding>() {
@@ -17,7 +17,7 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
 
         fun getInstance(creditCalculationEntity: CreditCalculationEntity) = CalculationFragment().apply {
             val bundle = Bundle()
-            bundle.putParcelable(KEY_CREDIT_CALCULATION, CalculationResultEntityDto(creditCalculationEntity))
+            bundle.putParcelable(KEY_CREDIT_CALCULATION, CalculationEntityDto(creditCalculationEntity))
             arguments = bundle
         }
 
@@ -25,7 +25,7 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
 
     private val adapter by lazy { CalculationPagerAdapter(this) }
 
-    fun getCreditCalculationArgument() = requireNotNull(requireArguments().getParcelable<CalculationResultEntityDto>(KEY_CREDIT_CALCULATION)?.get())
+    fun getCreditCalculationArgument() = requireNotNull(requireArguments().getParcelable<CalculationEntityDto>(KEY_CREDIT_CALCULATION)?.get())
 
     override val viewModelClass: Class<CalculationViewModel>
         get() = CalculationViewModel::class.java

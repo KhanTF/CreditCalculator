@@ -5,6 +5,7 @@ import ru.rager.credit.domain.entity.CreditCalculationEntity
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.util.NEGATIVE_DOUBLE
+import ru.rager.credit.presentation.util.zeroIfNegative
 import javax.inject.Inject
 
 class CalculationViewModel @Inject constructor(
@@ -19,7 +20,7 @@ class CalculationViewModel @Inject constructor(
     val creditTerm = creditCalculationEntity.creditTerm
     val creditPaymentList = creditCalculationEntity.creditCalculationPaymentList
     val creditSumPayments = creditCalculationEntity.getSumPayments()
-    val creditOverpayments = creditCalculationEntity.getSumPayments() - creditCalculationEntity.creditSum
+    val creditOverpayments = creditCalculationEntity.getOverpayments()
     val creditMonthPayment = when {
         creditCalculationEntity.isAnnuity() -> creditCalculationEntity.creditCalculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
         else -> NEGATIVE_DOUBLE

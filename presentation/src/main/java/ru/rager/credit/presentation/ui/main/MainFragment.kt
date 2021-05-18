@@ -52,6 +52,7 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
     override fun onMainMenu(mainMenuModel: MainMenuModel) {
         when (mainMenuModel) {
             is MainMenuModel.CalculatePaymentMainMenuModel -> viewModel.onOpenPaymentCalculator()
+            is MainMenuModel.CalculatePercentMainMenuModel -> viewModel.onOpenPercentCalculator()
         }
     }
 

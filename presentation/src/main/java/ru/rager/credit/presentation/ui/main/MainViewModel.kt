@@ -27,6 +27,8 @@ class MainViewModel @Inject constructor(
         router.navigateTo(screenFactory.getPaymentCalculatorScreen())
     }
 
-
+    fun onOpenPercentCalculator() {
+        router.navigateTo(screenFactory.getPercentCalculatorScreen())
+    }
 
 }

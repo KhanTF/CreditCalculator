@@ -6,6 +6,12 @@ const val EMPTY_STRING = ""
 const val NEGATIVE_DOUBLE = Double.NEGATIVE_INFINITY
 const val NEGATIVE_INT = Int.MIN_VALUE
 
+fun Double.zeroIfNegative() = if (this < 0) {
+    0
+} else {
+    this
+}
+
 fun LiveData<String>.getDoubleValue(): Double? {
     return value?.toDoubleOrNull()
 }

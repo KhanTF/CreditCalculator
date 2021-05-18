@@ -3,7 +3,7 @@ package ru.rager.credit.presentation.ui.paymentcalculator
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
 import ru.rager.credit.domain.entity.enums.CreditCalculationType
-import ru.rager.credit.domain.usecase.CalculateMonthPaymentUseCase
+import ru.rager.credit.domain.usecase.CalculatePaymentUseCase
 import ru.rager.credit.domain.utils.CreditConstants.isCreditRateValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class PaymentCalculatorViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
-    private val calculateMonthPaymentUseCase: CalculateMonthPaymentUseCase
+    private val calculatePaymentUseCase: CalculatePaymentUseCase
 ) : BaseViewModel(router) {
 
     val creditCalculationTypeList = CreditCalculationType.values().toList()
@@ -46,14 +46,14 @@ class PaymentCalculatorViewModel @Inject constructor(
         val creditRate = creditRateLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
         val creditCalculationEntity = when (creditCalculationPercentType) {
-            CreditCalculationType.ANNUITY -> calculateMonthPaymentUseCase.getAnnuityCalculation(
+            CreditCalculationType.ANNUITY -> calculatePaymentUseCase.getAnnuityCalculation(
                 creditSum, creditRate, creditTerm
             )
-            CreditCalculationType.DIFFERENTIATED -> calculateMonthPaymentUseCase.getDifferentiatedCalculation(
+            CreditCalculationType.DIFFERENTIATED -> calculatePaymentUseCase.getDifferentiatedCalculation(
                 creditSum, creditRate, creditTerm
             )
         }
-        router.navigateTo(screenFactory.getCalculationResultScreen(creditCalculationEntity))
+        router.navigateTo(screenFactory.getCalculationScreen(creditCalculationEntity))
     }
 
 }

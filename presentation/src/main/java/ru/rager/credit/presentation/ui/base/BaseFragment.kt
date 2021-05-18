@@ -41,9 +41,18 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.eventLiveData.observe(this::onHandleEvent)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         bindingInternal = null
+    }
+
+    protected open fun onHandleEvent(event: BaseViewModel.Event){
+
     }
 
     protected inline fun <T> LiveData<T>.observe(crossinline action: (T) -> Unit) {

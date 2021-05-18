@@ -11,6 +11,9 @@ object CreditConstants {
     const val MIN_CREDIT_TERM_EXCLUSIVE = 0
     const val MAX_CREDIT_TERM_EXCLUSIVE = 600
 
+    const val MIN_CREDIT_PAYMENT_EXCLUSIVE = 0
+    const val MAX_CREDIT_PAYMENT_EXCLUSIVE =  Double.MAX_VALUE
+
     fun isCreditSumValid(sum: Double?): Boolean {
         return sum != null && sum > MIN_CREDIT_SUM_EXCLUSIVE && sum < MAX_CREDIT_SUM_EXCLUSIVE
     }
@@ -21,6 +24,10 @@ object CreditConstants {
 
     fun isCreditTermValid(term: Int?): Boolean {
         return term != null && term > MIN_CREDIT_TERM_EXCLUSIVE && term < MAX_CREDIT_TERM_EXCLUSIVE
+    }
+
+    fun isCreditPaymentValid(payment: Double?): Boolean {
+        return payment != null && payment > MIN_CREDIT_PAYMENT_EXCLUSIVE && payment < MAX_CREDIT_PAYMENT_EXCLUSIVE
     }
 
 }

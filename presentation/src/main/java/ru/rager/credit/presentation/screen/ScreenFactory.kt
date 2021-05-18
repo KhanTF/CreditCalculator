@@ -9,6 +9,8 @@ interface ScreenFactory {
 
     fun getPaymentCalculatorScreen(): Screen
 
-    fun getCalculationResultScreen(creditCalculationEntity: CreditCalculationEntity): Screen
+    fun getPercentCalculatorScreen(): Screen
+
+    fun getCalculationScreen(creditCalculationEntity: CreditCalculationEntity): Screen
 
 }

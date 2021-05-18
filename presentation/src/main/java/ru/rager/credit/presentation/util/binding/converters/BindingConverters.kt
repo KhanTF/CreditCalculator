@@ -6,10 +6,20 @@ import ru.rager.credit.presentation.R
 object BindingConverters {
 
     @JvmStatic
-    fun creditCalculationPercentTypeToIntString(creditCalculationType: CreditCalculationType): Int {
+    fun creditCalculationPercentTypeToIntString(creditCalculationType: CreditCalculationType?): Int {
         return when (creditCalculationType) {
             CreditCalculationType.ANNUITY -> R.string.annuity
             CreditCalculationType.DIFFERENTIATED -> R.string.differential
+            else -> R.string.empty
+        }
+    }
+
+    @JvmStatic
+    fun creditCalculationPercentTypeToPaymentHint(creditCalculationType: CreditCalculationType?): Int {
+        return when (creditCalculationType) {
+            CreditCalculationType.ANNUITY -> R.string.credit_month_payment
+            CreditCalculationType.DIFFERENTIATED -> R.string.credit_first_month_payment
+            else -> R.string.empty
         }
     }
 

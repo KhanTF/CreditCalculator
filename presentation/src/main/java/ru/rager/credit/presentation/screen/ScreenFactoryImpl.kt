@@ -8,6 +8,7 @@ import ru.rager.credit.domain.entity.CreditCalculationEntity
 import ru.rager.credit.presentation.ui.calculation.CalculationFragment
 import ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorFragment
 import ru.rager.credit.presentation.ui.main.MainFragment
+import ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorFragment
 
 class ScreenFactoryImpl : ScreenFactory {
 
@@ -15,7 +16,9 @@ class ScreenFactoryImpl : ScreenFactory {
 
     override fun getPaymentCalculatorScreen(): Screen = getScreen { PaymentCalculatorFragment.getInstance() }
 
-    override fun getCalculationResultScreen(creditCalculationEntity: CreditCalculationEntity): Screen = getScreen { CalculationFragment.getInstance(creditCalculationEntity) }
+    override fun getPercentCalculatorScreen(): Screen = getScreen { PercentCalculatorFragment.getInstance() }
+
+    override fun getCalculationScreen(creditCalculationEntity: CreditCalculationEntity): Screen = getScreen { CalculationFragment.getInstance(creditCalculationEntity) }
 
     private inline fun getScreen(crossinline provider: () -> Fragment): Screen {
         return object : FragmentScreen {

@@ -5,12 +5,13 @@ import ru.rager.credit.domain.entity.enums.CreditCalculationType
 import ru.rager.credit.domain.entity.CreditCalculationPaymentEntity
 import javax.inject.Inject
 import kotlin.math.pow
+import kotlin.math.sqrt
 
-class CalculateMonthPaymentUseCase @Inject constructor() {
+class CalculatePaymentUseCase @Inject constructor() {
 
     companion object {
-        private const val TOTAL_MONTH = 12
         private const val TOTAL_PERCENT = 100
+        private const val MONTH_IN_YEAR = 12
     }
 
     fun getAnnuityCalculation(
@@ -18,8 +19,11 @@ class CalculateMonthPaymentUseCase @Inject constructor() {
         creditRate: Double,
         creditTerm: Int
     ): CreditCalculationEntity {
-        val p = creditRate / TOTAL_PERCENT / TOTAL_MONTH
-        val payment = creditDebtSum * (p + p / ((1 + p).pow(creditTerm) - 1))
+        val p = creditRate / TOTAL_PERCENT / MONTH_IN_YEAR
+        val payment = when {
+            creditRate <= 0 -> creditDebtSum / creditTerm
+            else -> creditDebtSum * (p + p / ((1 + p).pow(creditTerm) - 1))
+        }
         var remainingDebt = creditDebtSum
         val payments = IntRange(1, creditTerm).map { monthNumber ->
             val percentPart = remainingDebt * p
@@ -50,7 +54,7 @@ class CalculateMonthPaymentUseCase @Inject constructor() {
         creditRate: Double,
         creditTerm: Int
     ): CreditCalculationEntity {
-        val p = creditRate / TOTAL_PERCENT / TOTAL_MONTH
+        val p = creditRate / TOTAL_PERCENT / MONTH_IN_YEAR
         var remainingDebt = creditDebtSum
         val payments = IntRange(1, creditTerm).map { monthNumber ->
             val debtPart = creditDebtSum / creditTerm

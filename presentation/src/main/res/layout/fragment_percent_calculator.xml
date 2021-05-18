@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
 
         <variable
             name="viewModel"
-            type="ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorViewModel" />
+            type="ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorViewModel" />
 
     </data>
 
@@ -25,7 +28,7 @@
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/ic_back"
                 app:onNavigationClick="@{()-> viewModel.onBack()}"
-                app:title="@string/calculate_payment" />
+                app:title="@string/calculate_percent" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -59,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:hint="Сумма кредита"
+                    android:hint="@string/credit_sum"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/credit_type_spinner">
@@ -83,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:hint="Срок кредита"
+                    android:hint="@string/credit_term"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/credit_amount_layout">
@@ -102,28 +105,43 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/credit_rate_layout"
+                    android:id="@+id/credit_month_payment_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:hint="Процентная ставка"
+                    android:hint="@{BindingConverters.creditCalculationPercentTypeToPaymentHint(viewModel.creditCalculationType)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/credit_term_layout">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/credit_rate"
+                        android:id="@+id/credit_month_payment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_credit_percent"
+                        android:drawableStart="@drawable/ic_credit_month_payment"
                         android:drawablePadding="@dimen/dp_8"
                         android:inputType="numberDecimal"
-                        android:text="@={viewModel.creditRateLiveData}"
+                        android:text="@={viewModel.creditMonthPaymentLiveData}"
                         android:textAppearance="@style/Text.Light.16"
                         app:drawableTint="?attr/colorPrimaryVariant" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/min_payment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:text="@{@string/format_min_payment(viewModel.creditMinPayment)}"
+                    android:textAppearance="@style/Text.Light.12"
+                    android:visibility="@{viewModel.creditMinPayment > 0 ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/credit_month_payment_layout"
+                    tools:text="Минимальный платеж: 19000" />
 
                 <Button
                     style="@style/CreditMaterialButton"
@@ -132,10 +150,10 @@
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
                     android:enabled="@{viewModel.isCalculateAvailable}"
-                    android:text="Расчитать"
+                    android:text="@string/calculate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/credit_rate_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/min_payment"
                     app:onClickAndHideKeyboard="@{() -> viewModel.onCalculate()}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

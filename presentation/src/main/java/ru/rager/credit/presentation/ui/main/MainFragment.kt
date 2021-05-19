@@ -18,7 +18,6 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
         fun getInstance() = MainFragment()
     }
 
-
     override val viewModelClass: Class<MainViewModel>
         get() = MainViewModel::class.java
 
@@ -53,6 +52,7 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
         when (mainMenuModel) {
             is MainMenuModel.CalculatePaymentMainMenuModel -> viewModel.onOpenPaymentCalculator()
             is MainMenuModel.CalculatePercentMainMenuModel -> viewModel.onOpenPercentCalculator()
+            is MainMenuModel.CalculationListMainMenuModel -> viewModel.onOpenSavedCalculations()
         }
     }
 

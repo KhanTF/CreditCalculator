@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="listener"
+            type="ru.rager.credit.presentation.adapters.recyclerview.SavedCreditCalculationParameterListAdapter.Listener" />
+
+        <variable
+            name="data"
+            type="ru.rager.credit.domain.entity.SavedCreditCalculationParameterEntity" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->listener.onOpen(data)}"
+        app:cardCornerRadius="@dimen/dp_8"
+        app:cardElevation="@dimen/dp_8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{data.creditCalculationParameterName}"
+                android:textAppearance="@style/Text.Medium.20"
+                tools:text="Расчет 1" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{context.getString(BindingConverters.creditCalculationPercentTypeToIntString(data.creditCalculationType))}"
+                app:label="@string/credit_calculation_type" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_sum(data.creditSum)}"
+                app:label="@string/credit_sum" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{@string/format_percent(data.creditRate)}"
+                app:label="@string/credit_rate" />
+
+            <ru.rager.credit.presentation.view.LabeledTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:text="@{@plurals/format_month(data.creditTerm,data.creditTerm)}"
+                app:label="@string/credit_term" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

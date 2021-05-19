@@ -28,6 +28,7 @@
         <item name="buttonStyle">@style/CreditButton</item>
         <item name="labeledTextView">@style/CreditLabeledTextView</item>
         <item name="tabStyle">@style/CreditTabLayout</item>
+        <item name="android:dialogTheme">@style/CreditDialog</item>
 
         <item name="toolbarStyle">@style/CreditToolbar</item>
         <item name="textInputStyle">@style/CreditTextInputLayout</item>
@@ -68,6 +69,11 @@
         <item name="labelTextAppearance">@style/Text.Light.12</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="labelTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CreditDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">50%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
     </style>
 
     <style name="CreditTabLayout" parent="Widget.MaterialComponents.TabLayout">

@@ -1,26 +1,9 @@
 package ru.rager.credit.domain.entity
 
-import ru.rager.credit.domain.entity.enums.CreditCalculationType
-
-sealed class CreditCalculationEntity constructor(
-    val creditCalculationType: CreditCalculationType,
+data class CreditCalculationEntity constructor(
     val creditCalculationParameter: CreditCalculationParameterEntity,
     val creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
 ) {
-
-    class TempCreditCalculationEntity(
-        creditCalculationType: CreditCalculationType,
-        creditCalculationParameter: CreditCalculationParameterEntity,
-        creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
-    ) : CreditCalculationEntity(creditCalculationType, creditCalculationParameter, creditCalculationPaymentList)
-
-    class SavedCreditCalculationEntity(
-        val creditCalculationId: Long,
-        val creditCalculationName: String,
-        creditCalculationType: CreditCalculationType,
-        creditCalculationParameter: CreditCalculationParameterEntity,
-        creditCalculationPaymentList: List<CreditCalculationPaymentEntity>
-    ) : CreditCalculationEntity(creditCalculationType, creditCalculationParameter, creditCalculationPaymentList)
 
     fun getSumPayments() = creditCalculationPaymentList.sumByDouble { it.creditPayment }
 

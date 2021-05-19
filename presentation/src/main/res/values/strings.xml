@@ -44,9 +44,12 @@
     <string name="credit_payment_for_percent">Платеж в счет процентов</string>
     <string name="credit_payment_for_debt">Платеж в счет долга</string>
     <string name="credit_remaining_debt">Остаток долга</string>
+    <string name="credit_save">Сохранить</string>
     <string name="calculate">Расчитать</string>
+
 
     <string name="invalid_payment_too_small">Сумма платежа меньше, чем при 0% ставке</string>
     <string name="invalid_payment_too_much">Сумма платежа больше, чем при 100% ставке</string>
+    <string name="invalid_calculation_name">Название не может быть пустым</string>
 
 </resources>

@@ -106,8 +106,8 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditFirstPayment)}"
-                            android:visibility="@{viewModel.creditFirstPayment > 0 ? View.VISIBLE : View.GONE}"
+                            android:text="@{@string/format_sum(viewModel.creditFirstPaymentLiveData)}"
+                            android:visibility="@{viewModel.creditFirstPaymentLiveData > 0 ? View.VISIBLE : View.GONE}"
                             app:label="@string/credit_first_payment" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -116,8 +116,8 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditLastPayment)}"
-                            android:visibility="@{viewModel.creditLastPayment > 0 ? View.VISIBLE : View.GONE}"
+                            android:text="@{@string/format_sum(viewModel.creditLastPaymentLiveData)}"
+                            android:visibility="@{viewModel.creditLastPaymentLiveData > 0 ? View.VISIBLE : View.GONE}"
                             app:label="@string/credit_last_payment" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -126,8 +126,8 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditMonthPayment)}"
-                            android:visibility="@{viewModel.creditMonthPayment > 0 ? View.VISIBLE : View.GONE}"
+                            android:text="@{@string/format_sum(viewModel.creditMonthPaymentLiveData)}"
+                            android:visibility="@{viewModel.creditMonthPaymentLiveData > 0 ? View.VISIBLE : View.GONE}"
                             app:label="@string/credit_month_payment" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -136,7 +136,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditSumPayments)}"
+                            android:text="@{@string/format_sum(viewModel.creditSumPaymentsLiveData)}"
                             app:label="@string/credit_total_payments" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -145,7 +145,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditOverpayments)}"
+                            android:text="@{@string/format_sum(viewModel.creditOverpaymentsLiveData)}"
                             app:label="@string/credit_over_payments" />
 
                     </LinearLayout>

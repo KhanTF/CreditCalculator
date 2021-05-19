@@ -6,9 +6,9 @@ import ru.rager.credit.domain.entity.CreditCalculationPaymentEntity
 import ru.rager.credit.presentation.databinding.ItemPaymentBinding
 import ru.rager.credit.presentation.util.getLayoutInflater
 
-class PaymentListAdapter : RecyclerView.Adapter<PaymentListAdapter.PaymentViewHolder>() {
+class CreditCalculationPaymentListAdapter : RecyclerView.Adapter<CreditCalculationPaymentListAdapter.PaymentViewHolder>() {
 
-    var creditPaymentList: List<CreditCalculationPaymentEntity> = emptyList()
+    var data: List<CreditCalculationPaymentEntity> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -19,10 +19,10 @@ class PaymentListAdapter : RecyclerView.Adapter<PaymentListAdapter.PaymentViewHo
     }
 
     override fun onBindViewHolder(holder: PaymentViewHolder, position: Int) {
-        holder.bind(creditPaymentList[position])
+        holder.bind(data[position])
     }
 
-    override fun getItemCount() = creditPaymentList.size
+    override fun getItemCount() = data.size
 
     class PaymentViewHolder(private val binding: ItemPaymentBinding) : RecyclerView.ViewHolder(binding.root) {
 

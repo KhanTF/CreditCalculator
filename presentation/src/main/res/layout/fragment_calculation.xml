@@ -25,11 +25,13 @@
             app:elevation="@dimen/no_elevation">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:menu="@menu/menu_calculation"
                 app:navigationIcon="@drawable/ic_back"
                 app:onNavigationClick="@{()-> viewModel.onBack()}"
-                app:title="@string/calculation_result" />
+                app:title="@{viewModel.creditCalculationName != null ? viewModel.creditCalculationName : @string/calculation_result}" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"

@@ -2,5 +2,5 @@ package ru.rager.credit.data.di
 
 import dagger.Module
 
-@Module
+@Module(includes = [RepositoryModule::class, DatabaseModule::class])
 class DataModule

@@ -2,11 +2,8 @@ package ru.rager.credit.presentation.ui.paymentcalculator
 
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.domain.entity.enums.CreditCalculationType
-import ru.rager.credit.domain.usecase.CalculateAnnuityPaymentUseCase
-import ru.rager.credit.domain.usecase.CalculateDifferentiatedPaymentUseCase
 import ru.rager.credit.domain.utils.CreditConstants.isCreditRateValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
@@ -20,9 +17,7 @@ import javax.inject.Inject
 
 class PaymentCalculatorViewModel @Inject constructor(
     private val router: Router,
-    private val screenFactory: ScreenFactory,
-    private val calculateAnnuityPaymentUseCase: CalculateAnnuityPaymentUseCase,
-    private val calculationDifferentiatedPaymentUseCase: CalculateDifferentiatedPaymentUseCase
+    private val screenFactory: ScreenFactory
 ) : BaseViewModel(router) {
 
     val creditCalculationTypeList = CreditCalculationType.values().toList()
@@ -49,21 +44,16 @@ class PaymentCalculatorViewModel @Inject constructor(
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditRate = creditRateLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
-
-        when (creditCalculationPercentType) {
-            CreditCalculationType.ANNUITY -> calculateAnnuityPaymentUseCase.getAnnuityCalculation(
-                creditSum, creditRate, creditTerm
+        router.navigateTo(
+            screenFactory.getCalculationScreen(
+                CreditCalculationParameterEntity(
+                    creditCalculationType = creditCalculationPercentType,
+                    creditSum = creditSum,
+                    creditRate = creditRate,
+                    creditTerm = creditTerm
+                )
             )
-            CreditCalculationType.DIFFERENTIATED -> calculationDifferentiatedPaymentUseCase.getDifferentiatedCalculation(
-                creditSum, creditRate, creditTerm
-            )
-        }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { creditCalculationEntity ->
-                router.navigateTo(screenFactory.getCalculationScreen(creditCalculationEntity))
-            }
-            .disposeOnClear()
+        )
     }
 
 }

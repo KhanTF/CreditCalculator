@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.rager.credit.presentation.R
-import ru.rager.credit.presentation.adapters.recyclerview.PaymentListAdapter
+import ru.rager.credit.presentation.adapters.recyclerview.CreditCalculationPaymentListAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationPaymentsBinding
 import ru.rager.credit.presentation.ui.base.BaseFragment
 import ru.rager.credit.presentation.ui.calculation.CalculationViewModel
@@ -18,7 +18,7 @@ class CalculationPaymentsFragment : BaseFragment<CalculationViewModel, FragmentC
         fun getInstance() = CalculationPaymentsFragment()
     }
 
-    private val adapter = PaymentListAdapter()
+    private val adapter = CreditCalculationPaymentListAdapter()
 
     override fun getViewDataBindingInstance(inflater: LayoutInflater, container: ViewGroup?): FragmentCalculationPaymentsBinding {
         return FragmentCalculationPaymentsBinding.inflate(inflater, container, false)
@@ -28,10 +28,12 @@ class CalculationPaymentsFragment : BaseFragment<CalculationViewModel, FragmentC
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         binding.paymentList.also {
-            adapter.creditPaymentList = viewModel.creditPaymentList
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(requireContext())
             it.addItemDecoration(LinearSpaceItemDecoration(start = R.dimen.dp_16, top = R.dimen.dp_16, space = R.dimen.dp_8))
+        }
+        viewModel.creditPaymentListLiveData.observe {
+            adapter.data = it
         }
     }
 

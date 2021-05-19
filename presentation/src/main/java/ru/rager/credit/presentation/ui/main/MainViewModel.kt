@@ -31,4 +31,8 @@ class MainViewModel @Inject constructor(
         router.navigateTo(screenFactory.getPercentCalculatorScreen())
     }
 
+    fun onOpenSavedCalculations() {
+        router.navigateTo(screenFactory.getCalculationListScreen())
+    }
+
 }

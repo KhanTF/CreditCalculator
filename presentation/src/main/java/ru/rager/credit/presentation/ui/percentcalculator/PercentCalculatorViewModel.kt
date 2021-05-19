@@ -7,8 +7,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.rager.credit.domain.entity.enums.CreditCalculationType
 import ru.rager.credit.domain.exceptions.PaymentTooMuchException
 import ru.rager.credit.domain.exceptions.PaymentTooSmallException
-import ru.rager.credit.domain.usecase.CalculateAnnuityPercentUseCase
-import ru.rager.credit.domain.usecase.CalculateDifferentiatedPercentUseCase
+import ru.rager.credit.domain.usecase.GetCalculationParameterUseCase
 import ru.rager.credit.domain.utils.CreditConstants.isCreditPaymentValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
 import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
@@ -24,8 +23,7 @@ import javax.inject.Inject
 class PercentCalculatorViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
-    private val calculateAnnuityPercentUseCase: CalculateAnnuityPercentUseCase,
-    private val calculateDifferentiatedPercentUseCase: CalculateDifferentiatedPercentUseCase
+    private val getCalculationParameterUseCase: GetCalculationParameterUseCase
 ) : BaseViewModel(router) {
 
     val creditCalculationTypeList = CreditCalculationType.values().toList()
@@ -68,15 +66,12 @@ class PercentCalculatorViewModel @Inject constructor(
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditMonthPayment = creditMonthPaymentLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
-
-        when (creditCalculationPercentType) {
-            CreditCalculationType.ANNUITY -> calculateAnnuityPercentUseCase.getAnnuityCalculation(creditSum, creditMonthPayment, creditTerm)
-            CreditCalculationType.DIFFERENTIATED -> calculateDifferentiatedPercentUseCase.getDifferentiatedCalculation(creditSum, creditMonthPayment, creditTerm)
-        }
+        getCalculationParameterUseCase
+            .getCreditCalculationParameter(creditCalculationPercentType, creditSum, creditTerm, creditMonthPayment)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ creditCalculationEntity ->
-                router.navigateTo(screenFactory.getCalculationScreen(creditCalculationEntity))
+            .subscribe({ creditCalculationParameter ->
+                router.navigateTo(screenFactory.getCalculationScreen(creditCalculationParameter))
             }, { e ->
                 when (e) {
                     is PaymentTooSmallException -> postEvent(PaymentTooSmall)

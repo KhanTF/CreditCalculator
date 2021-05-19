@@ -10,7 +10,7 @@ sealed class MainMenuModel(@DrawableRes val icon: Int, @StringRes val title: Int
 
     object CalculatePercentMainMenuModel : MainMenuModel(R.drawable.ic_calculate_percent, R.string.calculate_percent, R.string.calculate_percent_description)
 
-    object CalculationListMainMenuModel : MainMenuModel(R.drawable.ic_saved_calculations, R.string.saved_calculations, R.string.saved_calculations_description)
+    object CalculationListMainMenuModel : MainMenuModel(R.drawable.ic_credit_save, R.string.saved_calculations, R.string.saved_calculations_description)
 
     object SettingsMainMenuModel : MainMenuModel(R.drawable.ic_settings, R.string.settings, R.string.settings_description)
 

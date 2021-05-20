@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -22,10 +24,11 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
             resValue "string", "app_name", "Кредитный калькулятор (Debug)"
         }
         release {
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "Кредитный калькулятор"
@@ -55,6 +58,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation "com.github.terrakok:cicerone:$cicerone_version"
+
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.gms:play-services-ads:20.1.0'
 
     implementation project(":presentation")
     implementation project(":domain")

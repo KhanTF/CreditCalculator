@@ -3,10 +3,10 @@ package ru.rager.credit.presentation.ui.paymentcalculator
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
 import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
-import ru.rager.credit.domain.entity.enums.CreditCalculationType
-import ru.rager.credit.domain.utils.CreditConstants.isCreditRateValid
-import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
-import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
+import ru.rager.credit.domain.entity.enums.CreditRateType
+import ru.rager.credit.domain.utils.CreditValidator.isCreditRateValid
+import ru.rager.credit.domain.utils.CreditValidator.isCreditSumValid
+import ru.rager.credit.domain.utils.CreditValidator.isCreditTermValid
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.util.getDoubleValue
@@ -20,18 +20,18 @@ class PaymentCalculatorViewModel @Inject constructor(
     private val screenFactory: ScreenFactory
 ) : BaseViewModel(router) {
 
-    val creditCalculationTypeList = CreditCalculationType.values().toList()
-    val creditCalculationTypeSelectedLiveData = MutableLiveData<Int>()
+    val creditRateList = CreditRateType.values().toList()
+    val creditRateSelectedLiveData = MutableLiveData<Int>()
     val creditSumLiveData = MutableLiveData<String>()
     val creditRateLiveData = MutableLiveData<String>()
     val creditTermLiveData = MutableLiveData<String>()
     val isCalculateAvailable = combinedLiveData(
-        creditCalculationTypeSelectedLiveData,
+        creditRateSelectedLiveData,
         creditSumLiveData,
         creditRateLiveData,
         creditTermLiveData
     ).map { (selectedType: Int?, creditSum: String?, creditRate: String?, creditTerm: String?) ->
-        val isSelectedTypeValid = selectedType != null && selectedType >= 0 && selectedType < creditCalculationTypeList.size
+        val isSelectedTypeValid = selectedType != null && selectedType >= 0 && selectedType < creditRateList.size
         val creditSumValue = creditSum?.toDoubleOrNull()
         val creditRateValue = creditRate?.toDoubleOrNull()
         val creditTermValue = creditTerm?.toIntOrNull()
@@ -39,19 +39,17 @@ class PaymentCalculatorViewModel @Inject constructor(
     }
 
     fun onCalculate() {
-        val creditCalculationPercentTypeSelected = creditCalculationTypeSelectedLiveData.value ?: return
-        val creditCalculationPercentType = creditCalculationTypeList.getOrNull(creditCalculationPercentTypeSelected) ?: return
+        val creditRateTypeSelected = creditRateSelectedLiveData.value ?: return
+        val creditRateType = creditRateList.getOrNull(creditRateTypeSelected) ?: return
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditRate = creditRateLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
         router.navigateTo(
             screenFactory.getCalculationScreen(
-                CreditCalculationParameterEntity(
-                    creditCalculationType = creditCalculationPercentType,
-                    creditSum = creditSum,
-                    creditRate = creditRate,
-                    creditTerm = creditTerm
-                )
+                creditRateType = creditRateType,
+                creditSum = creditSum,
+                creditRate = creditRate,
+                creditTerm = creditTerm
             )
         )
     }

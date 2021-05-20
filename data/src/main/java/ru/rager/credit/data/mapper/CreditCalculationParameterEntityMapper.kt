@@ -1,26 +1,30 @@
 package ru.rager.credit.data.mapper
 
 import ru.rager.credit.data.db.entity.CalculationParameterDbEntity
-import ru.rager.credit.domain.entity.SavedCreditCalculationParameterEntity
+import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 
 object CreditCalculationParameterEntityMapper {
 
-    fun map(savedCreditCalculationParameterEntity: SavedCreditCalculationParameterEntity) = CalculationParameterDbEntity(
-        creditCalculationParameterId = savedCreditCalculationParameterEntity.creditCalculationParameterId,
-        creditCalculationParameterName = savedCreditCalculationParameterEntity.creditCalculationParameterName,
-        creditCalculationType = savedCreditCalculationParameterEntity.creditCalculationType,
-        creditSum = savedCreditCalculationParameterEntity.creditSum,
-        creditRate = savedCreditCalculationParameterEntity.creditRate,
-        creditTerm = savedCreditCalculationParameterEntity.creditTerm
+    fun map(calculationParameterSavedEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity) = CalculationParameterDbEntity(
+        creditCalculationParameterId = calculationParameterSavedEntity.creditCalculationParameterId,
+        creditCalculationParameterName = calculationParameterSavedEntity.creditCalculationParameterName,
+        creditRateType = calculationParameterSavedEntity.creditRateType,
+        creditSum = calculationParameterSavedEntity.creditSum,
+        creditRate = calculationParameterSavedEntity.creditRate,
+        creditTerm = calculationParameterSavedEntity.creditTerm,
+        creditRateFrequencyType = calculationParameterSavedEntity.creditRateFrequency,
+        creditPaymentFrequencyType = calculationParameterSavedEntity.creditPaymentFrequency
     )
 
-    fun map(calculationParameterDbEntity: CalculationParameterDbEntity) = SavedCreditCalculationParameterEntity(
+    fun map(calculationParameterDbEntity: CalculationParameterDbEntity) = CreditCalculationParameterEntity.SavedCalculationParameterEntity(
         creditCalculationParameterId = calculationParameterDbEntity.creditCalculationParameterId,
         creditCalculationParameterName = calculationParameterDbEntity.creditCalculationParameterName,
-        creditCalculationType = calculationParameterDbEntity.creditCalculationType,
+        creditRateType = calculationParameterDbEntity.creditRateType,
         creditSum = calculationParameterDbEntity.creditSum,
         creditRate = calculationParameterDbEntity.creditRate,
-        creditTerm = calculationParameterDbEntity.creditTerm
+        creditTerm = calculationParameterDbEntity.creditTerm,
+        creditRateFrequency = calculationParameterDbEntity.creditRateFrequencyType,
+        creditPaymentFrequency = calculationParameterDbEntity.creditPaymentFrequencyType
     )
 
 }

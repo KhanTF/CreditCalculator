@@ -13,7 +13,7 @@ interface CalculationParameterDao : BaseDao<CalculationParameterDbEntity, Long> 
     fun getAll(): Single<List<CalculationParameterDbEntity>>
 
     @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterName LIKE :name")
-    fun getByName(name: String): Single<CalculationParameterDbEntity>
+    fun getByName(name: String): Single<List<CalculationParameterDbEntity>>
 
     @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterId=:id")
     fun getById(id: Long): Single<CalculationParameterDbEntity>

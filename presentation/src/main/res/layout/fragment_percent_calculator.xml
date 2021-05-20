@@ -50,11 +50,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_16"
-                    app:arrayResources="@{BindingConverters.creditCalculationPercentTypeListToIntStringList(viewModel.creditCalculationTypeList)}"
+                    app:arrayResources="@{BindingConverters.creditCalculationPercentTypeListToIntStringList(viewModel.creditRateTypeList)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:selectedItem="@={viewModel.creditCalculationTypeSelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditRateTypeSelectedLiveData}" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/credit_amount_layout"

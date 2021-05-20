@@ -2,13 +2,13 @@ package ru.rager.credit.presentation.adapters.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.rager.credit.domain.entity.CreditCalculationPaymentEntity
+import ru.rager.credit.domain.entity.CalculationPaymentEntity
 import ru.rager.credit.presentation.databinding.ItemPaymentBinding
 import ru.rager.credit.presentation.util.getLayoutInflater
 
 class CreditCalculationPaymentListAdapter : RecyclerView.Adapter<CreditCalculationPaymentListAdapter.PaymentViewHolder>() {
 
-    var data: List<CreditCalculationPaymentEntity> = emptyList()
+    var data: List<CalculationPaymentEntity> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -26,7 +26,7 @@ class CreditCalculationPaymentListAdapter : RecyclerView.Adapter<CreditCalculati
 
     class PaymentViewHolder(private val binding: ItemPaymentBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(calculationPaymentEntity: CreditCalculationPaymentEntity) {
+        fun bind(calculationPaymentEntity: CalculationPaymentEntity) {
             binding.data = calculationPaymentEntity
         }
 

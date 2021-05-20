@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.rager.credit.domain.entity.SavedCreditCalculationParameterEntity
+import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.adapters.recyclerview.SavedCreditCalculationParameterListAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationListBinding
@@ -19,11 +19,11 @@ class CalculationListFragment : BaseIndependentFragment<CalculationListViewModel
     }
 
     private val listener = object : SavedCreditCalculationParameterListAdapter.Listener {
-        override fun onOpen(savedCreditCalculationParameterEntity: SavedCreditCalculationParameterEntity) {
-            viewModel.onOpenCreditCalculation(savedCreditCalculationParameterEntity)
+        override fun onOpen(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity) {
+            viewModel.onOpenCreditCalculation(savedCalculationParameterEntity)
         }
 
-        override fun onDelete(savedCreditCalculationParameterEntity: SavedCreditCalculationParameterEntity) {
+        override fun onDelete(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity) {
         }
     }
     private val adapter = SavedCreditCalculationParameterListAdapter(listener)

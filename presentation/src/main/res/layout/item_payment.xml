@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="ru.rager.credit.domain.entity.CreditCalculationPaymentEntity" />
+            type="ru.rager.credit.domain.entity.CalculationPaymentEntity" />
 
         <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
 

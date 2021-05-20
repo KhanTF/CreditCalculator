@@ -25,6 +25,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'KEY_ADD_MAIN_SCREEN', '\"ca-app-pub-1016736832994048/8868866158\"'
+        }
+        debug {
+            buildConfigField 'String', 'KEY_ADD_MAIN_SCREEN', '\"ca-app-pub-3940256099942544/2247696110\"'
         }
     }
     compileOptions {
@@ -61,6 +65,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "com.github.PhilJay:MPAndroidChart:$chart_version"
 
+    compileOnly 'com.google.android.gms:play-services-ads:20.1.0'
     compileOnly "com.github.terrakok:cicerone:$cicerone_version"
     compileOnly project(":domain")
 

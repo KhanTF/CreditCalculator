@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "386643345801",
+    "project_id": "credit-905be",
+    "storage_bucket": "credit-905be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386643345801:android:eaa3c179e1f1f3bd15a158",
+        "android_client_info": {
+          "package_name": "ru.rager.credit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386643345801-2vskcogj4kpq763es3sbts8kn2ghler8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMCrBC1ydVyg_vs6MDBhRduvAeRAfzUlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386643345801-2vskcogj4kpq763es3sbts8kn2ghler8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,14 +22,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rect_top_corners"
-            android:fillViewport="true"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/menu_list"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/native_add_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="@dimen/dp_8"
+                    app:cardElevation="@dimen/dp_8" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/menu_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 

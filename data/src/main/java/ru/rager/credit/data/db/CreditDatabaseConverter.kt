@@ -1,29 +1,55 @@
 package ru.rager.credit.data.db
 
 import androidx.room.TypeConverter
-import ru.rager.credit.domain.entity.enums.CreditCalculationType
+import ru.rager.credit.domain.entity.enums.CreditFrequencyType
+import ru.rager.credit.domain.entity.enums.CreditRateType
 
 object CreditDatabaseConverter {
 
     private const val ANNUITY = 1
     private const val DIFFERENTIATED = 2
 
+    private const val EVERY_YEAR = 1
+    private const val EVERY_QUARTER = 2
+    private const val EVERY_MONTH = 3
+
     @JvmStatic
     @TypeConverter
-    fun fromCreditCalculationTypeToInt(creditCalculationType: CreditCalculationType): Int {
-        return when (creditCalculationType) {
-            CreditCalculationType.ANNUITY -> ANNUITY
-            CreditCalculationType.DIFFERENTIATED -> DIFFERENTIATED
+    fun fromCreditCalculationTypeToInt(creditRateType: CreditRateType): Int {
+        return when (creditRateType) {
+            CreditRateType.ANNUITY -> ANNUITY
+            CreditRateType.DIFFERENTIATED -> DIFFERENTIATED
         }
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromIntToCreditCalculationType(creditCalculationType: Int): CreditCalculationType {
+    fun fromIntToCreditCalculationType(creditCalculationType: Int): CreditRateType {
         return when (creditCalculationType) {
-            ANNUITY -> CreditCalculationType.ANNUITY
-            DIFFERENTIATED -> CreditCalculationType.DIFFERENTIATED
+            ANNUITY -> CreditRateType.ANNUITY
+            DIFFERENTIATED -> CreditRateType.DIFFERENTIATED
             else -> throw IllegalArgumentException("Unknown credit calculation type")
+        }
+    }
+
+    @JvmStatic
+    @TypeConverter
+    fun fromCreditFrequencyTypeToInt(creditFrequencyType: CreditFrequencyType): Int {
+        return when (creditFrequencyType) {
+            CreditFrequencyType.EVERY_YEAR -> EVERY_YEAR
+            CreditFrequencyType.EVERY_QUARTER -> EVERY_QUARTER
+            CreditFrequencyType.EVERY_MONTH -> EVERY_MONTH
+        }
+    }
+
+    @JvmStatic
+    @TypeConverter
+    fun fromIntToCreditFrequencyType(creditFrequencyType: Int): CreditFrequencyType {
+        return when (creditFrequencyType) {
+            EVERY_YEAR -> CreditFrequencyType.EVERY_YEAR
+            EVERY_QUARTER -> CreditFrequencyType.EVERY_QUARTER
+            EVERY_MONTH -> CreditFrequencyType.EVERY_MONTH
+            else -> throw IllegalArgumentException("Unknown credit frequency type")
         }
     }
 

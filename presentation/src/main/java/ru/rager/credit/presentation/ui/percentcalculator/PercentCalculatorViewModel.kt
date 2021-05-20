@@ -4,15 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.rager.credit.domain.entity.enums.CreditCalculationType
-import ru.rager.credit.domain.exceptions.PaymentTooMuchException
-import ru.rager.credit.domain.exceptions.PaymentTooSmallException
-import ru.rager.credit.domain.usecase.GetCalculationParameterUseCase
-import ru.rager.credit.domain.utils.CreditConstants.isCreditPaymentValid
-import ru.rager.credit.domain.utils.CreditConstants.isCreditSumValid
-import ru.rager.credit.domain.utils.CreditConstants.isCreditTermValid
+import ru.rager.credit.domain.entity.enums.CreditRateType
+import ru.rager.credit.domain.exceptions.CalculationException
+import ru.rager.credit.domain.usecase.GetCreditRateUseCase
+import ru.rager.credit.domain.utils.CreditValidator.isCreditPaymentValid
+import ru.rager.credit.domain.utils.CreditValidator.isCreditSumValid
+import ru.rager.credit.domain.utils.CreditValidator.isCreditTermValid
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
+import ru.rager.credit.presentation.ui.base.events.Event
 import ru.rager.credit.presentation.util.NEGATIVE_DOUBLE
 import ru.rager.credit.presentation.util.getDoubleValue
 import ru.rager.credit.presentation.util.getIntValue
@@ -23,25 +23,25 @@ import javax.inject.Inject
 class PercentCalculatorViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
-    private val getCalculationParameterUseCase: GetCalculationParameterUseCase
+    private val getCreditRateUseCase: GetCreditRateUseCase
 ) : BaseViewModel(router) {
 
-    val creditCalculationTypeList = CreditCalculationType.values().toList()
-    val creditCalculationTypeSelectedLiveData = MutableLiveData<Int>()
+    val creditRateTypeList = CreditRateType.values().toList()
+    val creditRateTypeSelectedLiveData = MutableLiveData<Int>()
     val creditSumLiveData = MutableLiveData<String>()
     val creditMonthPaymentLiveData = MutableLiveData<String>()
     val creditTermLiveData = MutableLiveData<String>()
 
-    val creditCalculationType = creditCalculationTypeSelectedLiveData.map {
-        creditCalculationTypeList[it]
+    val creditCalculationType = creditRateTypeSelectedLiveData.map {
+        creditRateTypeList[it]
     }
     val isCalculateAvailable = combinedLiveData(
-        creditCalculationTypeSelectedLiveData,
+        creditRateTypeSelectedLiveData,
         creditSumLiveData,
         creditMonthPaymentLiveData,
         creditTermLiveData
     ).map { (selectedType: Int?, creditSum: String?, monthPayment: String?, creditTerm: String?) ->
-        val isSelectedTypeValid = selectedType != null && selectedType >= 0 && selectedType < creditCalculationTypeList.size
+        val isSelectedTypeValid = selectedType != null && selectedType >= 0 && selectedType < creditRateTypeList.size
         val creditSumValue = creditSum?.toDoubleOrNull()
         val creditMonthPaymentValue = monthPayment?.toDoubleOrNull()
         val creditTermValue = creditTerm?.toIntOrNull()
@@ -61,28 +61,32 @@ class PercentCalculatorViewModel @Inject constructor(
     }
 
     fun onCalculate() {
-        val creditCalculationPercentTypeSelected = creditCalculationTypeSelectedLiveData.value ?: return
-        val creditCalculationPercentType = creditCalculationTypeList.getOrNull(creditCalculationPercentTypeSelected) ?: return
+        val creditRateTypeSelected = creditRateTypeSelectedLiveData.value ?: return
+        val creditRateType = creditRateTypeList.getOrNull(creditRateTypeSelected) ?: return
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditMonthPayment = creditMonthPaymentLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
-        getCalculationParameterUseCase
-            .getCreditCalculationParameter(creditCalculationPercentType, creditSum, creditTerm, creditMonthPayment)
+        getCreditRateUseCase
+            .getCreditRateSingle(creditRateType, creditSum, creditMonthPayment, creditTerm)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ creditCalculationParameter ->
-                router.navigateTo(screenFactory.getCalculationScreen(creditCalculationParameter))
+            .subscribe({ creditRate ->
+                router.navigateTo(
+                    screenFactory.getCalculationScreen(
+                        creditRateType = creditRateType,
+                        creditSum = creditSum,
+                        creditRate = creditRate,
+                        creditTerm = creditTerm
+                    )
+                )
             }, { e ->
                 when (e) {
-                    is PaymentTooSmallException -> postEvent(PaymentTooSmall)
-                    is PaymentTooMuchException -> postEvent(PaymentTooMuch)
+                    is CalculationException -> postEvent(Event.CalculationError)
+                    else -> postEvent(Event.UnknownError)
                 }
+                e.printStackTrace()
             })
             .disposeOnClear()
     }
-
-    object PaymentTooMuch : Event
-
-    object PaymentTooSmall : Event
 
 }

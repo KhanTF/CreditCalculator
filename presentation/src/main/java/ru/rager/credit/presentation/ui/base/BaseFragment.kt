@@ -2,20 +2,15 @@ package ru.rager.credit.presentation.ui.base
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import javax.inject.Inject
-import javax.inject.Provider
+import ru.rager.credit.presentation.R
+import ru.rager.credit.presentation.ui.base.events.Event
 
 abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding> : DaggerFragment() {
 
@@ -51,12 +46,14 @@ abstract class BaseFragment<ViewModel : BaseViewModel, Binding : ViewDataBinding
         bindingInternal = null
     }
 
-    protected open fun onHandleEvent(event: BaseViewModel.Event){
-
+    protected open fun onHandleEvent(event: Event) {
+        if (event is Event.UnknownError) {
+            Snackbar.make(requireView(), R.string.error_unknown, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     protected inline fun <T> LiveData<T>.observe(crossinline action: (T) -> Unit) {
-        observe(this@BaseFragment, { action(it) })
+        observe(viewLifecycleOwner, { action(it) })
     }
 
     internal open fun getViewModelInstance() = getParentViewModel()

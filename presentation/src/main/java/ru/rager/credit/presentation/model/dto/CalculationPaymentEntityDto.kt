@@ -2,7 +2,7 @@ package ru.rager.credit.presentation.model.dto
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import ru.rager.credit.domain.entity.CreditCalculationPaymentEntity
+import ru.rager.credit.domain.entity.CalculationPaymentEntity
 import javax.inject.Provider
 
 @Parcelize
@@ -12,17 +12,17 @@ data class CalculationPaymentEntityDto(
     private val creditPercentPartOfPayment: Double,
     private val creditDebtPartOfPayment: Double,
     private val creditDebtReminder: Double
-) : Parcelable, Provider<CreditCalculationPaymentEntity> {
+) : Parcelable, Provider<CalculationPaymentEntity> {
 
-    constructor(creditCalculationPaymentEntity: CreditCalculationPaymentEntity) : this(
-        creditMonthNumber = creditCalculationPaymentEntity.creditPaymentOrder,
-        creditPayment = creditCalculationPaymentEntity.creditPayment,
-        creditPercentPartOfPayment = creditCalculationPaymentEntity.creditPercentPartOfPayment,
-        creditDebtPartOfPayment = creditCalculationPaymentEntity.creditDebtPartOfPayment,
-        creditDebtReminder = creditCalculationPaymentEntity.creditDebtReminder
+    constructor(calculationPaymentEntity: CalculationPaymentEntity) : this(
+        creditMonthNumber = calculationPaymentEntity.creditPaymentOrder,
+        creditPayment = calculationPaymentEntity.creditPayment,
+        creditPercentPartOfPayment = calculationPaymentEntity.creditPercentPartOfPayment,
+        creditDebtPartOfPayment = calculationPaymentEntity.creditDebtPartOfPayment,
+        creditDebtReminder = calculationPaymentEntity.creditDebtReminder
     )
 
-    override fun get() = CreditCalculationPaymentEntity(
+    override fun get() = CalculationPaymentEntity(
         creditPaymentOrder = creditMonthNumber,
         creditPayment = creditPayment,
         creditPercentPartOfPayment = creditPercentPartOfPayment,

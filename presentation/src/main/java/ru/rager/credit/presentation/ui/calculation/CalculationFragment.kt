@@ -1,17 +1,17 @@
 package ru.rager.credit.presentation.ui.calculation
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ru.rager.credit.domain.entity.CreditCalculationEntity
+import kotlinx.android.parcel.Parcelize
 import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
-import ru.rager.credit.domain.entity.SavedCreditCalculationParameterEntity
+import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationBinding
 import ru.rager.credit.presentation.dialogs.SaveCalculationDialogFragment
-import ru.rager.credit.presentation.model.dto.CalculationEntityDto
 import ru.rager.credit.presentation.model.dto.CalculationParameterEntityDto
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 
@@ -19,19 +19,27 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
 
     companion object {
         private const val TAG_SAVE_CALCULATION = "TAG_SAVE_CALCULATION"
-        private const val KEY_CREDIT_CALCULATION = "KEY_CREDIT_CALCULATION"
+        private const val KEY_PARAMETERS = "KEY_PARAMETERS"
 
-        fun getInstance(calculationParameterEntity: CreditCalculationParameterEntity) = CalculationFragment().apply {
+        fun getInstance(
+            id: Long?,
+            name: String?,
+            creditRateType: CreditRateType,
+            creditSum: Double,
+            creditRate: Double,
+            creditTerm: Int
+        ) = CalculationFragment().apply {
+            val parameters = Parameters(id, name, creditRateType, creditSum, creditRate, creditTerm)
             val bundle = Bundle()
-            bundle.putParcelable(KEY_CREDIT_CALCULATION, CalculationParameterEntityDto(calculationParameterEntity))
+            bundle.putParcelable(KEY_PARAMETERS, parameters)
             arguments = bundle
         }
 
     }
 
-    private val adapter by lazy { CalculationPagerAdapter(this) }
+    val parameters by lazy { requireNotNull(requireArguments().getParcelable<Parameters>(KEY_PARAMETERS)) }
 
-    fun getCreditCalculationParameterArgument() = requireNotNull(requireArguments().getParcelable<CalculationParameterEntityDto>(KEY_CREDIT_CALCULATION)?.get())
+    private val adapter by lazy { CalculationPagerAdapter(this) }
 
     override val viewModelClass: Class<CalculationViewModel>
         get() = CalculationViewModel::class.java
@@ -46,7 +54,7 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
         binding.viewModel = viewModel
         binding.toolbar.apply {
             val saveMenuItem = menu.findItem(R.id.save)
-            saveMenuItem.isVisible = !viewModel.creditCalculationIsSaved
+            saveMenuItem.isVisible = viewModel.creditCalculationId == null
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.save -> {
@@ -64,5 +72,15 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
     override fun onSave(name: String) {
         viewModel.onSaveCalculation(name)
     }
+
+    @Parcelize
+    data class Parameters(
+        val id: Long?,
+        val name: String?,
+        val creditRateType: CreditRateType,
+        val creditSum: Double,
+        val creditRate: Double,
+        val creditTerm: Int
+    ) : Parcelable
 
 }

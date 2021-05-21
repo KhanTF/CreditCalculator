@@ -44,7 +44,7 @@ class PaymentCalculatorViewModel @Inject constructor(
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditRate = creditRateLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
-        router.navigateTo(
+        router.replaceScreen(
             screenFactory.getCalculationScreen(
                 creditRateType = creditRateType,
                 creditSum = creditSum,

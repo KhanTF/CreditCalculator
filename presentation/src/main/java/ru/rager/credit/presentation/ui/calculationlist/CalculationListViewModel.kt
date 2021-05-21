@@ -22,7 +22,6 @@ class CalculationListViewModel @Inject constructor(
     init {
         getCalculationParameterUseCase
             .getAll()
-            .toList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -37,6 +36,8 @@ class CalculationListViewModel @Inject constructor(
     fun onOpenCreditCalculation(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity) {
         router.navigateTo(
             screenFactory.getCalculationScreen(
+                id = savedCalculationParameterEntity.creditCalculationParameterId,
+                name = savedCalculationParameterEntity.creditCalculationParameterName,
                 creditRateType = savedCalculationParameterEntity.creditRateType,
                 creditSum = savedCalculationParameterEntity.creditSum,
                 creditRate = savedCalculationParameterEntity.creditRate,

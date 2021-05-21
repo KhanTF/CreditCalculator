@@ -44,8 +44,17 @@
     <string name="credit_payment_for_percent">Платеж в счет процентов</string>
     <string name="credit_payment_for_debt">Платеж в счет долга</string>
     <string name="credit_remaining_debt">Остаток долга</string>
+    <string name="credit_save_calculation">Сохранить расчет</string>
+    <string name="credit_calculation_name">Название расчета</string>
     <string name="credit_save">Сохранить</string>
+    <string name="credit_delete_calculation">Удалить расчет</string>
+    <string name="credit_delete">Удалить</string>
+    <string name="credit_delete_calculation_confirmation">Вы уверены, что хотите удалить расчет \"%s\"?</string>
+    <string name="credit_list_empty">Список расчетов пуст</string>
+
     <string name="calculate">Расчитать</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">Ок</string>
 
     <string name="invalid_payment_too_small">Сумма платежа меньше, чем при 0% ставке</string>
     <string name="invalid_payment_too_much">Сумма платежа больше, чем при 100% ставке</string>

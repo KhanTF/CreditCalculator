@@ -7,6 +7,10 @@ class GetCalculationParameterUseCase @Inject constructor(private val calculation
 
     fun getAll() = calculationParameterRepository.getAll()
 
+    fun getAllSingle() = calculationParameterRepository.getAllSingle()
+
     fun get(id: Long) = calculationParameterRepository.get(id)
+
+    fun getSingle(id: Long) = calculationParameterRepository.getSingle(id)
 
 }

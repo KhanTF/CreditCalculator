@@ -10,7 +10,7 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        android:text="Сохранить расчет"
+        android:text="@string/credit_save_calculation"
         android:textAppearance="@style/Text.Medium.20" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -20,12 +20,13 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        android:hint="Название расчета">
+        android:hint="@string/credit_calculation_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:lines="1"
             android:maxLength="100" />
 

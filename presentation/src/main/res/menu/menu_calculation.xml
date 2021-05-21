@@ -8,4 +8,10 @@
         android:title="@string/credit_save"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_credit_delete"
+        android:title="@string/credit_delete"
+        app:showAsAction="ifRoom" />
+
 </menu>

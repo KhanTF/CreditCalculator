@@ -71,7 +71,7 @@ class PercentCalculatorViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ creditRate ->
-                router.navigateTo(
+                router.replaceScreen(
                     screenFactory.getCalculationScreen(
                         creditRateType = creditRateType,
                         creditSum = creditSum,

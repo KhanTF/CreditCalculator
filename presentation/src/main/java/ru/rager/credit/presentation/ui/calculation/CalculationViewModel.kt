@@ -8,6 +8,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.rager.credit.domain.entity.CalculationPaymentEntity
 import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.domain.usecase.GetPaymentListUseCase
+import ru.rager.credit.domain.usecase.RemoveCalculationParameterUseCase
 import ru.rager.credit.domain.usecase.SaveCalculationParameterUseCase
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
@@ -20,6 +21,7 @@ class CalculationViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
     private val saveCalculationParameterUseCase: SaveCalculationParameterUseCase,
+    private val removeCalculationParameterUseCase: RemoveCalculationParameterUseCase,
     private val getPaymentListUseCase: GetPaymentListUseCase,
     @Named("creditCalculationId") val creditCalculationId: Long?,
     @Named("creditCalculationName") val creditCalculationName: String?,
@@ -91,6 +93,22 @@ class CalculationViewModel @Inject constructor(
                 it.printStackTrace()
             })
             .disposeOnClear()
+    }
+
+    fun onDelete() {
+        if (creditCalculationId != null) {
+            removeCalculationParameterUseCase
+                .remove(creditCalculationId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    router.exit()
+                }, {
+                    postEvent(Event.UnknownError)
+                    it.printStackTrace()
+                })
+                .disposeOnClear()
+        }
     }
 
 }

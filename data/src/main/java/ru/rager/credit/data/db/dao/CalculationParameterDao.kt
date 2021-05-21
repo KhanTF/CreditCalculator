@@ -10,15 +10,21 @@ import ru.rager.credit.data.db.entity.CalculationParameterDbEntity
 interface CalculationParameterDao : BaseDao<CalculationParameterDbEntity, Long> {
 
     @Query("SELECT * FROM CalculationParameterDbEntity")
-    fun getAll(): Single<List<CalculationParameterDbEntity>>
+    fun getAll(): Observable<List<CalculationParameterDbEntity>>
+
+    @Query("SELECT * FROM CalculationParameterDbEntity")
+    fun getAllSingle(): Single<List<CalculationParameterDbEntity>>
 
     @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterName LIKE :name")
-    fun getByName(name: String): Single<List<CalculationParameterDbEntity>>
+    fun getByName(name: String): Observable<List<CalculationParameterDbEntity>>
+
+    @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterName LIKE :name")
+    fun getByNameSingle(name: String): Single<List<CalculationParameterDbEntity>>
 
     @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterId=:id")
-    fun getById(id: Long): Single<CalculationParameterDbEntity>
+    fun getById(id: Long): Observable<CalculationParameterDbEntity>
 
-    @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterId=:creditCalculationParameterId")
-    fun getByCreditCalculationParameterId(creditCalculationParameterId: Long): Single<CalculationParameterDbEntity>
+    @Query("SELECT * FROM CalculationParameterDbEntity WHERE creditCalculationParameterId=:id")
+    fun getByIdSingle(id: Long): Single<CalculationParameterDbEntity>
 
 }

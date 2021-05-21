@@ -11,14 +11,16 @@ import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationBinding
+import ru.rager.credit.presentation.dialogs.DeleteCalculationDialogFragment
 import ru.rager.credit.presentation.dialogs.SaveCalculationDialogFragment
 import ru.rager.credit.presentation.model.dto.CalculationParameterEntityDto
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 
-class CalculationFragment : BaseIndependentFragment<CalculationViewModel, FragmentCalculationBinding>(), SaveCalculationDialogFragment.Callback {
+class CalculationFragment : BaseIndependentFragment<CalculationViewModel, FragmentCalculationBinding>(), SaveCalculationDialogFragment.Callback, DeleteCalculationDialogFragment.Callback {
 
     companion object {
         private const val TAG_SAVE_CALCULATION = "TAG_SAVE_CALCULATION"
+        private const val TAG_DELETE_CALCULATION = "TAG_DELETE_CALCULATION"
         private const val KEY_PARAMETERS = "KEY_PARAMETERS"
 
         fun getInstance(
@@ -54,13 +56,21 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
         binding.viewModel = viewModel
         binding.toolbar.apply {
             val saveMenuItem = menu.findItem(R.id.save)
+            val deleteMenuItem = menu.findItem(R.id.delete)
             saveMenuItem.isVisible = viewModel.creditCalculationId == null
+            deleteMenuItem.isVisible = viewModel.creditCalculationId != null
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.save -> {
                         SaveCalculationDialogFragment
                             .getInstance()
                             .show(childFragmentManager, TAG_SAVE_CALCULATION)
+                        true
+                    }
+                    R.id.delete -> {
+                        DeleteCalculationDialogFragment
+                            .getInstance(viewModel.creditCalculationName.orEmpty())
+                            .show(childFragmentManager, TAG_DELETE_CALCULATION)
                         true
                     }
                     else -> false
@@ -71,6 +81,10 @@ class CalculationFragment : BaseIndependentFragment<CalculationViewModel, Fragme
 
     override fun onSave(name: String) {
         viewModel.onSaveCalculation(name)
+    }
+
+    override fun onDelete() {
+        viewModel.onDelete()
     }
 
     @Parcelize

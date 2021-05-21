@@ -27,4 +27,6 @@ object CreditCalculationParameterEntityMapper {
         creditPaymentFrequency = calculationParameterDbEntity.creditPaymentFrequencyType
     )
 
+    fun mapList(calculationParameterDbEntityList: List<CalculationParameterDbEntity>) = calculationParameterDbEntityList.map(this::map)
+
 }

@@ -19,9 +19,13 @@ class CalculationParameterRepositoryImpl @Inject constructor(
     private val calculationParameterDao: CalculationParameterDao
 ) : CalculationParameterRepository {
 
-    override fun getAll() = calculationParameterDao.getAll().flatMapObservable { Observable.fromIterable(it) }.map(CreditCalculationParameterEntityMapper::map)
+    override fun getAll() = calculationParameterDao.getAll().map(CreditCalculationParameterEntityMapper::mapList)
+
+    override fun getAllSingle() = calculationParameterDao.getAllSingle().map(CreditCalculationParameterEntityMapper::mapList)
 
     override fun get(id: Long) = calculationParameterDao.getById(id).map(CreditCalculationParameterEntityMapper::map)
+
+    override fun getSingle(id: Long) = calculationParameterDao.getByIdSingle(id).map(CreditCalculationParameterEntityMapper::map)
 
     override fun save(
         name: String,
@@ -33,7 +37,7 @@ class CalculationParameterRepositoryImpl @Inject constructor(
         creditPaymentFrequency: CreditFrequencyType
     ): Single<CreditCalculationParameterEntity.SavedCalculationParameterEntity> {
         return calculationParameterDao
-            .getByName(name)
+            .getByNameSingle(name)
             .flatMapCompletable {
                 if (it.isNotEmpty()) {
                     Completable.error(CalculationParameterAlreadyExistException())
@@ -54,12 +58,12 @@ class CalculationParameterRepositoryImpl @Inject constructor(
                     )
                 )
             )
-            .flatMap(calculationParameterDao::getById)
+            .flatMap(calculationParameterDao::getByIdSingle)
             .map(CreditCalculationParameterEntityMapper::map)
     }
 
     override fun remove(id: Long) = calculationParameterDao
-        .getById(id)
+        .getByIdSingle(id)
         .flatMapCompletable(calculationParameterDao::delete)
 
 }

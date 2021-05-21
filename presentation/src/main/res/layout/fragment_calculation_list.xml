@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="ru.rager.credit.presentation.ui.calculationlist.CalculationListViewModel" />
@@ -28,12 +30,29 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calculation_list"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rect_top_corners"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/calculation_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/text_size_16"
+                android:layout_marginEnd="@dimen/text_size_16"
+                android:gravity="center"
+                android:text="@string/credit_list_empty"
+                android:textAppearance="@style/Text.Light.20"
+                android:visibility="@{viewModel.calculationListLiveData.size() == 0 ? View.VISIBLE : View.GONE}" />
+
+        </FrameLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

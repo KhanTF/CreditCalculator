@@ -9,9 +9,13 @@ import ru.rager.credit.domain.entity.enums.CreditRateType
 
 interface CalculationParameterRepository {
 
-    fun getAll(): Observable<CreditCalculationParameterEntity.SavedCalculationParameterEntity>
+    fun getAll(): Observable<List<CreditCalculationParameterEntity.SavedCalculationParameterEntity>>
 
-    fun get(id: Long): Single<CreditCalculationParameterEntity.SavedCalculationParameterEntity>
+    fun getAllSingle(): Single<List<CreditCalculationParameterEntity.SavedCalculationParameterEntity>>
+
+    fun get(id: Long): Observable<CreditCalculationParameterEntity.SavedCalculationParameterEntity>
+
+    fun getSingle(id: Long): Single<CreditCalculationParameterEntity.SavedCalculationParameterEntity>
 
     fun save(
         name: String,

@@ -52,7 +52,7 @@
                             android:layout_marginTop="@dimen/dp_16"
                             android:layout_marginEnd="@dimen/dp_16"
                             android:text="@{context.getString(BindingConverters.creditRateTypeToIntString(viewModel.creditRateType))}"
-                            app:label="@string/credit_calculation_type" />
+                            app:label="@string/credit_rate_type" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
                             android:layout_width="match_parent"

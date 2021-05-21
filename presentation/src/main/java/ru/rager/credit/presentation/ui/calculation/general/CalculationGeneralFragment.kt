@@ -65,6 +65,7 @@ class CalculationGeneralFragment : BaseFragment<CalculationViewModel, FragmentCa
         pieChart.setDrawEntryLabels(false)
         pieChart.isDrawHoleEnabled = false
         pieChart.description.isEnabled = false
+        pieChart.setUsePercentValues(true)
 
         pieChart.invalidate()
     }

@@ -46,7 +46,6 @@
     <string name="annuity">Аннуитетный</string>
     <string name="differential">Дифференцированный</string>
 
-    <string name="credit_calculation_type">Способ расчета процентной ставки</string>
     <string name="credit_sum">Сумма кредита</string>
     <string name="credit_rate">Процентная ставка</string>
     <string name="credit_term">Срок кредита</string>

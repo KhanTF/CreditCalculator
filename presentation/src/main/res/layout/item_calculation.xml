@@ -46,7 +46,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:text="@{context.getString(BindingConverters.creditRateTypeToIntString(data.creditRateType))}"
-                app:label="@string/credit_calculation_type" />
+                app:label="@string/credit_rate_type" />
 
             <ru.rager.credit.presentation.view.LabeledTextView
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:layout_marginBottom="@dimen/dp_16"
-                android:text="@{@plurals/format_month(data.creditTerm,data.creditTerm)}"
+                android:text="@{BindingConverters.creditTermToString(context,data.creditTerm,data.creditPaymentFrequency)}"
                 app:label="@string/credit_term" />
 
         </LinearLayout>

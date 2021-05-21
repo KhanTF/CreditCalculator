@@ -7,6 +7,7 @@ import com.github.terrakok.cicerone.androidx.FragmentScreen
 import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.presentation.ui.calculation.CalculationFragment
+import ru.rager.credit.presentation.ui.calculation.CalculationViewModel
 import ru.rager.credit.presentation.ui.calculationlist.CalculationListFragment
 import ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorFragment
 import ru.rager.credit.presentation.ui.main.MainFragment
@@ -20,22 +21,8 @@ class ScreenFactoryImpl : ScreenFactory {
 
     override fun getPercentCalculatorScreen(): Screen = getScreen { PercentCalculatorFragment.getInstance() }
 
-    override fun getCalculationScreen(
-        id: Long?,
-        name: String?,
-        creditRateType: CreditRateType,
-        creditSum: Double,
-        creditRate: Double,
-        creditTerm: Int
-    ): Screen = getScreen {
-        CalculationFragment.getInstance(
-            id = id,
-            name = name,
-            creditRateType = creditRateType,
-            creditSum = creditSum,
-            creditRate = creditRate,
-            creditTerm = creditTerm
-        )
+    override fun getCalculationScreen(parameters: CalculationViewModel.Parameters): Screen = getScreen {
+        CalculationFragment.getInstance(parameters)
     }
 
     override fun getCalculationListScreen(): Screen = getScreen { CalculationListFragment.getInstance() }

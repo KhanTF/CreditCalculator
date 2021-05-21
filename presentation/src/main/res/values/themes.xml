@@ -2,6 +2,7 @@
 
     <attr name="colorMaterialButtonRipple" format="color" />
     <attr name="labeledTextView" format="reference" />
+    <attr name="materialSpinner" format="reference" />
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarSize">@dimen/dp_64</item>
@@ -28,6 +29,7 @@
         <item name="buttonStyle">@style/CreditButton</item>
         <item name="labeledTextView">@style/CreditLabeledTextView</item>
         <item name="tabStyle">@style/CreditTabLayout</item>
+        <item name="materialSpinner">@style/CreditMaterialSpinner</item>
         <item name="android:dialogTheme">@style/CreditDialog</item>
 
         <item name="toolbarStyle">@style/CreditToolbar</item>
@@ -51,6 +53,13 @@
         <item name="android:textAppearance">@style/Text.Light.16</item>
         <item name="android:padding">@dimen/dp_16</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CreditMaterialSpinner">
+        <item name="android:textAppearance">@style/Text.Light.16</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:drawablePadding">@dimen/dp_8</item>
+        <item name="drawableTint">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="CreditMaterialButton" parent="Widget.MaterialComponents.Button.TextButton">

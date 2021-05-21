@@ -3,14 +3,30 @@
 
     <string name="empty" />
 
+    <plurals name="format_year">
+        <item quantity="one">%d год</item>
+        <item quantity="few">%d года</item>
+        <item quantity="many">%d лет</item>
+    </plurals>
+
+    <plurals name="format_quarter">
+        <item quantity="one">%d квартал</item>
+        <item quantity="few">%d кварталов</item>
+        <item quantity="many">%d кварталов</item>
+    </plurals>
+
     <plurals name="format_month">
         <item quantity="one">%d месяц</item>
         <item quantity="few">%d месяца</item>
         <item quantity="many">%d месяцев</item>
     </plurals>
+
+    <string name="format_number_year">%d год</string>
+    <string name="format_number_quarter">%d квартал</string>
+    <string name="format_number_month">%d месяц</string>
+
     <string name="format_percent">%.2f %%</string>
     <string name="format_sum">%.2f</string>
-    <string name="format_number_month">%d месяц</string>
     <string name="format_min_payment">Минимальный платеж: %.2f</string>
 
     <string name="calculation_result">Расчет</string>
@@ -51,6 +67,18 @@
     <string name="credit_delete">Удалить</string>
     <string name="credit_delete_calculation_confirmation">Вы уверены, что хотите удалить расчет \"%s\"?</string>
     <string name="credit_list_empty">Список расчетов пуст</string>
+
+    <string name="credit_rate_type">Способ начисления процентов</string>
+    <string name="credit_rate_frequency">Тип процентной ставки</string>
+    <string name="credit_payment_frequency">Периодичность платежей</string>
+
+    <string name="credit_rate_every_year">Годовая процентная ставка</string>
+    <string name="credit_rate_every_quarter">Квартальная процентная ставка</string>
+    <string name="credit_rate_every_month">Месячная процентная ставка</string>
+
+    <string name="credit_payment_every_year">Ежегодные</string>
+    <string name="credit_payment_every_quarter">Ежеквартальные</string>
+    <string name="credit_payment_every_month">Ежемесячные</string>
 
     <string name="calculate">Расчитать</string>
     <string name="cancel">Отмена</string>

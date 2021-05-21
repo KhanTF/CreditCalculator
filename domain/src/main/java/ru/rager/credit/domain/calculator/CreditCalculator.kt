@@ -74,8 +74,8 @@ interface CreditCalculator {
         startRate: Double,
         accuracy: Double
     ): Double {
-        if (startRate < 0) throw CalculationException("Month payment must be more than 0")
-        if (startRate > 100) throw CalculationException("Month payment must be less than 100")
+        if (startRate < 0) throw CalculationException("Credit payment must be more than 0")
+        if (startRate > 100) throw CalculationException("Credit rate must be less than 100")
         val actual1 = getPayment(sum, startRate, term, 0, creditRateFrequency, creditPaymentFrequency)
         return when {
             actual1 == payment || abs(actual1 - payment) < PERCENT_CALCULATION_FAULT -> startRate

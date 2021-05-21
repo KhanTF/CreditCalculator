@@ -10,4 +10,14 @@
         <attr name="labelTextColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="MaterialSpinner">
+        <attr name="hint" format="string" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="android:textColor" format="color" />
+        <attr name="android:textAppearance" format="reference" />
+        <attr name="android:drawableStart" format="reference" />
+        <attr name="android:drawablePadding" format="dimension" />
+        <attr name="drawableTint" format="color" />
+    </declare-styleable>
+
 </resources>

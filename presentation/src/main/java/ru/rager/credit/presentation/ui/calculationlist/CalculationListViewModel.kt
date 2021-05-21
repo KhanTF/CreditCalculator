@@ -5,10 +5,12 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
+import ru.rager.credit.domain.entity.enums.CreditFrequencyType
 import ru.rager.credit.domain.usecase.GetCalculationParameterUseCase
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.ui.base.events.Event
+import ru.rager.credit.presentation.ui.calculation.CalculationViewModel
 import javax.inject.Inject
 
 class CalculationListViewModel @Inject constructor(
@@ -36,12 +38,16 @@ class CalculationListViewModel @Inject constructor(
     fun onOpenCreditCalculation(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity) {
         router.navigateTo(
             screenFactory.getCalculationScreen(
-                id = savedCalculationParameterEntity.creditCalculationParameterId,
-                name = savedCalculationParameterEntity.creditCalculationParameterName,
-                creditRateType = savedCalculationParameterEntity.creditRateType,
-                creditSum = savedCalculationParameterEntity.creditSum,
-                creditRate = savedCalculationParameterEntity.creditRate,
-                creditTerm = savedCalculationParameterEntity.creditTerm
+                CalculationViewModel.Parameters(
+                    id = savedCalculationParameterEntity.creditCalculationParameterId,
+                    name = savedCalculationParameterEntity.creditCalculationParameterName,
+                    creditRateType = savedCalculationParameterEntity.creditRateType,
+                    creditSum = savedCalculationParameterEntity.creditSum,
+                    creditRate = savedCalculationParameterEntity.creditRate,
+                    creditTerm = savedCalculationParameterEntity.creditTerm,
+                    creditPaymentFrequencyType = savedCalculationParameterEntity.creditPaymentFrequency,
+                    creditRateFrequencyType = savedCalculationParameterEntity.creditRateFrequency
+                )
             )
         )
     }

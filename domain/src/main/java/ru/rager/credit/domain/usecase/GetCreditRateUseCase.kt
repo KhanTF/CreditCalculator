@@ -22,8 +22,8 @@ class GetCreditRateUseCase @Inject constructor(
         creditSum: Double,
         creditFirstPayment: Double,
         creditTerm: Int,
-        creditRateFrequency: CreditFrequencyType = CreditFrequencyType.EVERY_YEAR,
-        creditPaymentFrequency: CreditFrequencyType = CreditFrequencyType.EVERY_MONTH
+        creditRateFrequency: CreditFrequencyType,
+        creditPaymentFrequency: CreditFrequencyType
     ) = Single.fromCallable {
         when (creditRateType) {
             CreditRateType.ANNUITY -> annuityCreditCalculator.getRate(creditSum, creditFirstPayment, creditTerm, creditRateFrequency, creditPaymentFrequency)

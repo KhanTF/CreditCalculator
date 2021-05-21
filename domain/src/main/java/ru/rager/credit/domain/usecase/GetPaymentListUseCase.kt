@@ -24,8 +24,8 @@ class GetPaymentListUseCase @Inject constructor(
         creditSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRateFrequency: CreditFrequencyType = CreditFrequencyType.EVERY_YEAR,
-        creditPaymentFrequency: CreditFrequencyType = CreditFrequencyType.EVERY_MONTH
+        creditRateFrequency: CreditFrequencyType,
+        creditPaymentFrequency: CreditFrequencyType
     ) = Single.fromCallable {
         when (creditRateType) {
             CreditRateType.ANNUITY -> getPaymentsList(creditSum, creditRate, creditTerm, creditRateFrequency, creditPaymentFrequency, annuityCreditCalculator)
@@ -46,6 +46,7 @@ class GetPaymentListUseCase @Inject constructor(
         val debtPart = creditCalculator.getDebtPartOfPayment(creditSum, creditRate, creditTerm, paymentIndex, creditRateFrequency, creditPaymentFrequency)
         val remainingDebt = creditCalculator.getDebtRemainingAfterPayment(creditSum, creditRate, creditTerm, paymentIndex, creditRateFrequency, creditPaymentFrequency)
         CalculationPaymentEntity(
+            creditPaymentFrequency = creditPaymentFrequency,
             creditPaymentOrder = paymentIndex,
             creditPayment = payment,
             creditPercentPartOfPayment = percentPart,

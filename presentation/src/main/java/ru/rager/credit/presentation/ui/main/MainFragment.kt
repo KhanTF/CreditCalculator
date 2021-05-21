@@ -43,7 +43,7 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
         nativeAdHelper.nativeAdLiveData.observe(viewLifecycleOwner, {
             val nativeAd = it.getOrNull()
             if (nativeAd != null) {
-                val nativeAdView = View.inflate(requireContext(), R.layout.view_native_ad, null) as NativeAdView
+                val nativeAdView = View.inflate(requireContext(), R.layout.layout_native_ad, null) as NativeAdView
                 setupNativeAdView(nativeAd, native_add_card, nativeAdView)
             } else {
                 native_add_card.removeAllViews()

@@ -1,11 +1,14 @@
 package ru.rager.credit.presentation.ui.calculation
 
+import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.github.terrakok.cicerone.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 import ru.rager.credit.domain.entity.CalculationPaymentEntity
+import ru.rager.credit.domain.entity.enums.CreditFrequencyType
 import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.domain.usecase.GetPaymentListUseCase
 import ru.rager.credit.domain.usecase.RemoveCalculationParameterUseCase
@@ -22,15 +25,18 @@ class CalculationViewModel @Inject constructor(
     private val screenFactory: ScreenFactory,
     private val saveCalculationParameterUseCase: SaveCalculationParameterUseCase,
     private val removeCalculationParameterUseCase: RemoveCalculationParameterUseCase,
-    private val getPaymentListUseCase: GetPaymentListUseCase,
-    @Named("creditCalculationId") val creditCalculationId: Long?,
-    @Named("creditCalculationName") val creditCalculationName: String?,
-    @Named("creditRateType") val creditRateType: CreditRateType,
-    @Named("creditSum") val creditSum: Double,
-    @Named("creditRate") val creditRate: Double,
-    @Named("creditTerm") val creditTerm: Int
+    getPaymentListUseCase: GetPaymentListUseCase,
+    parameters: Parameters
 ) : BaseViewModel(router) {
 
+    val creditCalculationId: Long? = parameters.id
+    val creditCalculationName: String? = parameters.name
+    val creditRateType: CreditRateType = parameters.creditRateType
+    val creditSum: Double = parameters.creditSum
+    val creditRate: Double = parameters.creditRate
+    val creditTerm: Int = parameters.creditTerm
+    val creditPaymentFrequency = parameters.creditPaymentFrequencyType
+    val creditRateFrequency = parameters.creditRateFrequencyType
     val creditPaymentListLiveData = MutableLiveData<List<CalculationPaymentEntity>>()
     val creditSumPaymentsLiveData = creditPaymentListLiveData.map { calculationPaymentList ->
         calculationPaymentList.sumByDouble { it.creditPayment }
@@ -60,7 +66,14 @@ class CalculationViewModel @Inject constructor(
 
     init {
         getPaymentListUseCase
-            .getPaymentListSingle(creditRateType, creditSum, creditRate, creditTerm)
+            .getPaymentListSingle(
+                creditRateType = creditRateType,
+                creditSum = creditSum,
+                creditRate = creditRate,
+                creditTerm = creditTerm,
+                creditRateFrequency = creditRateFrequency,
+                creditPaymentFrequency = creditPaymentFrequency
+            )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -74,18 +87,30 @@ class CalculationViewModel @Inject constructor(
 
     fun onSaveCalculation(name: String) {
         saveCalculationParameterUseCase
-            .save(name, creditRateType, creditSum, creditRate, creditTerm)
+            .save(
+                name = name,
+                creditRateType = creditRateType,
+                creditSum = creditSum,
+                creditRate = creditRate,
+                creditTerm = creditTerm,
+                creditRateFrequency = creditRateFrequency,
+                creditPaymentFrequency = creditPaymentFrequency
+            )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 router.replaceScreen(
                     screenFactory.getCalculationScreen(
-                        it.creditCalculationParameterId,
-                        it.creditCalculationParameterName,
-                        it.creditRateType,
-                        it.creditSum,
-                        it.creditRate,
-                        it.creditTerm
+                        Parameters(
+                            it.creditCalculationParameterId,
+                            it.creditCalculationParameterName,
+                            it.creditRateType,
+                            it.creditSum,
+                            it.creditRate,
+                            it.creditTerm,
+                            it.creditRateFrequency,
+                            it.creditPaymentFrequency
+                        )
                     )
                 )
             }, {
@@ -110,5 +135,17 @@ class CalculationViewModel @Inject constructor(
                 .disposeOnClear()
         }
     }
+
+    @Parcelize
+    data class Parameters(
+        val id: Long? = null,
+        val name: String? = null,
+        val creditRateType: CreditRateType,
+        val creditSum: Double,
+        val creditRate: Double,
+        val creditTerm: Int,
+        val creditRateFrequencyType: CreditFrequencyType,
+        val creditPaymentFrequencyType: CreditFrequencyType
+    ) : Parcelable
 
 }

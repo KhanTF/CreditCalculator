@@ -6,7 +6,7 @@ import ru.rager.credit.presentation.di.internal.submodule.CalculationResultFragm
 import ru.rager.credit.presentation.ui.calculation.CalculationFragment
 import ru.rager.credit.presentation.ui.calculation.general.CalculationGeneralFragment
 import ru.rager.credit.presentation.ui.calculation.payments.CalculationPaymentsFragment
-import ru.rager.credit.presentation.ui.calculationlist.CalculationListFragment
+import ru.rager.credit.presentation.ui.earlypayment.EarlyPaymentFragment
 import ru.rager.credit.presentation.ui.main.MainFragment
 import ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorFragment
 import ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorFragment
@@ -21,6 +21,9 @@ internal abstract class FragmentBuilder {
     abstract fun buildPaymentCalculatorFragment(): PaymentCalculatorFragment
 
     @ContributesAndroidInjector
+    abstract fun buildEarlyPaymentFragment(): EarlyPaymentFragment
+
+    @ContributesAndroidInjector
     abstract fun buildPercentCalculatorFragment(): PercentCalculatorFragment
 
     @ContributesAndroidInjector(modules = [CalculationResultFragmentSubmodule::class])
@@ -31,8 +34,8 @@ internal abstract class FragmentBuilder {
 
     @ContributesAndroidInjector
     abstract fun buildCalculationResultPaymentScheduleFragment(): CalculationPaymentsFragment
-
+/*
     @ContributesAndroidInjector
-    abstract fun buildCalculationListFragment(): CalculationListFragment
+    abstract fun buildCalculationListFragment(): CalculationListFragment*/
 
 }

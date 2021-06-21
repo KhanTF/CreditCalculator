@@ -1,11 +1,10 @@
 package ru.rager.credit.presentation.ui.calculationlist
-
+/*
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.adapters.recyclerview.SavedCreditCalculationParameterListAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationListBinding
@@ -52,4 +51,4 @@ class CalculationListFragment : BaseIndependentFragment<CalculationListViewModel
         }
     }
 
-}
+}*/

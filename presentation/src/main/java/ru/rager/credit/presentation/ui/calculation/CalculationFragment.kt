@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ru.rager.credit.domain.entity.CreditParametersEntity
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationBinding
 import ru.rager.credit.presentation.dialogs.DeleteCalculationDialogFragment
 import ru.rager.credit.presentation.dialogs.SaveCalculationDialogFragment
+import ru.rager.credit.presentation.dto.CreditParametersParcelable
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 
 class CalculationFragment : BaseIndependentFragment<CalculationViewModel, FragmentCalculationBinding>(), SaveCalculationDialogFragment.Callback, DeleteCalculationDialogFragment.Callback {

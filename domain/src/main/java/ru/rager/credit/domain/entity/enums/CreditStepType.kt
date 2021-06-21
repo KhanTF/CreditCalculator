@@ -1,0 +1,9 @@
+package ru.rager.credit.domain.entity.enums
+
+enum class CreditStepType {
+    CALCULATE_PERCENT_STEP,
+    CALCULATE_SCHEDULE_PAYMENT_STEP,
+    CALCULATE_EARLY_PAYMENT_STEP,
+    CALCULATE_NEXT_DATE_STEP,
+    CALCULATE_CREDIT_RATE_CHANGES
+}

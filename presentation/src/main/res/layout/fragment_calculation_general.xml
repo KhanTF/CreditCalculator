@@ -60,7 +60,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{context.getString(BindingConverters.creditFrequencyTypeToRateFrequency(viewModel.creditRateFrequency))}"
+                            android:text="@{context.getString(BindingConverters.creditFrequencyTypeToRateFrequency(viewModel.creditRatePeriod))}"
                             app:label="@string/credit_rate_frequency" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -69,7 +69,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{context.getString(BindingConverters.creditFrequencyTypeToPaymentFrequency(viewModel.creditPaymentFrequency))}"
+                            android:text="@{context.getString(BindingConverters.creditFrequencyTypeToPaymentFrequency(viewModel.creditPaymentPeriod))}"
                             app:label="@string/credit_payment_frequency" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -97,7 +97,7 @@
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
                             android:layout_marginBottom="@dimen/dp_16"
-                            android:text="@{BindingConverters.creditTermToString(context,viewModel.creditTerm,viewModel.creditPaymentFrequency)}"
+                            android:text="@{BindingConverters.creditTermToString(context,viewModel.creditTerm,viewModel.creditPaymentPeriod)}"
                             app:label="@string/credit_term" />
 
                     </LinearLayout>
@@ -114,9 +114,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/dp_8"
-                        android:paddingBottom="@dimen/dp_16">
+                        android:orientation="vertical">
 
                         <ru.rager.credit.presentation.view.LabeledTextView
                             android:layout_width="match_parent"
@@ -144,16 +142,6 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditMonthPaymentLiveData)}"
-                            android:visibility="@{viewModel.creditMonthPaymentLiveData > 0 ? View.VISIBLE : View.GONE}"
-                            app:label="@string/credit_month_payment" />
-
-                        <ru.rager.credit.presentation.view.LabeledTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_16"
-                            android:layout_marginTop="@dimen/dp_8"
-                            android:layout_marginEnd="@dimen/dp_16"
                             android:text="@{@string/format_sum(viewModel.creditSumPaymentsLiveData)}"
                             app:label="@string/credit_total_payments" />
 
@@ -166,26 +154,17 @@
                             android:text="@{@string/format_sum(viewModel.creditOverpaymentsLiveData)}"
                             app:label="@string/credit_over_payments" />
 
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pie_chart"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/dp_16"
+                            android:layout_marginTop="@dimen/dp_16"
+                            android:layout_marginEnd="@dimen/dp_16"
+                            android:layout_marginBottom="@dimen/dp_16" />
+
                     </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_16"
-                    app:cardCornerRadius="@dimen/dp_8"
-                    app:cardElevation="@dimen/dp_8">
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pie_chart"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="@dimen/dp_16"
-                        android:layout_marginTop="@dimen/dp_16"
-                        android:layout_marginEnd="@dimen/dp_16"
-                        android:layout_marginBottom="@dimen/dp_16" />
 
                 </androidx.cardview.widget.CardView>
 

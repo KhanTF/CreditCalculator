@@ -4,13 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.github.terrakok.cicerone.Screen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
-import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
-import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.presentation.ui.calculation.CalculationFragment
 import ru.rager.credit.presentation.ui.calculation.CalculationViewModel
-import ru.rager.credit.presentation.ui.calculationlist.CalculationListFragment
-import ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorFragment
 import ru.rager.credit.presentation.ui.main.MainFragment
+import ru.rager.credit.presentation.ui.paymentcalculator.PaymentCalculatorFragment
 import ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorFragment
 
 class ScreenFactoryImpl : ScreenFactory {
@@ -25,7 +22,7 @@ class ScreenFactoryImpl : ScreenFactory {
         CalculationFragment.getInstance(parameters)
     }
 
-    override fun getCalculationListScreen(): Screen = getScreen { CalculationListFragment.getInstance() }
+    override fun getCalculationListScreen(): Screen = getScreen { throw Exception() }
 
     private inline fun getScreen(crossinline provider: () -> Fragment): Screen {
         return object : FragmentScreen {

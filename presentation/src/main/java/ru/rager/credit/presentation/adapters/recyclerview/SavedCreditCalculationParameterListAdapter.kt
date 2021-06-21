@@ -1,15 +1,16 @@
 package ru.rager.credit.presentation.adapters.recyclerview
+/*
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.presentation.databinding.ItemCalculationBinding
 import ru.rager.credit.presentation.util.getLayoutInflater
 
 class SavedCreditCalculationParameterListAdapter(
     private val listener: Listener
 ) : RecyclerView.Adapter<SavedCreditCalculationParameterListAdapter.CalculationViewHolder>() {
-
+*/
+/*
     var data: List<CreditCalculationParameterEntity.SavedCalculationParameterEntity> = emptyList()
         set(value) {
             field = value
@@ -41,6 +42,7 @@ class SavedCreditCalculationParameterListAdapter(
     interface Listener {
         fun onOpen(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity)
         fun onDelete(savedCalculationParameterEntity: CreditCalculationParameterEntity.SavedCalculationParameterEntity)
-    }
+    }*//*
 
-}
+
+}*/

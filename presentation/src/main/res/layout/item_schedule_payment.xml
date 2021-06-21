@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="ru.rager.credit.domain.entity.CalculationPaymentEntity" />
+            type="ru.rager.credit.domain.entity.CreditCalculationEntity.SchedulePaymentCreditCalculationEntity" />
 
         <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
 
@@ -30,7 +30,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{BindingConverters.creditTermIndexToString(context,data.creditPaymentOrder,data.creditPaymentFrequency)}"
+                android:text="@{BindingConverters.dateToString(data.calculationDate)}"
                 android:textAppearance="@style/Text.Medium.18"
                 tools:text="1 месяц" />
 
@@ -40,7 +40,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{@string/format_sum(data.creditPayment)}"
+                android:text="@{@string/format_sum(data.payment)}"
                 app:label="@string/credit_payment" />
 
             <ru.rager.credit.presentation.view.LabeledTextView
@@ -49,7 +49,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{@string/format_sum(data.creditPercentPartOfPayment)}"
+                android:text="@{@string/format_sum(data.paidPercentSum)}"
                 app:label="@string/credit_payment_for_percent" />
 
             <ru.rager.credit.presentation.view.LabeledTextView
@@ -58,7 +58,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{@string/format_sum(data.creditDebtPartOfPayment)}"
+                android:text="@{@string/format_sum(data.paidDebtSum)}"
                 app:label="@string/credit_payment_for_debt" />
 
             <ru.rager.credit.presentation.view.LabeledTextView
@@ -68,7 +68,7 @@
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginEnd="@dimen/dp_16"
                 android:layout_marginBottom="@dimen/dp_16"
-                android:text="@{@string/format_sum(data.creditDebtReminder)}"
+                android:text="@{@string/format_sum(data.currentCreditRemainingDebtSum)}"
                 app:label="@string/credit_remaining_debt" />
 
         </LinearLayout>

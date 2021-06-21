@@ -18,7 +18,7 @@
             android:id="@+id/payment_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_payment" />
+            tools:listitem="@layout/item_schedule_payment" />
 
     </FrameLayout>
 

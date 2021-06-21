@@ -2,8 +2,8 @@ package ru.rager.credit.presentation.ui.paymentcalculator
 
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
-import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
-import ru.rager.credit.domain.entity.enums.CreditFrequencyType
+import ru.rager.credit.domain.entity.CreditParametersEntity
+import ru.rager.credit.domain.entity.enums.CreditPeriodType
 import ru.rager.credit.domain.entity.enums.CreditRateType
 import ru.rager.credit.domain.utils.CreditValidator.isCreditRateValid
 import ru.rager.credit.domain.utils.CreditValidator.isCreditSumValid
@@ -22,27 +22,29 @@ class PaymentCalculatorViewModel @Inject constructor(
     private val screenFactory: ScreenFactory
 ) : BaseViewModel(router) {
 
-    private val creditPaymentFrequencyList = listOf(
-        CreditFrequencyType.EVERY_MONTH,
-        CreditFrequencyType.EVERY_QUARTER,
-        CreditFrequencyType.EVERY_YEAR,
+    private val creditPaymentPeriodList = listOf(
+        CreditPeriodType.EVERY_MONTH,
+        CreditPeriodType.EVERY_QUARTER,
+        CreditPeriodType.EVERY_YEAR,
     )
-    val creditRateSelectedLiveData = MutableLiveData(0)
-    val creditRateList = CreditRateType.values().toList()
-    val creditRateFrequencySelectedLiveData = MutableLiveData(0)
-    val creditRateFrequencyList = listOf(
-        CreditFrequencyType.EVERY_YEAR,
-        CreditFrequencyType.EVERY_QUARTER,
-        CreditFrequencyType.EVERY_MONTH
-    )
-    val creditPaymentFrequencySelectedLiveData = MutableLiveData(0)
-    val creditPaymentFrequencyListLiveData = creditRateFrequencySelectedLiveData.map { creditRateFrequencySelected ->
-        val creditRateFrequency = creditRateFrequencyList.getOrNull(creditRateFrequencySelected) ?: return@map listOf(CreditFrequencyType.EVERY_MONTH)
-        creditPaymentFrequencyList.filter { it.value <= creditRateFrequency.value }
-    }
+
     val creditSumLiveData = MutableLiveData<String>()
     val creditRateLiveData = MutableLiveData<String>()
     val creditTermLiveData = MutableLiveData<String>()
+
+    val creditRateSelectedLiveData = MutableLiveData(0)
+    val creditRateList = CreditRateType.values().toList()
+    val creditRatePeriodSelectedLiveData = MutableLiveData(0)
+    val creditRateFrequencyList = listOf(
+        CreditPeriodType.EVERY_YEAR,
+        CreditPeriodType.EVERY_QUARTER,
+        CreditPeriodType.EVERY_MONTH
+    )
+    val creditPaymentPeriodSelectedLiveData = MutableLiveData(0)
+    val creditPaymentPeriodListLiveData = creditRatePeriodSelectedLiveData.map { creditRateFrequencySelected ->
+        val creditRateFrequency = creditRateFrequencyList.getOrNull(creditRateFrequencySelected) ?: return@map listOf(CreditPeriodType.EVERY_MONTH)
+        creditPaymentPeriodList.filter { it.value <= creditRateFrequency.value }
+    }
     val isCalculateAvailable = combinedLiveData(
         creditRateSelectedLiveData,
         creditSumLiveData,
@@ -60,27 +62,25 @@ class PaymentCalculatorViewModel @Inject constructor(
         val creditRateTypeSelected = creditRateSelectedLiveData.value ?: return
         val creditRateType = creditRateList.getOrNull(creditRateTypeSelected) ?: return
 
-        val creditRateFrequencySelectedSelected = creditRateFrequencySelectedLiveData.value ?: return
-        val creditRateFrequencyType = creditRateFrequencyList.getOrNull(creditRateFrequencySelectedSelected) ?: return
+        val creditRatePeriodSelectedSelected = creditRatePeriodSelectedLiveData.value ?: return
+        val creditRatePeriodType = creditRateFrequencyList.getOrNull(creditRatePeriodSelectedSelected) ?: return
 
-        val creditPaymentFrequencySelected = creditPaymentFrequencySelectedLiveData.value ?: return
-        val creditPaymentFrequencyType = creditPaymentFrequencyList.getOrNull(creditPaymentFrequencySelected) ?: return
+        val creditPaymentPeriodSelected = creditPaymentPeriodSelectedLiveData.value ?: return
+        val creditPaymentPeriod = creditPaymentPeriodList.getOrNull(creditPaymentPeriodSelected) ?: return
 
         val creditSum = creditSumLiveData.getDoubleValue() ?: return
         val creditRate = creditRateLiveData.getDoubleValue() ?: return
         val creditTerm = creditTermLiveData.getIntValue() ?: return
-        router.replaceScreen(
-            screenFactory.getCalculationScreen(
-                CalculationViewModel.Parameters(
-                    creditRateType = creditRateType,
-                    creditSum = creditSum,
-                    creditRate = creditRate,
-                    creditTerm = creditTerm,
-                    creditRateFrequencyType = creditRateFrequencyType,
-                    creditPaymentFrequencyType = creditPaymentFrequencyType
-                )
-            )
-        )
+
+        val parameters = CreditParametersEntity.Builder()
+            .setCreditSum(creditSum)
+            .setCreditRate(creditRate)
+            .setCreditRateType(creditRateType)
+            .setCreditTerm(creditTerm)
+            .setCreditPaymentPeriod(creditPaymentPeriod)
+            .setCreditRatePeriod(creditRatePeriodType)
+            .build()
+        router.navigateTo(screenFactory.getCalculationScreen(CalculationViewModel.Parameters(parameters)))
     }
 
 }

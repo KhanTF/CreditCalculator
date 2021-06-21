@@ -1,7 +1,7 @@
 package ru.rager.credit.data.db
 
 import androidx.room.TypeConverter
-import ru.rager.credit.domain.entity.enums.CreditFrequencyType
+import ru.rager.credit.domain.entity.enums.CreditPeriodType
 import ru.rager.credit.domain.entity.enums.CreditRateType
 
 object CreditDatabaseConverter {
@@ -34,21 +34,21 @@ object CreditDatabaseConverter {
 
     @JvmStatic
     @TypeConverter
-    fun fromCreditFrequencyTypeToInt(creditFrequencyType: CreditFrequencyType): Int {
-        return when (creditFrequencyType) {
-            CreditFrequencyType.EVERY_YEAR -> EVERY_YEAR
-            CreditFrequencyType.EVERY_QUARTER -> EVERY_QUARTER
-            CreditFrequencyType.EVERY_MONTH -> EVERY_MONTH
+    fun fromCreditFrequencyTypeToInt(creditPeriodType: CreditPeriodType): Int {
+        return when (creditPeriodType) {
+            CreditPeriodType.EVERY_YEAR -> EVERY_YEAR
+            CreditPeriodType.EVERY_QUARTER -> EVERY_QUARTER
+            CreditPeriodType.EVERY_MONTH -> EVERY_MONTH
         }
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromIntToCreditFrequencyType(creditFrequencyType: Int): CreditFrequencyType {
+    fun fromIntToCreditFrequencyType(creditFrequencyType: Int): CreditPeriodType {
         return when (creditFrequencyType) {
-            EVERY_YEAR -> CreditFrequencyType.EVERY_YEAR
-            EVERY_QUARTER -> CreditFrequencyType.EVERY_QUARTER
-            EVERY_MONTH -> CreditFrequencyType.EVERY_MONTH
+            EVERY_YEAR -> CreditPeriodType.EVERY_YEAR
+            EVERY_QUARTER -> CreditPeriodType.EVERY_QUARTER
+            EVERY_MONTH -> CreditPeriodType.EVERY_MONTH
             else -> throw IllegalArgumentException("Unknown credit frequency type")
         }
     }

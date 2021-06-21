@@ -31,10 +31,12 @@ class CalculationGeneralFragment : BaseFragment<CalculationViewModel, FragmentCa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-
-
         viewModel.creditOverpaymentsLiveData.observe { overPayments ->
-            updatePieChart(binding.pieChart, overPayments, viewModel.creditSum)
+            updatePieChart(
+                pieChart = binding.pieChart,
+                overPayments = overPayments,
+                creditSum = viewModel.creditSum
+            )
         }
     }
 

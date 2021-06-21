@@ -7,145 +7,91 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.parcel.Parcelize
-import ru.rager.credit.domain.entity.CalculationPaymentEntity
-import ru.rager.credit.domain.entity.enums.CreditFrequencyType
+import ru.rager.credit.domain.entity.CreditCalculationEntity
+import ru.rager.credit.domain.entity.CreditParametersEntity
 import ru.rager.credit.domain.entity.enums.CreditRateType
-import ru.rager.credit.domain.usecase.GetPaymentListUseCase
-import ru.rager.credit.domain.usecase.RemoveCalculationParameterUseCase
-import ru.rager.credit.domain.usecase.SaveCalculationParameterUseCase
+import ru.rager.credit.domain.usecase.CreditCalculatorInteractor
+import ru.rager.credit.presentation.dto.CreditParametersParcelable
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.ui.base.events.Event
 import ru.rager.credit.presentation.util.NEGATIVE_DOUBLE
 import javax.inject.Inject
-import javax.inject.Named
 
 class CalculationViewModel @Inject constructor(
     private val router: Router,
     private val screenFactory: ScreenFactory,
-    private val saveCalculationParameterUseCase: SaveCalculationParameterUseCase,
-    private val removeCalculationParameterUseCase: RemoveCalculationParameterUseCase,
-    getPaymentListUseCase: GetPaymentListUseCase,
+    creditCalculatorInteractor: CreditCalculatorInteractor,
     parameters: Parameters
 ) : BaseViewModel(router) {
 
-    val creditCalculationId: Long? = parameters.id
-    val creditCalculationName: String? = parameters.name
-    val creditRateType: CreditRateType = parameters.creditRateType
-    val creditSum: Double = parameters.creditSum
-    val creditRate: Double = parameters.creditRate
-    val creditTerm: Int = parameters.creditTerm
-    val creditPaymentFrequency = parameters.creditPaymentFrequencyType
-    val creditRateFrequency = parameters.creditRateFrequencyType
-    val creditPaymentListLiveData = MutableLiveData<List<CalculationPaymentEntity>>()
-    val creditSumPaymentsLiveData = creditPaymentListLiveData.map { calculationPaymentList ->
-        calculationPaymentList.sumByDouble { it.creditPayment }
+    private val creditParametersEntity = parameters.creditParametersEntity
 
+    val creditCalculationId: Long? = when {
+        creditParametersEntity.id < 0 -> null
+        else -> creditParametersEntity.id
     }
-    val creditOverpaymentsLiveData = creditSumPaymentsLiveData.map { creditSumPayments ->
-        creditSumPayments - creditSum
+    val creditCalculationName: String? = when {
+        creditParametersEntity.name.isBlank() -> null
+        else -> creditParametersEntity.name
     }
-    val creditMonthPaymentLiveData = creditPaymentListLiveData.map { calculationPaymentList ->
-        when (creditRateType) {
-            CreditRateType.ANNUITY -> calculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
-            else -> NEGATIVE_DOUBLE
+    val creditSum: Double = creditParametersEntity.creditSum
+    val creditRate: Double = creditParametersEntity.creditRate
+    val creditRateType: CreditRateType = creditParametersEntity.creditRateType
+    val creditTerm: Int = creditParametersEntity.creditTerm
+    val creditPaymentPeriod = creditParametersEntity.creditPaymentPeriod
+    val creditRatePeriod = creditParametersEntity.creditRatePeriod
+    val creditCalculationListLiveData = MutableLiveData<List<CreditCalculationEntity>>()
+    val creditFirstPaymentLiveData = creditCalculationListLiveData.map { calculationList ->
+        calculationList
+            .find { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            ?.let { it as? CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            ?.payment ?: 0.0
+    }
+    val creditLastPaymentLiveData = creditCalculationListLiveData.map { calculationList ->
+        calculationList
+            .findLast { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            ?.let { it as? CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            ?.payment ?: 0.0
+    }
+    val creditSumPaymentsLiveData = creditCalculationListLiveData.map { calculationList ->
+        calculationList.sumByDouble {
+            when (it) {
+                is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity -> it.payment
+                is CreditCalculationEntity.EarlyPaymentCreditCalculationEntity -> it.payment
+                else -> 0.0
+            }
         }
     }
-    val creditFirstPaymentLiveData = creditPaymentListLiveData.map { calculationPaymentList ->
-        when (creditRateType) {
-            CreditRateType.DIFFERENTIATED -> calculationPaymentList.firstOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
-            else -> NEGATIVE_DOUBLE
-        }
-    }
-    val creditLastPaymentLiveData = creditPaymentListLiveData.map { calculationPaymentList ->
-        when (creditRateType) {
-            CreditRateType.DIFFERENTIATED -> calculationPaymentList.lastOrNull()?.creditPayment ?: NEGATIVE_DOUBLE
-            else -> NEGATIVE_DOUBLE
-        }
+    val creditOverpaymentsLiveData = creditSumPaymentsLiveData.map { sumPayments ->
+        sumPayments - creditSum
     }
 
     init {
-        getPaymentListUseCase
-            .getPaymentListSingle(
-                creditRateType = creditRateType,
-                creditSum = creditSum,
-                creditRate = creditRate,
-                creditTerm = creditTerm,
-                creditRateFrequency = creditRateFrequency,
-                creditPaymentFrequency = creditPaymentFrequency
-            )
+        creditCalculatorInteractor
+            .getCalculationListSingle(creditParametersEntity)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnError(Throwable::printStackTrace)
             .subscribe({
-                creditPaymentListLiveData.value = it
+                creditCalculationListLiveData.value = it
             }, {
                 postEvent(Event.UnknownError)
-                it.printStackTrace()
             })
             .disposeOnClear()
     }
 
     fun onSaveCalculation(name: String) {
-        saveCalculationParameterUseCase
-            .save(
-                name = name,
-                creditRateType = creditRateType,
-                creditSum = creditSum,
-                creditRate = creditRate,
-                creditTerm = creditTerm,
-                creditRateFrequency = creditRateFrequency,
-                creditPaymentFrequency = creditPaymentFrequency
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                router.replaceScreen(
-                    screenFactory.getCalculationScreen(
-                        Parameters(
-                            it.creditCalculationParameterId,
-                            it.creditCalculationParameterName,
-                            it.creditRateType,
-                            it.creditSum,
-                            it.creditRate,
-                            it.creditTerm,
-                            it.creditRateFrequency,
-                            it.creditPaymentFrequency
-                        )
-                    )
-                )
-            }, {
-                postEvent(Event.UnknownError)
-                it.printStackTrace()
-            })
-            .disposeOnClear()
     }
 
     fun onDelete() {
-        if (creditCalculationId != null) {
-            removeCalculationParameterUseCase
-                .remove(creditCalculationId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    router.exit()
-                }, {
-                    postEvent(Event.UnknownError)
-                    it.printStackTrace()
-                })
-                .disposeOnClear()
-        }
     }
 
     @Parcelize
-    data class Parameters(
-        val id: Long? = null,
-        val name: String? = null,
-        val creditRateType: CreditRateType,
-        val creditSum: Double,
-        val creditRate: Double,
-        val creditTerm: Int,
-        val creditRateFrequencyType: CreditFrequencyType,
-        val creditPaymentFrequencyType: CreditFrequencyType
-    ) : Parcelable
+    data class Parameters(val creditParametersEntity: CreditParametersParcelable) : Parcelable {
+        constructor(creditParametersEntity: CreditParametersEntity) : this(
+            CreditParametersParcelable(creditParametersEntity)
+        )
+    }
 
 }

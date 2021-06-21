@@ -59,7 +59,7 @@
                     android:drawableStart="@drawable/ic_credit_rate_frequency"
                     app:arrayResources="@{BindingConverters.creditFrequencyListToRateFrequencyStringList(viewModel.creditRateFrequencyList)}"
                     app:hint="@string/credit_rate_frequency"
-                    app:selectedItem="@={viewModel.creditRateFrequencySelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditRatePeriodSelectedLiveData}" />
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
                     android:layout_width="match_parent"
@@ -67,9 +67,9 @@
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
                     android:drawableStart="@drawable/ic_credit_payment_frequency"
-                    app:arrayResources="@{BindingConverters.creditFrequencyListToPaymentFrequencyStringList(viewModel.creditPaymentFrequencyListLiveData)}"
+                    app:arrayResources="@{BindingConverters.creditFrequencyListToPaymentFrequencyStringList(viewModel.creditPaymentPeriodListLiveData)}"
                     app:hint="@string/credit_payment_frequency"
-                    app:selectedItem="@={viewModel.creditPaymentFrequencySelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditPaymentPeriodSelectedLiveData}" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/credit_amount_layout"
@@ -134,6 +134,36 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="Досрочные платежи"
+                    android:textAppearance="@style/Text.Light.16" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/early_payment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="Изменения процентной ставки"
+                    android:textAppearance="@style/Text.Light.16" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rate_changes_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8" />
+
                 <Button
                     style="@style/CreditMaterialButton"
                     android:layout_width="match_parent"
@@ -142,9 +172,6 @@
                     android:layout_marginTop="@dimen/dp_8"
                     android:enabled="@{viewModel.isCalculateAvailable}"
                     android:text="@string/calculate"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/credit_rate_layout"
                     app:onClickAndHideKeyboard="@{() -> viewModel.onCalculate()}" />
 
             </LinearLayout>

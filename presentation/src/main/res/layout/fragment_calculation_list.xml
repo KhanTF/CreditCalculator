@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+
+ <!--   <data>
 
         <import type="android.view.View" />
 
@@ -9,12 +10,12 @@
             name="viewModel"
             type="ru.rager.credit.presentation.ui.calculationlist.CalculationListViewModel" />
 
-    </data>
+    </data>-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+<!--
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
                 android:textAppearance="@style/Text.Light.20"
                 android:visibility="@{viewModel.calculationListLiveData.size() == 0 ? View.VISIBLE : View.GONE}" />
 
-        </FrameLayout>
+        </FrameLayout>-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

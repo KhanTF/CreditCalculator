@@ -1,11 +1,11 @@
 package ru.rager.credit.presentation.ui.calculationlist
+/*
 
 import androidx.lifecycle.MutableLiveData
 import com.github.terrakok.cicerone.Router
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
-import ru.rager.credit.domain.entity.enums.CreditFrequencyType
 import ru.rager.credit.domain.usecase.GetCalculationParameterUseCase
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
@@ -45,11 +45,11 @@ class CalculationListViewModel @Inject constructor(
                     creditSum = savedCalculationParameterEntity.creditSum,
                     creditRate = savedCalculationParameterEntity.creditRate,
                     creditTerm = savedCalculationParameterEntity.creditTerm,
-                    creditPaymentFrequencyType = savedCalculationParameterEntity.creditPaymentFrequency,
-                    creditRateFrequencyType = savedCalculationParameterEntity.creditRateFrequency
+                    creditPaymentPeriodType = savedCalculationParameterEntity.creditPaymentPeriod,
+                    creditRatePeriodType = savedCalculationParameterEntity.creditRatePeriod
                 )
             )
         )
     }
 
-}
+}*/

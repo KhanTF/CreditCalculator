@@ -1,9 +1,7 @@
 package ru.rager.credit.domain.entity
 
-import ru.rager.credit.domain.calculator.CreditPaymentCalculator
 import ru.rager.credit.domain.entity.enums.CreditPeriodType
 import ru.rager.credit.domain.entity.enums.CreditRateType
-import ru.rager.credit.domain.entity.enums.CreditStepType
 import java.util.*
 
 open class CreditParametersEntity(

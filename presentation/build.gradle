@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -19,6 +20,7 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
     buildFeatures {
+        viewBinding true
         dataBinding true
     }
     buildTypes {
@@ -65,8 +67,17 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "com.github.PhilJay:MPAndroidChart:$chart_version"
 
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // Jetpack Compose Integration
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha04")
+
     compileOnly 'com.google.android.gms:play-services-ads:20.1.0'
-    compileOnly "com.github.terrakok:cicerone:$cicerone_version"
     compileOnly project(":domain")
 
     testImplementation "junit:junit:$junit_version"

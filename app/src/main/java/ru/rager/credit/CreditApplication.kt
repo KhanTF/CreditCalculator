@@ -1,5 +1,7 @@
 package ru.rager.credit
 
+import android.content.Context
+import androidx.multidex.MultiDex
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
@@ -10,5 +12,10 @@ class CreditApplication : DaggerApplication() {
             .builder()
             .application(this)
             .build()
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
+    }
 
 }

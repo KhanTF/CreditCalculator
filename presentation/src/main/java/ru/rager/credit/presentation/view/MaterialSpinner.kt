@@ -86,6 +86,10 @@ class MaterialSpinner @JvmOverloads constructor(
         }
     }
 
+    fun getAdapter(): ListAdapter {
+        return auto_complete_text_view.adapter
+    }
+
     interface OnItemSelectedListener {
         fun onItemSelected(position: Int)
     }

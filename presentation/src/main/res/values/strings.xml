@@ -7,18 +7,21 @@
         <item quantity="one">%d год</item>
         <item quantity="few">%d года</item>
         <item quantity="many">%d лет</item>
+        <item quantity="other">%d лет</item>
     </plurals>
 
     <plurals name="format_quarter">
         <item quantity="one">%d квартал</item>
         <item quantity="few">%d кварталов</item>
         <item quantity="many">%d кварталов</item>
+        <item quantity="other">%d кварталов</item>
     </plurals>
 
     <plurals name="format_month">
         <item quantity="one">%d месяц</item>
         <item quantity="few">%d месяца</item>
         <item quantity="many">%d месяцев</item>
+        <item quantity="other">%d месяцев</item>
     </plurals>
 
     <string name="format_number_year">%d год</string>
@@ -46,9 +49,12 @@
     <string name="annuity">Аннуитетный</string>
     <string name="differential">Дифференцированный</string>
 
+    <string name="credit_start">Дата оформления</string>
     <string name="credit_sum">Сумма кредита</string>
     <string name="credit_rate">Процентная ставка</string>
     <string name="credit_term">Срок кредита</string>
+    <string name="credit_rate_units">Процентная ставка (%)</string>
+    <string name="credit_term_units">Срок кредита (В месяцах)</string>
     <string name="credit_first_payment">Первый платеж</string>
     <string name="credit_last_payment">Последний платеж</string>
     <string name="credit_month_payment">Ежемесячный платеж</string>
@@ -61,11 +67,13 @@
     <string name="credit_remaining_debt">Остаток долга</string>
     <string name="credit_save_calculation">Сохранить расчет</string>
     <string name="credit_calculation_name">Название расчета</string>
-    <string name="credit_save">Сохранить</string>
     <string name="credit_delete_calculation">Удалить расчет</string>
-    <string name="credit_delete">Удалить</string>
     <string name="credit_delete_calculation_confirmation">Вы уверены, что хотите удалить расчет \"%s\"?</string>
     <string name="credit_list_empty">Список расчетов пуст</string>
+
+    <string name="credit_create_early_payment">Добавить досрочный платеж</string>
+    <string name="credit_create_early_payment_sum">Сумма платежа</string>
+    <string name="credit_create_date_early_payment">Дата платежа</string>
 
     <string name="credit_rate_type">Способ начисления процентов</string>
     <string name="credit_rate_frequency">Тип процентной ставки</string>
@@ -79,13 +87,20 @@
     <string name="credit_payment_every_quarter">Ежеквартальные</string>
     <string name="credit_payment_every_month">Ежемесячные</string>
 
+    <string name="credit_calculation_tab_general">Общее</string>
+    <string name="credit_calculation_tab_payments">График платежей</string>
+
     <string name="calculate">Расчитать</string>
     <string name="cancel">Отмена</string>
     <string name="ok">Ок</string>
+    <string name="delete">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="add">Добавить</string>
 
     <string name="invalid_payment_too_small">Сумма платежа меньше, чем при 0% ставке</string>
     <string name="invalid_payment_too_much">Сумма платежа больше, чем при 100% ставке</string>
     <string name="invalid_calculation_name">Название не может быть пустым</string>
+    <string name="invalid_value">Некорректное значение</string>
 
     <string name="error_unknown">Произошла ошибка</string>
 

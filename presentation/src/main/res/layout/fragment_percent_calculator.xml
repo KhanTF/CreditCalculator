@@ -7,7 +7,9 @@
 
         <import type="android.view.View" />
 
-        <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditPeriodTypeMapper" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditRateTypeMapper" />
 
         <variable
             name="viewModel"
@@ -24,10 +26,10 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/ic_back"
-                app:onNavigationClick="@{()-> viewModel.onBack()}"
                 app:title="@string/calculate_percent" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -50,9 +52,9 @@
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_16"
                     android:drawableStart="@drawable/ic_credit_rate_type"
-                    app:arrayResources="@{BindingConverters.creditRateTypeListToIntStringList(viewModel.creditRateTypeList)}"
+                    app:arrayResources="@{CreditRateTypeMapper.toRateType(viewModel.creditRateTypeList)}"
                     app:hint="@string/credit_rate_type"
-                    app:selectedItem="@={viewModel.creditRateTypeSelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditRateTypeSelected}" />
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
                     android:layout_width="match_parent"
@@ -60,9 +62,9 @@
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
                     android:drawableStart="@drawable/ic_credit_rate_frequency"
-                    app:arrayResources="@{BindingConverters.creditFrequencyListToRateFrequencyStringList(viewModel.creditRateFrequencyList)}"
+                    app:arrayResources="@{CreditPeriodTypeMapper.toRatePeriod(viewModel.creditRatePeriodList)}"
                     app:hint="@string/credit_rate_frequency"
-                    app:selectedItem="@={viewModel.creditRateFrequencySelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditRatePeriodSelected}" />
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
                     android:layout_width="match_parent"
@@ -70,9 +72,9 @@
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
                     android:drawableStart="@drawable/ic_credit_payment_frequency"
-                    app:arrayResources="@{BindingConverters.creditFrequencyListToPaymentFrequencyStringList(viewModel.creditPaymentFrequencyListLiveData)}"
+                    app:arrayResources="@{CreditPeriodTypeMapper.toPaymentPeriod(viewModel.creditPaymentPeriodList)}"
                     app:hint="@string/credit_payment_frequency"
-                    app:selectedItem="@={viewModel.creditPaymentFrequencySelectedLiveData}" />
+                    app:selectedItem="@={viewModel.creditPaymentPeriodSelected}" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/credit_amount_layout"
@@ -89,7 +91,7 @@
                         android:drawableStart="@drawable/ic_credit_amount"
                         android:drawablePadding="@dimen/dp_8"
                         android:inputType="numberDecimal"
-                        android:text="@={viewModel.creditSumLiveData}"
+                        android:text="@={viewModel.creditSum}"
                         android:textAppearance="@style/Text.Light.16"
                         app:drawableTint="?attr/colorPrimaryVariant" />
 
@@ -110,7 +112,7 @@
                         android:drawableStart="@drawable/ic_credit_term"
                         android:drawablePadding="@dimen/dp_8"
                         android:inputType="number"
-                        android:text="@={viewModel.creditTermLiveData}"
+                        android:text="@={viewModel.creditTerm}"
                         android:textAppearance="@style/Text.Light.16"
                         app:drawableTint="?attr/colorPrimaryVariant" />
 
@@ -122,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:hint="@{BindingConverters.creditRateTypeToPaymentHint(viewModel.creditCalculationType)}">
+                    android:hint="@{CreditRateTypeMapper.toPaymentType(viewModel.creditRateType)}">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/credit_month_payment"
@@ -131,7 +133,7 @@
                         android:drawableStart="@drawable/ic_credit_month_payment"
                         android:drawablePadding="@dimen/dp_8"
                         android:inputType="numberDecimal"
-                        android:text="@={viewModel.creditMonthPaymentLiveData}"
+                        android:text="@={viewModel.creditPayment}"
                         android:textAppearance="@style/Text.Light.16"
                         app:drawableTint="?attr/colorPrimaryVariant" />
 

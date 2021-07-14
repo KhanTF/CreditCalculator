@@ -1,6 +1,5 @@
 package ru.rager.credit.presentation.util.binding.adapters
 
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter

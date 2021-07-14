@@ -1,7 +1,6 @@
 package ru.rager.credit.presentation.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -15,23 +14,16 @@ import ru.rager.credit.presentation.ad.NativeAdHelper
 import ru.rager.credit.presentation.adapters.recyclerview.MainMenuAdapter
 import ru.rager.credit.presentation.databinding.FragmentMainBinding
 import ru.rager.credit.presentation.model.MainMenuModel
-import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
+import ru.rager.credit.presentation.ui.base.BaseFragment
 import ru.rager.credit.presentation.util.itemdecorations.LinearSpaceItemDecoration
 import java.util.*
 import javax.inject.Inject
 
 
-class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
+class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
 
     companion object {
         fun getInstance() = MainFragment()
-    }
-
-    override val viewModelClass: Class<MainViewModel>
-        get() = MainViewModel::class.java
-
-    override fun getViewDataBindingInstance(inflater: LayoutInflater, container: ViewGroup?): FragmentMainBinding {
-        return FragmentMainBinding.inflate(inflater, container, false)
     }
 
     @Inject
@@ -64,8 +56,14 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
                 )
             )
         }
-        viewModel.mainMenuListLiveData.observe {
+        viewModel.mainMenuList.observe {
             mainMenuAdapter.mainMenuList = it
+        }
+        viewModel.openMenuList.observe {
+            when (it) {
+                MainMenuModel.CalculatePaymentMainMenuModel -> navController.navigate(MainFragmentDirections.toCreditCalculator())
+                MainMenuModel.CalculatePercentMainMenuModel -> navController.navigate(MainFragmentDirections.toPercentCalculator())
+            }
         }
     }
 
@@ -146,11 +144,7 @@ class MainFragment : BaseIndependentFragment<MainViewModel, FragmentMainBinding>
     }
 
     override fun onMainMenu(mainMenuModel: MainMenuModel) {
-        when (mainMenuModel) {
-            is MainMenuModel.CalculatePaymentMainMenuModel -> viewModel.onOpenPaymentCalculator()
-            is MainMenuModel.CalculatePercentMainMenuModel -> viewModel.onOpenPercentCalculator()
-            is MainMenuModel.CalculationListMainMenuModel -> viewModel.onOpenSavedCalculations()
-        }
+        viewModel.onOpenMenu(mainMenuModel)
     }
 
 

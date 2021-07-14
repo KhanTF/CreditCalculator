@@ -39,3 +39,10 @@ fun Calendar.nextDayOfMonth(): Calendar {
     dateClone.add(Calendar.DAY_OF_MONTH, 1)
     return dateClone
 }
+
+fun Calendar.skipWeekend() {
+    when {
+        get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY -> add(Calendar.DAY_OF_MONTH, 2)
+        get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY -> add(Calendar.DAY_OF_MONTH, 1)
+    }
+}

@@ -9,7 +9,7 @@
             name="data"
             type="ru.rager.credit.domain.entity.CreditCalculationEntity.SchedulePaymentCreditCalculationEntity" />
 
-        <import type="ru.rager.credit.presentation.util.binding.converters.BindingConverters" />
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.DateMapper" />
 
     </data>
 
@@ -30,7 +30,7 @@
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                android:text="@{BindingConverters.dateToString(data.calculationDate)}"
+                android:text="@{DateMapper.dateToString(data.calculationDate)}"
                 android:textAppearance="@style/Text.Medium.18"
                 tools:text="1 месяц" />
 

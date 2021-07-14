@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <variable
-            name="pagerAdapter"
-            type="ru.rager.credit.presentation.adapters.pagers.CalculationPagerAdapter" />
 
         <variable
             name="viewModel"
@@ -31,7 +26,7 @@
                 app:menu="@menu/menu_calculation"
                 app:navigationIcon="@drawable/ic_back"
                 app:onNavigationClick="@{()-> viewModel.onBack()}"
-                app:title="@{viewModel.creditCalculationName != null ? viewModel.creditCalculationName : @string/calculation_result}" />
+                app:title="@{viewModel.creditCalculationName.length() > 0 ? viewModel.creditCalculationName : @string/calculation_result}" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -46,10 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rect_top_corners"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            app:pager_adapter="@{pagerAdapter}"
-            app:tab_array="@{@stringArray/tab_names}"
-            app:with_tab_layout="@{tabs}" />
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

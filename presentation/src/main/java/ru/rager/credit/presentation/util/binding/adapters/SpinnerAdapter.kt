@@ -10,23 +10,16 @@ import androidx.databinding.InverseBindingListener
 
 object SpinnerAdapter {
 
-    @BindingAdapter("app:array", "app:arrayResources", requireAll = false)
+    @BindingAdapter("app:arrayString", "app:arrayResources", requireAll = false)
     @JvmStatic
-    fun setArray(spinner: Spinner, array: List<Any>?, arrayResources: List<Int>?) {
+    fun setArray(spinner: Spinner, arrayString: List<Any>?, arrayResources: List<Int>?) {
         val resources = spinner.resources
         val adapter = when {
-            array != null -> ArrayAdapter(spinner.context, android.R.layout.simple_spinner_item, array)
+            arrayString != null -> ArrayAdapter(spinner.context, android.R.layout.simple_spinner_item, arrayString)
             arrayResources != null -> ArrayAdapter(spinner.context, android.R.layout.simple_spinner_item, arrayResources.map(resources::getString))
             else -> null
         }
         spinner.adapter = adapter
-    }
-
-    @BindingAdapter("app:arrayResources")
-    @JvmStatic
-    fun setArray(spinner: Spinner, array: List<Int>) {
-        spinner.onItemSelectedListener
-        spinner.adapter = ArrayAdapter(spinner.context, android.R.layout.simple_spinner_item, array)
     }
 
     @BindingAdapter("app:selectedItem")

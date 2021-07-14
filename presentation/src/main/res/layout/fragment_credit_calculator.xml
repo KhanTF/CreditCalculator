@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditRateTypeMapper" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditPeriodTypeMapper" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.DateMapper" />
+
+        <variable
+            name="viewModel"
+            type="ru.rager.credit.presentation.ui.creditcalculator.CreditCalculatorViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_back"
+                app:onNavigationClick="@{()-> viewModel.onBack()}"
+                app:title="@string/calculate_payment" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_top_corners"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_start_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:hint="@string/credit_start">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_start"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_credit_start"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="numberDecimal"
+                        android:onClick="@{() -> viewModel.onSelectCreditStart()}"
+                        android:text="@{DateMapper.dateToString(viewModel.creditStart)}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:id="@+id/rateType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_credit_rate_type"
+                    app:arrayResources="@{CreditRateTypeMapper.toRateType(viewModel.creditRateTypeList)}"
+                    app:hint="@string/credit_rate_type"
+                    app:selectedItem="@={viewModel.creditRateTypeSelected}" />
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_credit_rate_frequency"
+                    app:arrayResources="@{CreditPeriodTypeMapper.toRatePeriod(viewModel.creditRatePeriodList)}"
+                    app:hint="@string/credit_rate_frequency"
+                    app:selectedItem="@={viewModel.creditRatePeriodSelected}" />
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_credit_payment_frequency"
+                    app:arrayResources="@{CreditPeriodTypeMapper.toPaymentPeriod(viewModel.creditPaymentPeriodList)}"
+                    app:hint="@string/credit_payment_frequency"
+                    app:selectedItem="@={viewModel.creditPaymentPeriodSelected}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_amount_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:hint="@string/credit_sum"
+                    app:error="@{@string/invalid_value}"
+                    app:errorIsVisible="@{viewModel.isCreditSumInvalid}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_amount"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.creditSum}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_term_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:hint="@string/credit_term_units"
+                    app:error="@{@string/invalid_value}"
+                    app:errorIsVisible="@{viewModel.isCreditTermInvalid}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_term"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_term"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:inputType="number"
+                        android:text="@={viewModel.creditTerm}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/credit_term_template_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/credit_rate_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:hint="@string/credit_rate_units"
+                    app:error="@{@string/invalid_value}"
+                    app:errorIsVisible="@{viewModel.isCreditRateInvalid}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/credit_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_credit_percent"
+                        android:drawablePadding="@dimen/dp_8"
+                        android:inputType="numberDecimal"
+                        android:text="@={viewModel.creditRate}"
+                        android:textAppearance="@style/Text.Light.16"
+                        app:drawableTint="?attr/colorPrimaryVariant" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="Досрочные платежи"
+                    android:textAppearance="@style/Text.Light.16" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/early_payment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:text="Изменения процентной ставки"
+                    android:textAppearance="@style/Text.Light.16" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rate_changes_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8" />
+
+                <Button
+                    style="@style/CreditMaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:enabled="@{viewModel.isCalculateAvailable}"
+                    android:text="@string/calculate"
+                    app:onClickAndHideKeyboard="@{() -> viewModel.onCalculate()}" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

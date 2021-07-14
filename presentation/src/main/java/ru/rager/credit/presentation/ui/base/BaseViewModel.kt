@@ -1,32 +1,43 @@
 package ru.rager.credit.presentation.ui.base
 
-import androidx.lifecycle.LiveData
+import android.os.Parcelable
 import androidx.lifecycle.ViewModel
-import com.github.terrakok.cicerone.Router
+import androidx.navigation.NavDirections
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import ru.rager.credit.presentation.ui.base.events.Event
-import ru.rager.credit.presentation.util.livedata.SingleLiveEvent
+import ru.rager.credit.presentation.util.livedata.SingleLiveData
 
-abstract class BaseViewModel(private val router: Router) : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
 
-    private val eventMutableLiveData = SingleLiveEvent<Event>()
+    val viewModelEvent = SingleLiveData<ViewModelEvent>()
     private val clearedCompositeDisposable = CompositeDisposable()
-
-    val eventLiveData: LiveData<Event> = eventMutableLiveData
 
     override fun onCleared() {
         clearedCompositeDisposable.dispose()
         super.onCleared()
     }
 
-    open fun onBack() {
-        router.exit()
+    fun onBack() {
+        close()
     }
 
-    protected fun postEvent(event: Event) {
-        eventMutableLiveData.postValue(event)
+    protected fun close() {
+        postViewModelEvent(CloseDirectionEvent())
     }
+
+    protected fun postViewModelResult(result: ViewModelResult) {
+        postViewModelEvent(SetResultEvent(result))
+    }
+
+    protected fun postNavigationEvent(navDirections: NavDirections) {
+        postViewModelEvent(OpenDirectionEvent(navDirections))
+    }
+
+    protected fun postViewModelEvent(event: ViewModelEvent) {
+        viewModelEvent.setValue(event)
+    }
+
+    open fun onHandleResult(requestKey: String, payload: ViewModelResult) {}
 
     protected fun Disposable.disposeOnClear() {
         clearedCompositeDisposable.add(this)

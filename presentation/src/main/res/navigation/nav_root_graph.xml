@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_root_graph"
+    app:startDestination="@+id/mainFragment">
+
+    <action
+        android:id="@+id/toSimpleDialog"
+        app:destination="@+id/simpleDialogFragment" />
+
+    <action
+        android:id="@+id/toDatePickerDialog"
+        app:destination="@+id/datePickerDialogFragment" />
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="ru.rager.credit.presentation.ui.main.MainFragment">
+
+        <action
+            android:id="@+id/toCreditCalculator"
+            app:destination="@+id/creditCalculatorFragment" />
+        <action
+            android:id="@+id/toPercentCalculator"
+            app:destination="@+id/percentCalculatorFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/percentCalculatorFragment"
+        android:name="ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorFragment">
+
+        <action
+            android:id="@+id/toCalculationFragment"
+            app:destination="@+id/calculationFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/creditCalculatorFragment"
+        android:name="ru.rager.credit.presentation.ui.creditcalculator.CreditCalculatorFragment">
+
+        <action
+            android:id="@+id/toCalculationFragment"
+            app:destination="@+id/calculationFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/calculationFragment"
+        android:name="ru.rager.credit.presentation.ui.calculation.CalculationFragment">
+
+        <argument
+            android:name="parameters"
+            app:argType="ru.rager.credit.presentation.dto.CreditParametersParcelable" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/simpleDialogFragment"
+        android:name="ru.rager.credit.presentation.ui.dialog.simple.SimpleDialogFragment">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="message"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="ok"
+            app:argType="string" />
+        <argument
+            android:name="cancel"
+            app:argType="string"
+            app:nullable="true" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/datePickerDialogFragment"
+        android:name="ru.rager.credit.presentation.ui.dialog.datepicker.DatePickerDialogFragment">
+
+        <argument
+            android:name="initDate"
+            app:argType="java.util.Calendar"
+            app:nullable="true" />
+        <argument
+            android:name="minDate"
+            app:argType="java.util.Calendar"
+            app:nullable="true" />
+        <argument
+            android:name="maxDate"
+            app:argType="java.util.Calendar"
+            app:nullable="true" />
+
+    </dialog>
+
+</navigation>

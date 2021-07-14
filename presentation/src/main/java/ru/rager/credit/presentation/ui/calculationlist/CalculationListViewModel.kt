@@ -9,7 +9,7 @@ import ru.rager.credit.domain.entity.CreditCalculationParameterEntity
 import ru.rager.credit.domain.usecase.GetCalculationParameterUseCase
 import ru.rager.credit.presentation.screen.ScreenFactory
 import ru.rager.credit.presentation.ui.base.BaseViewModel
-import ru.rager.credit.presentation.ui.base.events.Event
+import ru.rager.credit.presentation.ui.base.Event
 import ru.rager.credit.presentation.ui.calculation.CalculationViewModel
 import javax.inject.Inject
 

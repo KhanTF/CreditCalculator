@@ -1,4 +1,4 @@
-package ru.rager.credit.presentation.adapters.recyclerview
+package ru.rager.credit.presentation.ui.main
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -6,7 +6,7 @@ import ru.rager.credit.presentation.databinding.ItemMainMenuBinding
 import ru.rager.credit.presentation.model.MainMenuModel
 import ru.rager.credit.presentation.util.getLayoutInflater
 
-class MainMenuAdapter(private val listener: MainMenuListener) : RecyclerView.Adapter<MainMenuAdapter.MainMenuViewHolder>() {
+class MainAdapter(private val listener: MainMenuListener) : RecyclerView.Adapter<MainAdapter.MainMenuViewHolder>() {
 
     var mainMenuList = emptyList<MainMenuModel>()
 

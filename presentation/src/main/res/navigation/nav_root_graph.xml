@@ -43,6 +43,10 @@
             android:id="@+id/toCalculationFragment"
             app:destination="@+id/calculationFragment" />
 
+        <action
+            android:id="@+id/toCreateEarlyPaymentFragment"
+            app:destination="@+id/createEarlyPaymentFragment" />
+
     </fragment>
 
     <fragment
@@ -52,6 +56,12 @@
         <argument
             android:name="parameters"
             app:argType="ru.rager.credit.presentation.dto.CreditParametersParcelable" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createEarlyPaymentFragment"
+        android:name="ru.rager.credit.presentation.ui.createearlypayment.CreateEarlyPaymentFragment">
 
     </fragment>
 

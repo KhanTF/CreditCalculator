@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.rager.credit.presentation.R
-import ru.rager.credit.presentation.adapters.recyclerview.SavedCreditCalculationParameterListAdapter
+import ru.rager.credit.presentation.common.recyclerview.SavedCreditCalculationParameterListAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationListBinding
 import ru.rager.credit.presentation.ui.base.BaseIndependentFragment
 import ru.rager.credit.presentation.util.itemdecorations.LinearSpaceItemDecoration

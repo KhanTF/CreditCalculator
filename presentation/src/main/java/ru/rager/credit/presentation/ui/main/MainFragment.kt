@@ -11,7 +11,6 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import kotlinx.android.synthetic.main.fragment_main.*
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.ad.NativeAdHelper
-import ru.rager.credit.presentation.adapters.recyclerview.MainMenuAdapter
 import ru.rager.credit.presentation.databinding.FragmentMainBinding
 import ru.rager.credit.presentation.model.MainMenuModel
 import ru.rager.credit.presentation.ui.base.BaseFragment
@@ -20,7 +19,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainMenuAdapter.MainMenuListener {
+class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainAdapter.MainMenuListener {
 
     companion object {
         fun getInstance() = MainFragment()
@@ -44,7 +43,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainMen
     }
 
     private fun setupMainMenuList() {
-        val mainMenuAdapter = MainMenuAdapter(this@MainFragment)
+        val mainMenuAdapter = MainAdapter(this@MainFragment)
         binding.menuList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = mainMenuAdapter

@@ -20,12 +20,6 @@ object MaterialSpinnerAdapter {
         materialSpinner.setAdapter(adapter)
     }
 
-    @BindingAdapter("app:arrayResources")
-    @JvmStatic
-    fun setArray(materialSpinner: MaterialSpinner, array: List<Int>) {
-        materialSpinner.setAdapter(ArrayAdapter(materialSpinner.context, android.R.layout.simple_spinner_item, array))
-    }
-
     @BindingAdapter("app:selectedItem")
     @JvmStatic
     fun setSelectedItem(materialSpinner: MaterialSpinner, position: Int) {

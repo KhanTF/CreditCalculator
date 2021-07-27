@@ -31,6 +31,8 @@
         <item name="tabStyle">@style/CreditTabLayout</item>
         <item name="materialSpinner">@style/CreditMaterialSpinner</item>
         <item name="android:dialogTheme">@style/CreditDialog</item>
+        <item name="checkboxStyle">@style/CreditMaterialCheckBox</item>
+        <item name="android:textViewStyle">@style/CreditTextView</item>
 
         <item name="toolbarStyle">@style/CreditToolbar</item>
         <item name="textInputStyle">@style/CreditTextInputLayout</item>
@@ -59,13 +61,18 @@
         <item name="android:textAppearance">@style/Text.Light.16</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:drawablePadding">@dimen/dp_8</item>
-        <item name="drawableTint">?attr/colorPrimaryVariant</item>
+        <item name="materialDrawableTint">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="CreditMaterialButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
         <item name="rippleColor">@color/selector_material_button_ripple</item>
+    </style>
+
+    <style name="CreditMaterialCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textAppearance">@style/Text.Light.16</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="CreditButton" parent="Widget.AppCompat.Button">
@@ -78,6 +85,11 @@
         <item name="labelTextAppearance">@style/Text.Light.12</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="labelTextColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="CreditTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Text.Light.16</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="CreditDialog" parent="ThemeOverlay.AppCompat.Dialog">

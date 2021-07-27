@@ -72,12 +72,32 @@
     <string name="credit_list_empty">Список расчетов пуст</string>
 
     <string name="credit_create_early_payment">Добавить досрочный платеж</string>
-    <string name="credit_create_early_payment_sum">Сумма платежа</string>
-    <string name="credit_create_date_early_payment">Дата платежа</string>
+    <string name="credit_early_payment_sum">Сумма платежа</string>
+    <string name="credit_early_payment_date">Дата платежа</string>
+    <string name="credit_create_start_date_early_payment">Дата начала</string>
+    <string name="credit_create_end_date_early_payment">Дата окончания</string>
+    <string name="credit_create_end_date_early_payment_for_all_terms">На весь срок кредитования</string>
+    <string name="credit_early_payment_decrease_payment">Уменьшение платежа</string>
+    <string name="credit_early_payment_decrease_term">Уменьшение срока кредита</string>
 
     <string name="credit_rate_type">Способ начисления процентов</string>
     <string name="credit_rate_frequency">Тип процентной ставки</string>
     <string name="credit_payment_frequency">Периодичность платежей</string>
+    <string name="credit_early_payment">Досрочное погашение</string>
+    <string name="credit_early_payment_type">Тип досрочного погашения</string>
+    <string name="credit_early_payment_period_type">Регулярность погашения</string>
+    <string name="credit_early_payment_single">Единоразовый</string>
+    <string name="credit_early_payment_every_month">Каждый месяц</string>
+    <string name="credit_early_payment_every_quarter">Каждый квартал</string>
+    <string name="credit_early_payment_every_half_year">Каждые полгода</string>
+    <string name="credit_early_payment_every_year">Каждый год</string>
+
+    <string name="from_start_before_end_date">С %s до %s</string>
+    <string name="from_date">С %s</string>
+    <string name="before_date">До %s</string>
+    <string name="extras">%s (%s)</string>
+
+    <string name="credit_rate_changes">Изменение процентной ставки</string>
 
     <string name="credit_rate_every_year">Годовая процентная ставка</string>
     <string name="credit_rate_every_quarter">Квартальная процентная ставка</string>

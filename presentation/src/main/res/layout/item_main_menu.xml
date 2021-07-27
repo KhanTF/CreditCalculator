@@ -13,7 +13,7 @@
 
         <variable
             name="listener"
-            type="ru.rager.credit.presentation.adapters.recyclerview.MainMenuAdapter.MainMenuListener" />
+            type="ru.rager.credit.presentation.ui.main.MainAdapter.MainMenuListener" />
 
     </data>
 

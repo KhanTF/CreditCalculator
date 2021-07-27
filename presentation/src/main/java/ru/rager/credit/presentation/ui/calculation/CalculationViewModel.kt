@@ -10,6 +10,7 @@ import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.ui.base.ErrorEvent
 import ru.rager.credit.presentation.ui.base.ViewModelEvent
 import ru.rager.credit.presentation.util.livedata.combinedNotNullLiveData
+import ru.rager.credit.presentation.util.livedata.mapImmediate
 import javax.inject.Inject
 
 class CalculationViewModel @Inject constructor(
@@ -27,21 +28,19 @@ class CalculationViewModel @Inject constructor(
     val creditRateType = MutableLiveData(creditParametersEntity.creditRateType)
     val creditPaymentPeriod = MutableLiveData(creditParametersEntity.creditPaymentPeriod)
     val creditCalculationList = MutableLiveData<List<CreditCalculationEntity>>()
-    val creditFirstPayment = creditCalculationList.map { calculationList ->
+    val creditFirstPayment = creditCalculationList.mapImmediate { calculationList ->
         calculationList
             .find { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
             ?.let { it as CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
             ?.payment ?: 0.0
     }
-
-    val creditLastPayment = creditCalculationList.map { calculationList ->
+    val creditLastPayment = creditCalculationList.mapImmediate { calculationList ->
         calculationList
             .findLast { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
             ?.let { it as CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
             ?.payment ?: 0.0
     }
-
-    val creditSumPayments = creditCalculationList.map { calculationList ->
+    val creditSumPayments = creditCalculationList.mapImmediate { calculationList ->
         calculationList.sumByDouble {
             when (it) {
                 is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity -> it.payment
@@ -50,11 +49,10 @@ class CalculationViewModel @Inject constructor(
             }
         }
     }
-
     val creditOverpayments = combinedNotNullLiveData(
         creditSumPayments,
         creditSum
-    ).map { (creditSumPayments: Double, creditSum: Double) ->
+    ).mapImmediate { (creditSumPayments: Double, creditSum: Double) ->
         creditSumPayments - creditSum
     }
 
@@ -74,11 +72,9 @@ class CalculationViewModel @Inject constructor(
 
     fun onOpenDeleteCalculationConfirmation() {
         val creditCalculationName = creditCalculationName.value ?: return
-        postViewModelEvent(OpenDeleteCalculationConfirmationViewModelEvent(creditCalculationName))
     }
 
     fun onOpenSaveCalculation() {
-        postViewModelEvent(OpenSaveCalculationViewModelEvent())
     }
 
     fun onDeleteCalculation() {
@@ -88,10 +84,5 @@ class CalculationViewModel @Inject constructor(
     fun onSaveCalculation(calculationName: String) {
 
     }
-
-
-    class OpenDeleteCalculationConfirmationViewModelEvent(val calculationName: String) : ViewModelEvent.ExtendedEvent()
-
-    class OpenSaveCalculationViewModelEvent : ViewModelEvent.ExtendedEvent()
 
 }

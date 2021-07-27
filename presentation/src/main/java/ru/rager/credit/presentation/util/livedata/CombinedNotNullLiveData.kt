@@ -7,7 +7,7 @@ fun combinedNotNullLiveData(vararg liveDataArray: LiveData<out Any>) = CombinedN
 
 class CombinedNotNullLiveData(
     private val liveDataArray: List<LiveData<out Any>>
-) : MediatorLiveData<CombinedNotNullData>() {
+) : ImmediateMediatorLiveData<CombinedNotNullData>() {
 
     constructor(vararg liveDataArray: LiveData<out Any>) : this(liveDataArray.toList())
 
@@ -18,10 +18,7 @@ class CombinedNotNullLiveData(
     }
 
     private fun setCombinedData() {
-        val data = getCombinedData()
-        if (data != null) {
-            value = data
-        }
+        value = getCombinedData() ?: return
     }
 
     private fun getCombinedData(): CombinedNotNullData? {

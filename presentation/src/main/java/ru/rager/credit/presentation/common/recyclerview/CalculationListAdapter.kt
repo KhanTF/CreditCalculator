@@ -1,4 +1,4 @@
-package ru.rager.credit.presentation.adapters.recyclerview
+package ru.rager.credit.presentation.common.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -6,7 +6,7 @@ import ru.rager.credit.domain.entity.CreditCalculationEntity
 import ru.rager.credit.presentation.databinding.ItemSchedulePaymentBinding
 import ru.rager.credit.presentation.util.getLayoutInflater
 
-class CreditCalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var data: List<CreditCalculationEntity> = emptyList()
         set(value) {

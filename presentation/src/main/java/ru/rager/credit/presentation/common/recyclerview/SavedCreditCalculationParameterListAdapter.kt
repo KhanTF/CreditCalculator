@@ -1,4 +1,4 @@
-package ru.rager.credit.presentation.adapters.recyclerview
+package ru.rager.credit.presentation.common.recyclerview
 /*
 
 import android.view.ViewGroup

@@ -2,14 +2,16 @@ package ru.rager.credit.presentation.view
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import kotlinx.android.synthetic.main.view_material_spinner.view.*
 import ru.rager.credit.presentation.R
+import ru.rager.credit.presentation.util.emptyString
 
 class MaterialSpinner @JvmOverloads constructor(
     context: Context,
@@ -33,7 +35,7 @@ class MaterialSpinner @JvmOverloads constructor(
         val textAppearance = typedArray.getResourceId(R.styleable.MaterialSpinner_android_textAppearance, -1)
         val drawableStart = typedArray.getDrawable(R.styleable.MaterialSpinner_android_drawableStart)
         val drawablePadding = typedArray.getDimensionPixelOffset(R.styleable.MaterialSpinner_android_drawablePadding, 0)
-        val drawableTint = typedArray.getColor(R.styleable.MaterialSpinner_drawableTint, -1)
+        val drawableTint = typedArray.getColor(R.styleable.MaterialSpinner_materialDrawableTint, -1)
         typedArray.recycle()
 
         if (hint != null) {
@@ -61,18 +63,30 @@ class MaterialSpinner @JvmOverloads constructor(
         this.onItemSelectedListener = onItemSelectedListener
     }
 
+    override fun onSaveInstanceState(): Parcelable {
+        val state = SavedState(super.onSaveInstanceState())
+        state.selectedPosition = selectedPosition
+        return state
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            setSelected(state.selectedPosition)
+        } else {
+            super.onRestoreInstanceState(state)
+        }
+    }
+
     fun setSelected(position: Int) {
         val adapter = auto_complete_text_view.adapter
-        if (adapter != null) {
-            val selectedItem = adapter.getItem(position).toString()
-            auto_complete_text_view.setText(selectedItem, false)
-            selectedPosition = position
-            onItemSelectedListener?.onItemSelected(position)
-        } else {
-            auto_complete_text_view.setText(null, false)
-            selectedPosition = 0
-            onItemSelectedListener?.onItemSelected(0)
+        val selectedItem = when {
+            adapter != null -> adapter.getItem(position).toString()
+            else -> emptyString()
         }
+        auto_complete_text_view.setText(selectedItem, false)
+        selectedPosition = position
+        onItemSelectedListener?.onItemSelected(position)
     }
 
     fun getSelected(): Int {
@@ -81,7 +95,9 @@ class MaterialSpinner @JvmOverloads constructor(
 
     fun <T> setAdapter(adapter: T) where T : ListAdapter?, T : Filterable? {
         auto_complete_text_view.setAdapter(adapter)
-        if (adapter != null && adapter.count > 0) {
+        if (adapter != null && selectedPosition < adapter.count) {
+            setSelected(selectedPosition)
+        } else {
             setSelected(0)
         }
     }
@@ -92,6 +108,36 @@ class MaterialSpinner @JvmOverloads constructor(
 
     interface OnItemSelectedListener {
         fun onItemSelected(position: Int)
+    }
+
+    class SavedState : BaseSavedState {
+
+        var selectedPosition: Int = 0
+
+        constructor(parcelable: Parcelable?) : super(parcelable)
+
+        constructor(parcel: Parcel) : super(parcel) {
+            selectedPosition = parcel.readInt()
+        }
+
+        override fun writeToParcel(out: Parcel?, flags: Int) {
+            super.writeToParcel(out, flags)
+            out?.writeInt(selectedPosition)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(`in`: Parcel): SavedState {
+                    return SavedState(`in`)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
+
     }
 
 }

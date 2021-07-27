@@ -17,7 +17,7 @@
         <attr name="android:textAppearance" format="reference" />
         <attr name="android:drawableStart" format="reference" />
         <attr name="android:drawablePadding" format="dimension" />
-        <attr name="drawableTint" format="color" />
+        <attr name="materialDrawableTint" format="color" />
     </declare-styleable>
 
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -72,7 +73,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
-                    android:id="@+id/rateType"
+                    android:id="@+id/creditRateType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
@@ -83,6 +84,7 @@
                     app:selectedItem="@={viewModel.creditRateTypeSelected}" />
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:id="@+id/creditRatePeriodType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
@@ -93,6 +95,7 @@
                     app:selectedItem="@={viewModel.creditRatePeriodSelected}" />
 
                 <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:id="@+id/creditPaymentPeriodType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
@@ -118,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_amount"
                         android:drawablePadding="@dimen/dp_8"
+                        android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.creditSum}"
                         android:textAppearance="@style/Text.Light.16"
@@ -141,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_term"
                         android:drawablePadding="@dimen/dp_8"
+                        android:imeOptions="actionNext"
                         android:inputType="number"
                         android:text="@={viewModel.creditTerm}"
                         android:textAppearance="@style/Text.Light.16"
@@ -148,18 +153,27 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/credit_term_template_list"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_4" />
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:descendantFocusability="blocksDescendants"
+                    tools:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/credit_term_template_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never" />
+
+                </FrameLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/credit_rate_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:hint="@string/credit_rate_units"
                     app:error="@{@string/invalid_value}"
                     app:errorIsVisible="@{viewModel.isCreditRateInvalid}">
@@ -170,6 +184,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_credit_percent"
                         android:drawablePadding="@dimen/dp_8"
+                        android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
                         android:text="@={viewModel.creditRate}"
                         android:textAppearance="@style/Text.Light.16"
@@ -177,35 +192,11 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:text="Досрочные платежи"
-                    android:textAppearance="@style/Text.Light.16" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/early_payment_list"
+                    android:id="@+id/earlyPaymentList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_8" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:text="Изменения процентной ставки"
-                    android:textAppearance="@style/Text.Light.16" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rate_changes_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/dp_16"
-                    android:layout_marginTop="@dimen/dp_8" />
+                    android:overScrollMode="never" />
 
                 <Button
                     style="@style/CreditMaterialButton"
@@ -213,6 +204,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_8"
+                    android:onClick="@{() -> viewModel.onCreateEarlyPayment()}"
+                    android:text="@string/credit_early_payment" />
+
+                <Button
+                    style="@style/CreditMaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="@string/credit_rate_changes" />
+
+                <Button
+                    style="@style/CreditMaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:enabled="@{viewModel.isCalculateAvailable}"
                     android:text="@string/calculate"
                     app:onClickAndHideKeyboard="@{() -> viewModel.onCalculate()}" />

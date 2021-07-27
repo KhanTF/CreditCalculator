@@ -6,7 +6,7 @@ fun combinedLiveData(vararg liveDataArray: LiveData<out Any?>) = CombinedLiveDat
 
 class CombinedLiveData(
     private val liveDataArray: List<LiveData<out Any?>>
-) : MediatorLiveData<CombinedData>() {
+) : ImmediateMediatorLiveData<CombinedData>() {
 
     constructor(vararg liveDataArray: LiveData<out Any?>) : this(liveDataArray.toList())
 

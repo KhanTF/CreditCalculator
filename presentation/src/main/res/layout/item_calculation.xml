@@ -5,7 +5,7 @@
 
         <variable
             name="listener"
-            type="ru.rager.credit.presentation.adapters.recyclerview.SavedCreditCalculationParameterListAdapter.Listener" />
+            type="ru.rager.credit.presentation.common.recyclerview.SavedCreditCalculationParameterListAdapter.Listener" />
 
         <variable
             name="data"

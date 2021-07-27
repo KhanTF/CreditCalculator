@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.EarlyPaymentPeriodTypeMapper" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.DateMapper" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.EarlyPaymentTypeMapper" />
+
+        <variable
+            name="viewModel"
+            type="ru.rager.credit.presentation.ui.createearlypayment.CreateEarlyPaymentViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_back"
+                app:onNavigationClick="@{()-> viewModel.onBack()}"
+                app:title="@string/credit_create_early_payment" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_top_corners"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    app:arrayResources="@{EarlyPaymentTypeMapper.earlyPaymentToStringRes(viewModel.earlyPaymentTypeList)}"
+                    app:hint="@string/credit_early_payment_type"
+                    app:selectedItem="@={viewModel.earlyPaymentTypeSelected}" />
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    app:arrayResources="@{EarlyPaymentPeriodTypeMapper.earlyPaymentPeriodTypeToStringRes(viewModel.earlyPaymentPeriodTypeList)}"
+                    app:hint="@string/credit_early_payment_period_type"
+                    app:selectedItem="@={viewModel.earlyPaymentPeriodTypeSelected}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/startDateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@{viewModel.isRegular ? @string/credit_create_start_date_early_payment : @string/credit_early_payment_date}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/startDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="date"
+                        android:lines="1"
+                        android:onClick="@{() -> viewModel.onSelectEarlyPaymentStart()}"
+                        android:text="@{DateMapper.dateToString(viewModel.earlyPaymentStart)}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/endDateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@string/credit_create_end_date_early_payment"
+                    android:visibility="@{(viewModel.isRegular &amp;&amp; !viewModel.earlyPaymentEndForAllTerm) ? View.VISIBLE : View.GONE}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/endDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="date"
+                        android:lines="1"
+                        android:onClick="@{() -> viewModel.onSelectEarlyPaymentEnd()}"
+                        android:text="@{DateMapper.dateToString(viewModel.earlyPaymentEnd)}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:checked="@={viewModel.earlyPaymentEndForAllTerm}"
+                    android:text="@string/credit_create_end_date_early_payment_for_all_terms"
+                    android:textAppearance="@style/Text.Light.16"
+                    android:visibility="@{viewModel.isRegular ? View.VISIBLE : View.GONE}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/earlyPaymentSumLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@string/credit_early_payment_sum">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/earlyPaymentSum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+                        android:maxLength="100"
+                        android:text="@={viewModel.earlyPaymentSum}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/save"
+                    style="@style/CreditMaterialButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:onClick="@{()->viewModel.onAdd()}"
+                    android:text="@string/add" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

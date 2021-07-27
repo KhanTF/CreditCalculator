@@ -2,7 +2,6 @@ package ru.rager.credit.presentation.ui.percentcalculator
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.rager.credit.domain.entity.CreditParametersEntity
@@ -14,6 +13,7 @@ import ru.rager.credit.presentation.ui.base.ErrorEvent
 import ru.rager.credit.presentation.util.livedata.SingleLiveData
 import ru.rager.credit.presentation.util.livedata.combinedLiveData
 import ru.rager.credit.presentation.util.livedata.combinedNotNullLiveData
+import ru.rager.credit.presentation.util.livedata.mapImmediate
 import java.util.*
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class PercentCalculatorViewModel @Inject constructor(private val creditCalculato
     val creditRateType: LiveData<CreditRateType> = combinedNotNullLiveData(
         creditRateTypeList,
         creditRateTypeSelected
-    ).map { (creditRateTypeList: List<CreditRateType>, creditRateTypeSelected: Int) ->
+    ).mapImmediate { (creditRateTypeList: List<CreditRateType>, creditRateTypeSelected: Int) ->
         creditRateTypeList[creditRateTypeSelected]
     }
     val creditRatePeriodSelected: MutableLiveData<Int> = MutableLiveData()
@@ -34,7 +34,7 @@ class PercentCalculatorViewModel @Inject constructor(private val creditCalculato
     val creditRatePeriod: LiveData<CreditPeriodType> = combinedNotNullLiveData(
         creditRatePeriodList,
         creditRatePeriodSelected
-    ).map { (creditRatePeriodList: List<CreditPeriodType>, creditRatePeriodSelected: Int) ->
+    ).mapImmediate { (creditRatePeriodList: List<CreditPeriodType>, creditRatePeriodSelected: Int) ->
         creditRatePeriodList[creditRatePeriodSelected]
     }
     val creditPaymentPeriodSelected: MutableLiveData<Int> = MutableLiveData()
@@ -44,7 +44,7 @@ class PercentCalculatorViewModel @Inject constructor(private val creditCalculato
     val creditPaymentPeriod: LiveData<CreditPeriodType> = combinedNotNullLiveData(
         creditPaymentPeriodList,
         creditPaymentPeriodSelected
-    ).map { (creditPaymentPeriodList: List<CreditPeriodType>, creditPaymentPeriodSelected: Int) ->
+    ).mapImmediate { (creditPaymentPeriodList: List<CreditPeriodType>, creditPaymentPeriodSelected: Int) ->
         creditPaymentPeriodList[creditPaymentPeriodSelected]
     }
     val creditPayment: MutableLiveData<String> = MutableLiveData()
@@ -57,13 +57,13 @@ class PercentCalculatorViewModel @Inject constructor(private val creditCalculato
         creditPayment,
         creditSum,
         creditTerm
-    ).map { (creditRateType: CreditRateType?, creditRatePeriod: CreditPeriodType?, creditPaymentPeriod: CreditPeriodType?, creditMonthPayment: String?, creditSum: String?, creditTerm: String?) ->
+    ).mapImmediate { (creditRateType: CreditRateType?, creditRatePeriod: CreditPeriodType?, creditPaymentPeriod: CreditPeriodType?, creditMonthPayment: String?, creditSum: String?, creditTerm: String?) ->
         creditRateType != null && creditRatePeriod != null && creditPaymentPeriod != null
     }
     val creditMinPayment = combinedLiveData(
         creditSum,
         creditTerm
-    ).map { (creditSum: String?, creditTerm: String?) ->
+    ).mapImmediate { (creditSum: String?, creditTerm: String?) ->
         val creditSumValue = creditSum?.toDoubleOrNull()
         val creditTermValue = creditTerm?.toIntOrNull()
         if (creditSumValue != null && creditTermValue != null) {

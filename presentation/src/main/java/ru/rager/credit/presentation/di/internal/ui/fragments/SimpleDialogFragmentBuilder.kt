@@ -1,9 +1,8 @@
-package ru.rager.credit.presentation.di.internal.ui.dialogs
+package ru.rager.credit.presentation.di.internal.ui.fragments
 
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import ru.rager.credit.presentation.ui.calculation.CalculationFragment
 import ru.rager.credit.presentation.ui.dialog.simple.SimpleDialogFragment
 import ru.rager.credit.presentation.ui.dialog.simple.SimpleDialogFragmentArgs
 

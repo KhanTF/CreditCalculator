@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.ad.NativeAdHelper
 import ru.rager.credit.presentation.databinding.FragmentMainBinding
+import ru.rager.credit.domain.entity.enums.CalculatorType
 import ru.rager.credit.presentation.model.MainMenuModel
 import ru.rager.credit.presentation.ui.base.BaseFragment
 import ru.rager.credit.presentation.util.itemdecorations.LinearSpaceItemDecoration
@@ -60,8 +61,8 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>(), MainAda
         }
         viewModel.openMenuList.observe {
             when (it) {
-                MainMenuModel.CalculatePaymentMainMenuModel -> navController.navigate(MainFragmentDirections.toCreditCalculator())
-                MainMenuModel.CalculatePercentMainMenuModel -> navController.navigate(MainFragmentDirections.toPercentCalculator())
+                MainMenuModel.CalculatePaymentMainMenuModel -> navController.navigate(MainFragmentDirections.toCreditCalculator(CalculatorType.STANDARD_CALCULATOR))
+                MainMenuModel.CalculatePercentMainMenuModel -> navController.navigate(MainFragmentDirections.toCreditCalculator(CalculatorType.PERCENT_CALCULATOR))
             }
         }
     }

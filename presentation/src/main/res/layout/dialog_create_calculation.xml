@@ -34,7 +34,7 @@
 
     <Button
         android:id="@+id/save"
-        style="@style/CreditMaterialButton"
+        style="@style/MaterialButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"

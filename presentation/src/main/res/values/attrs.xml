@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="colorMaterialButtonRipple" format="color" />
+
+    <attr name="labeledTextView" format="reference" />
     <declare-styleable name="LabeledTextView">
         <attr name="label" format="string" />
         <attr name="android:text" format="string" />
@@ -10,14 +13,14 @@
         <attr name="labelTextColor" format="color" />
     </declare-styleable>
 
+    <attr name="materialSpinner" format="reference" />
     <declare-styleable name="MaterialSpinner">
         <attr name="hint" format="string" />
         <attr name="hintTextColor" format="color" />
         <attr name="android:textColor" format="color" />
         <attr name="android:textAppearance" format="reference" />
-        <attr name="android:drawableStart" format="reference" />
-        <attr name="android:drawablePadding" format="dimension" />
-        <attr name="materialDrawableTint" format="color" />
+        <attr name="startIconDrawable" format="reference" />
+        <attr name="startIconTint" format="color" />
     </declare-styleable>
 
 </resources>

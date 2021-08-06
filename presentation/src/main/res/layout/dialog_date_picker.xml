@@ -26,7 +26,7 @@
 
         <Button
             android:id="@+id/cancel"
-            style="@style/CreditMaterialButton"
+            style="@style/MaterialButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"
@@ -43,7 +43,7 @@
 
         <Button
             android:id="@+id/ok"
-            style="@style/CreditMaterialButton"
+            style="@style/MaterialButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_8"

@@ -3,36 +3,64 @@
 
     <string name="empty" />
 
-    <plurals name="format_year">
+    <plurals name="format_year_count">
         <item quantity="one">%d год</item>
+        <item quantity="two">%d года</item>
         <item quantity="few">%d года</item>
         <item quantity="many">%d лет</item>
         <item quantity="other">%d лет</item>
     </plurals>
 
-    <plurals name="format_quarter">
+    <plurals name="format_quarter_count">
         <item quantity="one">%d квартал</item>
         <item quantity="few">%d кварталов</item>
         <item quantity="many">%d кварталов</item>
         <item quantity="other">%d кварталов</item>
     </plurals>
 
-    <plurals name="format_month">
+    <plurals name="format_month_count">
         <item quantity="one">%d месяц</item>
         <item quantity="few">%d месяца</item>
         <item quantity="many">%d месяцев</item>
         <item quantity="other">%d месяцев</item>
     </plurals>
 
+    <plurals name="format_every_month">
+        <item quantity="one">Каждый месяц</item>
+        <item quantity="two">Каждые %d месяца</item>
+        <item quantity="few">Каждые %d месяца</item>
+        <item quantity="other">Каждые %d месяцев</item>
+    </plurals>
+
+    <plurals name="format_every_quarter">
+        <item quantity="one">Каждый квартал</item>
+        <item quantity="two">Каждые %d квартала</item>
+        <item quantity="few">Каждые %d квартала</item>
+        <item quantity="other">Каждые %d кварталов</item>
+    </plurals>
+
+    <plurals name="format_every_year">
+        <item quantity="one">Каждый год</item>
+        <item quantity="two">Каждые %d года</item>
+        <item quantity="few">Каждые %d год</item>
+        <item quantity="other">Каждые %d лет</item>
+    </plurals>
+
     <string name="format_number_year">%d год</string>
     <string name="format_number_quarter">%d квартал</string>
     <string name="format_number_month">%d месяц</string>
+    <string name="format_date_range">%s - %s</string>
 
     <string name="format_percent">%.2f %%</string>
     <string name="format_sum">%.2f</string>
     <string name="format_min_payment">Минимальный платеж: %.2f</string>
 
+    <string name="once">Единоразовый</string>
+
     <string name="calculation_result">Расчет</string>
+
+    <string name="standard_calculator">Калькулятор</string>
+    <string name="percent_calculator">Калькулятор</string>
 
     <string name="calculate_payment">Расчитать ежемесячный платеж</string>
     <string name="calculate_payment_description">Расчитайте ежемесячный платеж по сумме кредита, процентной ставке и сроку кредита</string>
@@ -58,7 +86,6 @@
     <string name="credit_first_payment">Первый платеж</string>
     <string name="credit_last_payment">Последний платеж</string>
     <string name="credit_month_payment">Ежемесячный платеж</string>
-    <string name="credit_first_month_payment">Первый платеж</string>
     <string name="credit_total_payments">Всего выплат</string>
     <string name="credit_over_payments">Переплата</string>
     <string name="credit_payment">Платеж</string>
@@ -77,7 +104,7 @@
     <string name="credit_create_start_date_early_payment">Дата начала</string>
     <string name="credit_create_end_date_early_payment">Дата окончания</string>
     <string name="credit_create_end_date_early_payment_for_all_terms">На весь срок кредитования</string>
-    <string name="credit_early_payment_decrease_payment">Уменьшение платежа</string>
+    <string name="credit_early_payment_decrease_payment">Уменьшение суммы платежа</string>
     <string name="credit_early_payment_decrease_term">Уменьшение срока кредита</string>
 
     <string name="credit_rate_type">Способ начисления процентов</string>
@@ -86,16 +113,7 @@
     <string name="credit_early_payment">Досрочное погашение</string>
     <string name="credit_early_payment_type">Тип досрочного погашения</string>
     <string name="credit_early_payment_period_type">Регулярность погашения</string>
-    <string name="credit_early_payment_single">Единоразовый</string>
-    <string name="credit_early_payment_every_month">Каждый месяц</string>
-    <string name="credit_early_payment_every_quarter">Каждый квартал</string>
-    <string name="credit_early_payment_every_half_year">Каждые полгода</string>
     <string name="credit_early_payment_every_year">Каждый год</string>
-
-    <string name="from_start_before_end_date">С %s до %s</string>
-    <string name="from_date">С %s</string>
-    <string name="before_date">До %s</string>
-    <string name="extras">%s (%s)</string>
 
     <string name="credit_rate_changes">Изменение процентной ставки</string>
 
@@ -116,6 +134,7 @@
     <string name="delete">Удалить</string>
     <string name="save">Сохранить</string>
     <string name="add">Добавить</string>
+    <string name="edit">Редактировать</string>
 
     <string name="invalid_payment_too_small">Сумма платежа меньше, чем при 0% ставке</string>
     <string name="invalid_payment_too_much">Сумма платежа больше, чем при 100% ставке</string>
@@ -126,5 +145,7 @@
 
     <string name="pie_chart_label_overpayments">Сумма процентов</string>
     <string name="pie_chart_label_credit_sum">Сумма долга</string>
+    <string name="credit_parameters">Параметры кредита</string>
+    <string name="preterm_payments">Досрочные платежи</string>
 
 </resources>

@@ -3,7 +3,7 @@ package ru.rager.credit.presentation.ui.calculation
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.rager.credit.domain.entity.CreditCalculationEntity
+import ru.rager.credit.domain.entity.CreditDateCalculationEntity
 import ru.rager.credit.presentation.R
 import ru.rager.credit.presentation.common.recyclerview.CalculationListAdapter
 import ru.rager.credit.presentation.databinding.FragmentCalculationPaymentsBinding
@@ -26,8 +26,8 @@ class CalculationPaymentsFragment : BaseFragment<CalculationViewModel, FragmentC
             it.layoutManager = LinearLayoutManager(requireContext())
             it.addItemDecoration(LinearSpaceItemDecoration(start = R.dimen.dp_16, top = R.dimen.dp_16, space = R.dimen.dp_8))
         }
-        viewModel.creditCalculationList.observe {
-            adapter.data = it.filterIsInstance(CreditCalculationEntity.SchedulePaymentCreditCalculationEntity::class.java)
+        viewModel.dateCalculationList.observe {
+            adapter.data = it.filterIsInstance(CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity::class.java)
         }
     }
 

@@ -11,10 +11,9 @@ abstract class RootActivityBuilder {
     @ContributesAndroidInjector(
         modules = [
             CalculationFragmentBuilder::class,
-            PercentCalculatorFragmentBuilder::class,
             CreditCalculatorFragmentBuilder::class,
             MainFragmentBuilder::class,
-            CreateEarlyPaymentFragmentBuilder::class,
+            PretermPaymentFragmentBuilder::class,
             SimpleDialogFragmentBuilder::class,
             DatePickerDialogFragmentBuilder::class
         ]

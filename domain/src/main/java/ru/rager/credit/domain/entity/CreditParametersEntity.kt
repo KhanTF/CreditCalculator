@@ -1,7 +1,7 @@
 package ru.rager.credit.domain.entity
 
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.CreditRateType
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.RateType
 import java.util.*
 
 open class CreditParametersEntity(
@@ -10,13 +10,13 @@ open class CreditParametersEntity(
     val creditStart: Calendar,
     val creditSum: Double,
     val creditRate: Double,
-    val creditRateType: CreditRateType,
+    val creditRateType: RateType,
     val creditTerm: Int,
     val creditSkipWeekend: Boolean,
-    val creditRatePeriod: CreditPeriodType,
-    val creditPaymentPeriod: CreditPeriodType,
-    val creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity>,
-    val creditRateChangesList: List<CreditRateChangesEntity>
+    val creditRatePeriod: PeriodType,
+    val creditPaymentPeriod: PeriodType,
+    val creditPretermPaymentEntityList: List<CreditPretermPaymentEntity>,
+    val creditRateChangeList: List<CreditRateChangeEntity>
 ) {
 
     class Builder(
@@ -26,12 +26,12 @@ open class CreditParametersEntity(
         private var creditSum: Double = 0.0,
         private var creditRate: Double = 0.0,
         private var creditTerm: Int = 0,
-        private var creditRateType: CreditRateType = CreditRateType.ANNUITY,
+        private var creditRateType: RateType = RateType.ANNUITY,
         private var creditSkipWeekend: Boolean = false,
-        private var creditRatePeriod: CreditPeriodType = CreditPeriodType.EVERY_YEAR,
-        private var creditPaymentPeriod: CreditPeriodType = CreditPeriodType.EVERY_MONTH,
-        private var creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity> = emptyList(),
-        private var creditRateChangesList: List<CreditRateChangesEntity> = emptyList()
+        private var creditRatePeriod: PeriodType = PeriodType.YEAR,
+        private var creditPaymentPeriod: PeriodType = PeriodType.MONTH,
+        private var creditPretermPaymentEntityList: List<CreditPretermPaymentEntity> = emptyList(),
+        private var creditRateChangeList: List<CreditRateChangeEntity> = emptyList()
     ) {
 
         fun setId(id: Long): Builder {
@@ -59,7 +59,7 @@ open class CreditParametersEntity(
             return this
         }
 
-        fun setCreditRateType(creditRateType: CreditRateType): Builder {
+        fun setCreditRateType(creditRateType: RateType): Builder {
             this.creditRateType = creditRateType
             return this
         }
@@ -74,23 +74,23 @@ open class CreditParametersEntity(
             return this
         }
 
-        fun setCreditRatePeriod(creditRatePeriod: CreditPeriodType): Builder {
+        fun setCreditRatePeriod(creditRatePeriod: PeriodType): Builder {
             this.creditRatePeriod = creditRatePeriod
             return this
         }
 
-        fun setCreditPaymentPeriod(creditPaymentPeriod: CreditPeriodType): Builder {
+        fun setCreditPaymentPeriod(creditPaymentPeriod: PeriodType): Builder {
             this.creditPaymentPeriod = creditPaymentPeriod
             return this
         }
 
-        fun setCreditEarlyPaymentList(creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity>): Builder {
-            this.creditEarlyPaymentEntityList = creditEarlyPaymentEntityList
+        fun setCreditEarlyPaymentList(creditPretermPaymentEntityList: List<CreditPretermPaymentEntity>): Builder {
+            this.creditPretermPaymentEntityList = creditPretermPaymentEntityList
             return this
         }
 
-        fun setCreditRateChangesList(creditRateChangesList: List<CreditRateChangesEntity>): Builder {
-            this.creditRateChangesList = creditRateChangesList
+        fun setCreditRateChangesList(creditRateChangeList: List<CreditRateChangeEntity>): Builder {
+            this.creditRateChangeList = creditRateChangeList
             return this
         }
 
@@ -105,8 +105,8 @@ open class CreditParametersEntity(
             creditSkipWeekend = creditSkipWeekend,
             creditRatePeriod = creditRatePeriod,
             creditPaymentPeriod = creditPaymentPeriod,
-            creditEarlyPaymentEntityList = creditEarlyPaymentEntityList,
-            creditRateChangesList = creditRateChangesList
+            creditPretermPaymentEntityList = creditPretermPaymentEntityList,
+            creditRateChangeList = creditRateChangeList
         )
 
     }

@@ -5,7 +5,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 object TextInputLayoutAdapter {
 
-    @BindingAdapter("app:error", "app:errorIsVisible", requireAll = true)
+    @BindingAdapter("error", "errorIsVisible", requireAll = true)
     @JvmStatic
     fun setError(textInputLayout: TextInputLayout, error: String, isVisible: Boolean) {
         if (isVisible) {

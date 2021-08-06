@@ -26,7 +26,7 @@ class CalculationGeneralFragment : BaseFragment<CalculationViewModel, FragmentCa
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         combinedNotNullLiveData(
-            viewModel.creditOverpayments,
+            viewModel.overpayments,
             viewModel.creditSum
         ).observe { (overPayments: Double, creditSum: Double) ->
             updatePieChart(binding.pieChart, overPayments, creditSum)

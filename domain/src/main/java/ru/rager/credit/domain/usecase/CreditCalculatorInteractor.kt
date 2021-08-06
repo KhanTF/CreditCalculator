@@ -5,11 +5,11 @@ import ru.rager.credit.domain.calculator.CreditPaymentCalculator
 import ru.rager.credit.domain.calculator.CreditRateCalculator
 import ru.rager.credit.domain.di.qualifiers.AnnuityQualifier
 import ru.rager.credit.domain.di.qualifiers.DifferentiatedQualifier
-import ru.rager.credit.domain.entity.CreditEarlyPaymentEntity
+import ru.rager.credit.domain.entity.CreditPretermPaymentEntity
 import ru.rager.credit.domain.entity.CreditParametersEntity
-import ru.rager.credit.domain.entity.CreditRateChangesEntity
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.CreditRateType
+import ru.rager.credit.domain.entity.CreditRateChangeEntity
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.RateType
 import java.util.*
 import javax.inject.Inject
 
@@ -35,21 +35,21 @@ class CreditCalculatorInteractor @Inject constructor(
         parameters.creditSkipWeekend,
         parameters.creditRatePeriod,
         parameters.creditPaymentPeriod,
-        parameters.creditEarlyPaymentEntityList,
-        parameters.creditRateChangesList
+        parameters.creditPretermPaymentEntityList,
+        parameters.creditRateChangeList
     )
 
     fun getCalculationListSingle(
         creditStart: Calendar,
         creditSum: Double,
         creditRate: Double,
-        creditRateType: CreditRateType,
+        creditRateType: RateType,
         creditTerm: Int,
         creditSkipWeekend: Boolean,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
-        creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity>,
-        creditRateChangesList: List<CreditRateChangesEntity>
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
+        creditPretermPaymentEntityList: List<CreditPretermPaymentEntity>,
+        creditRateChangeList: List<CreditRateChangeEntity>
     ) = Single.fromCallable {
         getCalculationList(
             creditStart = creditStart,
@@ -60,18 +60,18 @@ class CreditCalculatorInteractor @Inject constructor(
             creditSkipWeekend = creditSkipWeekend,
             creditRatePeriod = creditRatePeriod,
             creditPaymentPeriod = creditPaymentPeriod,
-            creditEarlyPaymentEntityList = creditEarlyPaymentEntityList,
-            creditRateChangesList = creditRateChangesList
+            creditPretermPaymentEntityList = creditPretermPaymentEntityList,
+            creditRateChangeList = creditRateChangeList
         )
     }
 
     fun getCreditRateSingle(
         creditSum: Double,
         creditPaymentSum: Double,
-        creditRateType: CreditRateType,
+        creditRateType: RateType,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ) = Single.fromCallable {
         getCreditRate(
             creditSum = creditSum,
@@ -87,15 +87,15 @@ class CreditCalculatorInteractor @Inject constructor(
         creditStart: Calendar,
         creditSum: Double,
         creditRate: Double,
-        creditRateType: CreditRateType,
+        creditRateType: RateType,
         creditTerm: Int,
         creditSkipWeekend: Boolean,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
-        creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity>,
-        creditRateChangesList: List<CreditRateChangesEntity>
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
+        creditPretermPaymentEntityList: List<CreditPretermPaymentEntity>,
+        creditRateChangeList: List<CreditRateChangeEntity>
     ) = when (creditRateType) {
-        CreditRateType.ANNUITY -> annuityCreditPaymentCalculator.calculate(
+        RateType.ANNUITY -> annuityCreditPaymentCalculator.calculate(
             creditStart = creditStart,
             creditSum = creditSum,
             creditRate = creditRate,
@@ -103,10 +103,10 @@ class CreditCalculatorInteractor @Inject constructor(
             isSkipWeekend = creditSkipWeekend,
             creditRatePeriod = creditRatePeriod,
             creditPaymentPeriod = creditPaymentPeriod,
-            creditEarlyPaymentList = creditEarlyPaymentEntityList,
-            creditRateChangesList = creditRateChangesList
+            creditPretermPaymentList = creditPretermPaymentEntityList,
+            creditRateChangeList = creditRateChangeList
         )
-        CreditRateType.DIFFERENTIATED -> differentiatedCreditPaymentCalculator.calculate(
+        RateType.DIFFERENTIATED -> differentiatedCreditPaymentCalculator.calculate(
             creditStart = creditStart,
             creditSum = creditSum,
             creditRate = creditRate,
@@ -114,27 +114,27 @@ class CreditCalculatorInteractor @Inject constructor(
             isSkipWeekend = creditSkipWeekend,
             creditRatePeriod = creditRatePeriod,
             creditPaymentPeriod = creditPaymentPeriod,
-            creditEarlyPaymentList = creditEarlyPaymentEntityList,
-            creditRateChangesList = creditRateChangesList
+            creditPretermPaymentList = creditPretermPaymentEntityList,
+            creditRateChangeList = creditRateChangeList
         )
     }
 
     private fun getCreditRate(
         creditSum: Double,
         creditPaymentSum: Double,
-        creditRateType: CreditRateType,
+        creditRateType: RateType,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ) = when (creditRateType) {
-        CreditRateType.ANNUITY -> annuityCreditRateCalculator.calculate(
+        RateType.ANNUITY -> annuityCreditRateCalculator.calculate(
             creditSum = creditSum,
             creditPaymentSum = creditPaymentSum,
             creditTerm = creditTerm,
             creditRatePeriod = creditRatePeriod,
             creditPaymentPeriod = creditPaymentPeriod
         )
-        CreditRateType.DIFFERENTIATED -> differentiatedCreditRateCalculator.calculate(
+        RateType.DIFFERENTIATED -> differentiatedCreditRateCalculator.calculate(
             creditSum = creditSum,
             creditPaymentSum = creditPaymentSum,
             creditTerm = creditTerm,

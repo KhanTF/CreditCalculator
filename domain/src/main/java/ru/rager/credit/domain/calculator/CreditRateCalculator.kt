@@ -1,6 +1,6 @@
 package ru.rager.credit.domain.calculator
 
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
+import ru.rager.credit.domain.entity.enums.PeriodType
 import kotlin.math.abs
 
 abstract class CreditRateCalculator {
@@ -15,8 +15,8 @@ abstract class CreditRateCalculator {
         creditSum: Double,
         creditPaymentSum: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ) = getRate(
         creditSum = creditSum,
         creditPaymentSum = creditPaymentSum,
@@ -29,8 +29,8 @@ abstract class CreditRateCalculator {
 
     protected fun getPForPeriod(
         creditRate: Double,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Double {
         return creditRate / 100 / (creditRatePeriod.value / creditPaymentPeriod.value)
     }
@@ -39,8 +39,8 @@ abstract class CreditRateCalculator {
         creditSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Double
 
     private tailrec fun getRate(
@@ -48,8 +48,8 @@ abstract class CreditRateCalculator {
         creditPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
         creditRateAccuracy: Double
     ): Double {
         if (creditRate < 0 || creditRate > 100) {

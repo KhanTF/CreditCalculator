@@ -1,8 +1,8 @@
 package ru.rager.credit.data.db
 
 import androidx.room.TypeConverter
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.CreditRateType
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.RateType
 
 object CreditDatabaseConverter {
 
@@ -15,40 +15,40 @@ object CreditDatabaseConverter {
 
     @JvmStatic
     @TypeConverter
-    fun fromCreditCalculationTypeToInt(creditRateType: CreditRateType): Int {
+    fun fromCreditCalculationTypeToInt(creditRateType: RateType): Int {
         return when (creditRateType) {
-            CreditRateType.ANNUITY -> ANNUITY
-            CreditRateType.DIFFERENTIATED -> DIFFERENTIATED
+            RateType.ANNUITY -> ANNUITY
+            RateType.DIFFERENTIATED -> DIFFERENTIATED
         }
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromIntToCreditCalculationType(creditCalculationType: Int): CreditRateType {
+    fun fromIntToCreditCalculationType(creditCalculationType: Int): RateType {
         return when (creditCalculationType) {
-            ANNUITY -> CreditRateType.ANNUITY
-            DIFFERENTIATED -> CreditRateType.DIFFERENTIATED
+            ANNUITY -> RateType.ANNUITY
+            DIFFERENTIATED -> RateType.DIFFERENTIATED
             else -> throw IllegalArgumentException("Unknown credit calculation type")
         }
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromCreditFrequencyTypeToInt(creditPeriodType: CreditPeriodType): Int {
+    fun fromCreditFrequencyTypeToInt(creditPeriodType: PeriodType): Int {
         return when (creditPeriodType) {
-            CreditPeriodType.EVERY_YEAR -> EVERY_YEAR
-            CreditPeriodType.EVERY_QUARTER -> EVERY_QUARTER
-            CreditPeriodType.EVERY_MONTH -> EVERY_MONTH
+            PeriodType.YEAR -> EVERY_YEAR
+            PeriodType.QUARTER -> EVERY_QUARTER
+            PeriodType.MONTH -> EVERY_MONTH
         }
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromIntToCreditFrequencyType(creditFrequencyType: Int): CreditPeriodType {
+    fun fromIntToCreditFrequencyType(creditFrequencyType: Int): PeriodType {
         return when (creditFrequencyType) {
-            EVERY_YEAR -> CreditPeriodType.EVERY_YEAR
-            EVERY_QUARTER -> CreditPeriodType.EVERY_QUARTER
-            EVERY_MONTH -> CreditPeriodType.EVERY_MONTH
+            EVERY_YEAR -> PeriodType.YEAR
+            EVERY_QUARTER -> PeriodType.QUARTER
+            EVERY_MONTH -> PeriodType.MONTH
             else -> throw IllegalArgumentException("Unknown credit frequency type")
         }
     }

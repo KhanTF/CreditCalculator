@@ -8,37 +8,40 @@ import java.util.*
 
 object DatePickerAdapter {
 
-    @BindingAdapter("app:minDate")
+    @BindingAdapter("minDate")
     @JvmStatic
     fun setMinDate(datePicker: DatePicker, minDate: Calendar?) {
         if (minDate == null) return
         datePicker.minDate = minDate.timeInMillis
     }
 
-    @BindingAdapter("app:maxDate")
+    @BindingAdapter("maxDate")
     @JvmStatic
     fun setMaxDate(datePicker: DatePicker, maxDate: Calendar?) {
         if (maxDate == null) return
         datePicker.maxDate = maxDate.timeInMillis
     }
 
-    @BindingAdapter("app:date")
+    @BindingAdapter("date")
     @JvmStatic
     fun setDate(datePicker: DatePicker, date: Calendar?) {
-        if (date == null) return
-        val currentYear = datePicker.year
-        val currentMonth = datePicker.month
-        val currentDay = datePicker.dayOfMonth
-        val newYear = date.get(Calendar.YEAR)
-        val newMonth = date.get(Calendar.MONTH)
-        val newDay = date.get(Calendar.DAY_OF_MONTH)
-        if (currentYear != newYear || currentMonth != newMonth || currentDay != newDay) {
-            datePicker.updateDate(newYear, newMonth, newDay)
+        if (date == null) {
+            datePicker.updateDate(datePicker.year, datePicker.month, datePicker.dayOfMonth)
+        } else {
+            val currentYear = datePicker.year
+            val currentMonth = datePicker.month
+            val currentDay = datePicker.dayOfMonth
+            val newYear = date.get(Calendar.YEAR)
+            val newMonth = date.get(Calendar.MONTH)
+            val newDay = date.get(Calendar.DAY_OF_MONTH)
+            if (currentYear != newYear || currentMonth != newMonth || currentDay != newDay) {
+                datePicker.updateDate(newYear, newMonth, newDay)
+            }
         }
     }
 
     @JvmStatic
-    @InverseBindingAdapter(attribute = "app:date", event = "onDateChangedNotifier")
+    @InverseBindingAdapter(attribute = "date", event = "onDateChangedNotifier")
     fun getDate(datePicker: DatePicker): Calendar {
         val year = datePicker.year
         val month = datePicker.month
@@ -48,7 +51,7 @@ object DatePickerAdapter {
         return calendar
     }
 
-    @BindingAdapter("app:onDateChangedNotifier")
+    @BindingAdapter("onDateChangedNotifier")
     @JvmStatic
     fun setOnDateChangedNotifier(datePicker: DatePicker, inverseBindingAdapter: InverseBindingListener?) {
         val year = datePicker.year

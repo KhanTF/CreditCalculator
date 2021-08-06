@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00FFFFFF</color>
-    <color name="blue_grey_100">#7384DA</color>
-    <color name="blue_grey_200">#505A8F</color>
-    <color name="blue_grey_500">#434B78</color>
-    <color name="blue_grey_700">#32385A</color>
-    <color name="red_600">#ef5350</color>
-    <color name="red_700">#b71c1c</color>
-    <color name="red_900">#c62828</color>
+    <color name="blue_100">#40428C</color>
+    <color name="blue_200">#2B2C67</color>
+    <color name="blue_500">#191A3E</color>
+    <color name="green_100">#00C777</color>
+    <color name="green_200">#00C777</color>
+    <color name="green_500">#00C777</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="divider">#33000000</color>
-    <color name="color_pie_chart_1">@color/blue_grey_100</color>
-    <color name="color_pie_chart_2">@color/red_600</color>
+    <color name="color_pie_chart_1">@color/blue_200</color>
+    <color name="color_pie_chart_2">@color/green_200</color>
 </resources>

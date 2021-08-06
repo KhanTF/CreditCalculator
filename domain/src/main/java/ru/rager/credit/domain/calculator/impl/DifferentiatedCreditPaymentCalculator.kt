@@ -1,12 +1,10 @@
 package ru.rager.credit.domain.calculator.impl
 
 import ru.rager.credit.domain.calculator.CreditPaymentCalculator
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
+import ru.rager.credit.domain.entity.enums.PeriodType
 import javax.inject.Inject
 import kotlin.math.ceil
-import kotlin.math.log
 import kotlin.math.max
-import kotlin.math.pow
 
 class DifferentiatedCreditPaymentCalculator @Inject constructor() : CreditPaymentCalculator() {
 
@@ -15,8 +13,8 @@ class DifferentiatedCreditPaymentCalculator @Inject constructor() : CreditPaymen
         creditMinPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
         currentTotalRemainingDebtSum: Double,
         currentTotalAccruedPercentSum: Double
     ): Double {
@@ -28,8 +26,8 @@ class DifferentiatedCreditPaymentCalculator @Inject constructor() : CreditPaymen
         creditPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Int {
         return ceil(creditSum / creditPaymentSum).toInt()
     }

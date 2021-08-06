@@ -8,7 +8,7 @@
 
         <activity
             android:name=".ui.RootActivity"
-            android:theme="@style/AppTheme.Credit.PrimaryWindow">
+            android:theme="@style/AppTheme.Credit">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,14 +1,12 @@
 package ru.rager.credit.presentation.ui.calculation
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import ru.rager.credit.domain.entity.CreditCalculationEntity
+import ru.rager.credit.domain.entity.CreditDateCalculationEntity
 import ru.rager.credit.domain.usecase.CreditCalculatorInteractor
 import ru.rager.credit.presentation.ui.base.BaseViewModel
 import ru.rager.credit.presentation.ui.base.ErrorEvent
-import ru.rager.credit.presentation.ui.base.ViewModelEvent
 import ru.rager.credit.presentation.util.livedata.combinedNotNullLiveData
 import ru.rager.credit.presentation.util.livedata.mapImmediate
 import javax.inject.Inject
@@ -19,38 +17,38 @@ class CalculationViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val creditParametersEntity = arguments.parameters
-    val creditCalculationId = MutableLiveData(creditParametersEntity.id)
-    val creditCalculationName = MutableLiveData(creditParametersEntity.name)
+    val calculationId = MutableLiveData(creditParametersEntity.id)
+    val calculationName = MutableLiveData(creditParametersEntity.name)
     val creditSum = MutableLiveData(creditParametersEntity.creditSum)
     val creditTerm = MutableLiveData(creditParametersEntity.creditTerm)
     val creditRate = MutableLiveData(creditParametersEntity.creditRate)
-    val creditRatePeriod = MutableLiveData(creditParametersEntity.creditRatePeriod)
-    val creditRateType = MutableLiveData(creditParametersEntity.creditRateType)
-    val creditPaymentPeriod = MutableLiveData(creditParametersEntity.creditPaymentPeriod)
-    val creditCalculationList = MutableLiveData<List<CreditCalculationEntity>>()
-    val creditFirstPayment = creditCalculationList.mapImmediate { calculationList ->
+    val ratePeriod = MutableLiveData(creditParametersEntity.creditRatePeriod)
+    val rateType = MutableLiveData(creditParametersEntity.creditRateType)
+    val paymentPeriod = MutableLiveData(creditParametersEntity.creditPaymentPeriod)
+    val dateCalculationList = MutableLiveData<List<CreditDateCalculationEntity>>()
+    val firstPayment = dateCalculationList.mapImmediate { calculationList ->
         calculationList
-            .find { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
-            ?.let { it as CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            .find { it is CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity }
+            ?.let { it as CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity }
             ?.payment ?: 0.0
     }
-    val creditLastPayment = creditCalculationList.mapImmediate { calculationList ->
+    val lastPayment = dateCalculationList.mapImmediate { calculationList ->
         calculationList
-            .findLast { it is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
-            ?.let { it as CreditCalculationEntity.SchedulePaymentCreditCalculationEntity }
+            .findLast { it is CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity }
+            ?.let { it as CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity }
             ?.payment ?: 0.0
     }
-    val creditSumPayments = creditCalculationList.mapImmediate { calculationList ->
+    val sumPayments = dateCalculationList.mapImmediate { calculationList ->
         calculationList.sumByDouble {
             when (it) {
-                is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity -> it.payment
-                is CreditCalculationEntity.EarlyPaymentCreditCalculationEntity -> it.payment
+                is CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity -> it.payment
+                is CreditDateCalculationEntity.EarlyPaymentCreditDateCalculationEntity -> it.payment
                 else -> 0.0
             }
         }
     }
-    val creditOverpayments = combinedNotNullLiveData(
-        creditSumPayments,
+    val overpayments = combinedNotNullLiveData(
+        sumPayments,
         creditSum
     ).mapImmediate { (creditSumPayments: Double, creditSum: Double) ->
         creditSumPayments - creditSum
@@ -63,7 +61,7 @@ class CalculationViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError(Throwable::printStackTrace)
             .subscribe({
-                creditCalculationList.value = it
+                dateCalculationList.value = it
             }, {
                 postViewModelEvent(ErrorEvent(it))
             })
@@ -71,7 +69,7 @@ class CalculationViewModel @Inject constructor(
     }
 
     fun onOpenDeleteCalculationConfirmation() {
-        val creditCalculationName = creditCalculationName.value ?: return
+        val creditCalculationName = calculationName.value ?: return
     }
 
     fun onOpenSaveCalculation() {

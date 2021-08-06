@@ -2,13 +2,13 @@ package ru.rager.credit.presentation.common.recyclerview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ru.rager.credit.domain.entity.CreditCalculationEntity
+import ru.rager.credit.domain.entity.CreditDateCalculationEntity
 import ru.rager.credit.presentation.databinding.ItemSchedulePaymentBinding
 import ru.rager.credit.presentation.util.getLayoutInflater
 
 class CalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var data: List<CreditCalculationEntity> = emptyList()
+    var data: List<CreditDateCalculationEntity> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -16,9 +16,9 @@ class CalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (data[position]) {
-            is CreditCalculationEntity.SchedulePaymentCreditCalculationEntity -> 1
-            is CreditCalculationEntity.EarlyPaymentCreditCalculationEntity -> 2
-            is CreditCalculationEntity.RateChangesCreditCalculationEntity -> 3
+            is CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity -> 1
+            is CreditDateCalculationEntity.EarlyPaymentCreditDateCalculationEntity -> 2
+            is CreditDateCalculationEntity.RateChangesCreditDateCalculationEntity -> 3
         }
     }
 
@@ -31,7 +31,7 @@ class CalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is SchedulePaymentViewHolder -> holder.bind(data[position] as CreditCalculationEntity.SchedulePaymentCreditCalculationEntity)
+            is SchedulePaymentViewHolder -> holder.bind(data[position] as CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity)
         }
     }
 
@@ -39,8 +39,8 @@ class CalculationListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class SchedulePaymentViewHolder(private val binding: ItemSchedulePaymentBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(schedulePaymentCreditCalculationEntity: CreditCalculationEntity.SchedulePaymentCreditCalculationEntity) {
-            binding.data = schedulePaymentCreditCalculationEntity
+        fun bind(schedulePaymentCreditDateCalculationEntity: CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity) {
+            binding.data = schedulePaymentCreditDateCalculationEntity
         }
 
     }

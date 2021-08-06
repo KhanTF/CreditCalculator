@@ -7,8 +7,8 @@ import androidx.databinding.BindingMethods
 
 @BindingMethods(
     value = [
-        BindingMethod(type = Toolbar::class, attribute = "app:onNavigationClick", method = "setNavigationOnClickListener"),
-        BindingMethod(type = Toolbar::class, attribute = "app:onMenuItemClick", method = "setOnMenuItemClickListener")
+        BindingMethod(type = Toolbar::class, attribute = "onNavigationClick", method = "setNavigationOnClickListener"),
+        BindingMethod(type = Toolbar::class, attribute = "onMenuItemClick", method = "setOnMenuItemClickListener")
     ]
 )
 object ToolbarAdapter

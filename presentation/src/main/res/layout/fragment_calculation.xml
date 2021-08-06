@@ -26,7 +26,7 @@
                 app:menu="@menu/menu_calculation"
                 app:navigationIcon="@drawable/ic_back"
                 app:onNavigationClick="@{()-> viewModel.onBack()}"
-                app:title="@{viewModel.creditCalculationName.length() > 0 ? viewModel.creditCalculationName : @string/calculation_result}" />
+                app:title="@{viewModel.calculationName.length() > 0 ? viewModel.calculationName : @string/calculation_result}" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -40,7 +40,7 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rect_top_corners"
+            android:background="@drawable/bg_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

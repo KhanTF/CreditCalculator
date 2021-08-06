@@ -4,13 +4,7 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.DateMapper" />
-
-        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditRateTypeMapper" />
-
-        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditPeriodTypeMapper" />
+        <import type="ru.rager.credit.presentation.util.binding.converters.EnumBindingConverter" />
 
         <variable
             name="viewModel"
@@ -55,7 +49,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_16"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{context.getString(CreditRateTypeMapper.toRateType(viewModel.creditRateType))}"
+                            android:text="@{EnumBindingConverter.mapRateTypeToString(context, viewModel.rateType)}"
                             app:label="@string/credit_rate_type" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -64,7 +58,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{context.getString(CreditPeriodTypeMapper.toRatePeriod(viewModel.creditRatePeriod))}"
+                            android:text="@{EnumBindingConverter.mapPeriodTypeToRateTypeString(context, viewModel.ratePeriod)}"
                             app:label="@string/credit_rate_frequency" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -73,7 +67,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{context.getString(CreditPeriodTypeMapper.toPaymentPeriod(viewModel.creditPaymentPeriod))}"
+                            android:text="@{EnumBindingConverter.mapPeriodTypeToPaymentTypeString(context, viewModel.paymentPeriod)}"
                             app:label="@string/credit_payment_frequency" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -101,7 +95,7 @@
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
                             android:layout_marginBottom="@dimen/dp_16"
-                            android:text="@{CreditPeriodTypeMapper.toTermNumber(context,viewModel.creditTerm,viewModel.creditPaymentPeriod)}"
+                            android:text="@{@plurals/format_month_count(viewModel.creditTerm, viewModel.creditTerm)}"
                             app:label="@string/credit_term" />
 
                     </LinearLayout>
@@ -126,8 +120,8 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditFirstPayment)}"
-                            android:visibility="@{viewModel.creditFirstPayment > 0 ? View.VISIBLE : View.GONE}"
+                            android:text="@{@string/format_sum(viewModel.firstPayment)}"
+                            app:isVisible="@{viewModel.firstPayment > 0}"
                             app:label="@string/credit_first_payment" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -136,8 +130,8 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditLastPayment)}"
-                            android:visibility="@{viewModel.creditLastPayment > 0 ? View.VISIBLE : View.GONE}"
+                            android:text="@{@string/format_sum(viewModel.lastPayment)}"
+                            app:isVisible="@{viewModel.lastPayment > 0}"
                             app:label="@string/credit_last_payment" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -146,7 +140,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditSumPayments)}"
+                            android:text="@{@string/format_sum(viewModel.sumPayments)}"
                             app:label="@string/credit_total_payments" />
 
                         <ru.rager.credit.presentation.view.LabeledTextView
@@ -155,7 +149,7 @@
                             android:layout_marginStart="@dimen/dp_16"
                             android:layout_marginTop="@dimen/dp_8"
                             android:layout_marginEnd="@dimen/dp_16"
-                            android:text="@{@string/format_sum(viewModel.creditOverpayments)}"
+                            android:text="@{@string/format_sum(viewModel.overpayments)}"
                             app:label="@string/credit_over_payments" />
 
                         <com.github.mikephil.charting.charts.PieChart

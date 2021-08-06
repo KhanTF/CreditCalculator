@@ -33,9 +33,8 @@ class MaterialSpinner @JvmOverloads constructor(
         val hintTextColor = typedArray.getColor(R.styleable.MaterialSpinner_hintTextColor, -1)
         val textColor = typedArray.getColor(R.styleable.MaterialSpinner_android_textColor, -1)
         val textAppearance = typedArray.getResourceId(R.styleable.MaterialSpinner_android_textAppearance, -1)
-        val drawableStart = typedArray.getDrawable(R.styleable.MaterialSpinner_android_drawableStart)
-        val drawablePadding = typedArray.getDimensionPixelOffset(R.styleable.MaterialSpinner_android_drawablePadding, 0)
-        val drawableTint = typedArray.getColor(R.styleable.MaterialSpinner_materialDrawableTint, -1)
+        val startIconDrawable = typedArray.getResourceId(R.styleable.MaterialSpinner_startIconDrawable, -1)
+        val startIconTint = typedArray.getColor(R.styleable.MaterialSpinner_startIconTint, -1)
         typedArray.recycle()
 
         if (hint != null) {
@@ -50,10 +49,12 @@ class MaterialSpinner @JvmOverloads constructor(
         if (textAppearance != -1) {
             auto_complete_text_view.setTextAppearance(context, textAppearance)
         }
-        if (drawableStart != null) {
-            drawableStart.colorFilter = PorterDuffColorFilter(drawableTint, PorterDuff.Mode.SRC_IN)
-            auto_complete_text_view.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableStart, null, null, null)
-            auto_complete_text_view.compoundDrawablePadding = drawablePadding
+        if (startIconDrawable != -1) {
+            auto_complete_text_view_layout.setStartIconDrawable(startIconDrawable)
+        }
+        if (startIconTint != -1) {
+            auto_complete_text_view_layout.setStartIconTintList(ColorStateList.valueOf(startIconTint))
+            auto_complete_text_view_layout.setStartIconTintMode(PorterDuff.Mode.SRC_IN)
         }
         auto_complete_text_view.inputType = EditorInfo.TYPE_NULL
         auto_complete_text_view.onItemClickListener = onItemClickListener

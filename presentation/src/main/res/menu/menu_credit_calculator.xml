@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/rate_change"
+        android:icon="@drawable/ic_credit_rate_changes"
+        android:title="@string/credit_rate_changes"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/preterm_payment"
+        android:icon="@drawable/ic_credit_early_payment"
+        android:title="@string/credit_early_payment"
+        app:showAsAction="ifRoom" />
+
+</menu>

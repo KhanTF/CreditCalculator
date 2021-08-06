@@ -1,10 +1,9 @@
 package ru.rager.credit.domain.usecase
 
-import ru.rager.credit.domain.entity.CreditEarlyPaymentEntity
-import ru.rager.credit.domain.entity.CreditRateChangesEntity
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.CreditRateType
-import ru.rager.credit.domain.entity.enums.CreditStepType
+import ru.rager.credit.domain.entity.CreditPretermPaymentEntity
+import ru.rager.credit.domain.entity.CreditRateChangeEntity
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.RateType
 import ru.rager.credit.domain.repository.CreditParameterRepository
 import java.util.*
 import javax.inject.Inject
@@ -16,14 +15,13 @@ class CreditParametersInteractor @Inject constructor(private val creditParameter
         creditStart: Calendar,
         creditSum: Double,
         creditRate: Double,
-        creditRateType: CreditRateType,
+        creditRateType: RateType,
         creditTerm: Int,
         creditSkipWeekend: Boolean,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
-        creditEarlyPaymentEntityList: List<CreditEarlyPaymentEntity>,
-        creditRateChangesList: List<CreditRateChangesEntity>,
-        creditStepSequence: List<CreditStepType>
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
+        creditPretermPaymentEntityList: List<CreditPretermPaymentEntity>,
+        creditRateChangeList: List<CreditRateChangeEntity>
     ) = creditParameterRepository.save(
         name = name,
         creditStart = creditStart,
@@ -34,9 +32,8 @@ class CreditParametersInteractor @Inject constructor(private val creditParameter
         creditSkipWeekend = creditSkipWeekend,
         creditRatePeriod = creditRatePeriod,
         creditPaymentPeriod = creditPaymentPeriod,
-        creditEarlyPaymentEntityList = creditEarlyPaymentEntityList,
-        creditRateChangesList = creditRateChangesList,
-        creditStepSequence = creditStepSequence
+        creditPretermPaymentEntityList = creditPretermPaymentEntityList,
+        creditRateChangeList = creditRateChangeList
     )
 
     fun get(id: Long) = creditParameterRepository.get(id)

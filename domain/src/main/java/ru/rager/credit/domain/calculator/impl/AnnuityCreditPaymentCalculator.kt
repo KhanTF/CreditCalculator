@@ -1,7 +1,7 @@
 package ru.rager.credit.domain.calculator.impl
 
 import ru.rager.credit.domain.calculator.CreditPaymentCalculator
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
+import ru.rager.credit.domain.entity.enums.PeriodType
 import javax.inject.Inject
 import kotlin.math.ceil
 import kotlin.math.log
@@ -15,8 +15,8 @@ class AnnuityCreditPaymentCalculator @Inject constructor() : CreditPaymentCalcul
         creditMinPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
         currentTotalRemainingDebtSum: Double,
         currentTotalAccruedPercentSum: Double
     ): Double {
@@ -29,8 +29,8 @@ class AnnuityCreditPaymentCalculator @Inject constructor() : CreditPaymentCalcul
         creditPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Int {
         val p = getPForPeriod(creditRate, creditRatePeriod, creditPaymentPeriod)
         return ceil(log(creditPaymentSum / (creditPaymentSum - p * creditPaymentSum), 1 + p)).toInt()

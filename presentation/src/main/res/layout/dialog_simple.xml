@@ -45,7 +45,7 @@
 
             <Button
                 android:id="@+id/cancel"
-                style="@style/CreditMaterialButton"
+                style="@style/MaterialButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"
@@ -58,7 +58,7 @@
 
             <Button
                 android:id="@+id/confirm"
-                style="@style/CreditMaterialButton"
+                style="@style/MaterialButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_16"

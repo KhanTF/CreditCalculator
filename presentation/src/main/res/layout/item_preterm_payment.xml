@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.DateBindingConverter" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.EnumBindingConverter" />
+
+        <variable
+            name="data"
+            type="ru.rager.credit.domain.entity.CreditPretermPaymentEntity" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/dp_4"
+        app:cardElevation="@dimen/dp_4"
+        tools:layout_margin="@dimen/dp_16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pretermPaymentType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:text="@{EnumBindingConverter.mapPretermTypeToString(context, data.type)}"
+                android:textAppearance="@style/Text.Light.16"
+                app:label="@string/credit_early_payment_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pretermPaymentDelete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Уменьшение срока кредита" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pretermDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:text="@{DateBindingConverter.mapCalendarToRangeDateString(context, data.start, data.end)}"
+                app:label="@string/credit_early_payment_period_type"
+                app:layout_constraintBottom_toBottomOf="@+id/pretermPeriod"
+                app:layout_constraintEnd_toStartOf="@+id/pretermPaymentDelete"
+                app:layout_constraintStart_toEndOf="@+id/pretermPeriod"
+                app:layout_constraintTop_toTopOf="@+id/pretermPeriod"
+                tools:text="21.10.1997 - 21.10.1997" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pretermPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:text="@{EnumBindingConverter.mapPeriodValueToEveryString(context, data.periodValue)}"
+                android:textAppearance="@style/Text.Light.16"
+                app:layout_constraintEnd_toStartOf="@+id/pretermDate"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pretermPaymentType"
+                tools:text="Каждый месяц" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="pretermDate, pretermPeriod" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pretermPaymentSum"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_4"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:text="@{@string/format_sum(data.paymentSum)}"
+                android:textAppearance="@style/Text.Medium.18"
+                app:label="@string/credit_early_payment_sum"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pretermPaymentDelete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barrier"
+                app:layout_constraintVertical_bias="0"
+                tools:text="21000" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/pretermPaymentDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:padding="@dimen/dp_8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_close"
+                app:tint="?attr/colorPrimary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

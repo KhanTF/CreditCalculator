@@ -3,15 +3,15 @@
 
     <data>
 
-        <import type="ru.rager.credit.presentation.util.binding.converters.oneway.CreditPeriodTypeMapper" />
+        <import type="ru.rager.credit.presentation.util.binding.converters.EnumBindingConverter" />
 
         <variable
             name="data"
-            type="ru.rager.credit.domain.entity.enums.TermTemplateType" />
+            type="ru.rager.credit.domain.entity.PeriodValueEntity" />
 
         <variable
             name="listener"
-            type="ru.rager.credit.presentation.common.recyclerview.TermTemplateListAdapter.TermTemplateListener" />
+            type="ru.rager.credit.presentation.common.recyclerview.TermTemplateListAdapter.Listener" />
     </data>
 
     <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,12 +20,12 @@
         android:layout_height="wrap_content"
         android:background="?selectableItemBackground"
         android:focusableInTouchMode="false"
-        android:onClick="@{()->listener.onSelectTermTemplate(data)}"
+        android:onClick="@{() -> listener.onSelectTermTemplate(data)}"
         android:paddingStart="@dimen/dp_8"
         android:paddingTop="@dimen/dp_4"
         android:paddingEnd="@dimen/dp_8"
         android:paddingBottom="@dimen/dp_4"
-        android:text="@{CreditPeriodTypeMapper.toTermNumber(context,data.value, data.period)}"
+        android:text="@{EnumBindingConverter.mapPeriodValueToString(context, data)}"
         android:textAppearance="@style/Text.Light.12"
         tools:text="5 лет" />
 

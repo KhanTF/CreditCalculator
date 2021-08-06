@@ -7,12 +7,21 @@ import androidx.databinding.BindingAdapter
 
 object ViewAdapter {
 
-    @BindingAdapter("app:onClickAndHideKeyboard")
+    @BindingAdapter("onClickAndHideKeyboard")
     @JvmStatic
     fun setOnClickAndHideKeyboard(view: View, onClickListener: View.OnClickListener) {
         view.setOnClickListener {
             hideKeyboard(it)
             onClickListener.onClick(it)
+        }
+    }
+
+    @BindingAdapter("isVisible")
+    @JvmStatic
+    fun setIsVisible(view: View, isVisible: Boolean) {
+        view.visibility = when {
+            isVisible -> View.VISIBLE
+            else -> View.GONE
         }
     }
 

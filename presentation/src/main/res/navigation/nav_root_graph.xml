@@ -26,26 +26,20 @@
     </fragment>
 
     <fragment
-        android:id="@+id/percentCalculatorFragment"
-        android:name="ru.rager.credit.presentation.ui.percentcalculator.PercentCalculatorFragment">
-
-        <action
-            android:id="@+id/toCalculationFragment"
-            app:destination="@+id/calculationFragment" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/creditCalculatorFragment"
         android:name="ru.rager.credit.presentation.ui.creditcalculator.CreditCalculatorFragment">
 
+        <argument
+            android:name="type"
+            app:argType="ru.rager.credit.domain.entity.enums.CalculatorType" />
+
         <action
             android:id="@+id/toCalculationFragment"
             app:destination="@+id/calculationFragment" />
 
         <action
-            android:id="@+id/toCreateEarlyPaymentFragment"
-            app:destination="@+id/createEarlyPaymentFragment" />
+            android:id="@+id/toPretermPaymentFragment"
+            app:destination="@+id/pretermPaymentFragment" />
 
     </fragment>
 
@@ -60,8 +54,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/createEarlyPaymentFragment"
-        android:name="ru.rager.credit.presentation.ui.createearlypayment.CreateEarlyPaymentFragment">
+        android:id="@+id/pretermPaymentFragment"
+        android:name="ru.rager.credit.presentation.ui.pretermpayment.PretermPaymentFragment">
+
+        <argument
+            android:name="pretermPayment"
+            app:argType="ru.rager.credit.presentation.dto.CreditPretermPaymentParcelable"
+            app:nullable="true" />
 
     </fragment>
 

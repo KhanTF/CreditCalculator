@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.DateBindingConverter" />
+
+        <import type="ru.rager.credit.presentation.util.binding.converters.EnumBindingConverter" />
+
+        <variable
+            name="viewModel"
+            type="ru.rager.credit.presentation.ui.pretermpayment.PretermPaymentViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_back"
+                app:onNavigationClick="@{()-> viewModel.onBack()}"
+                app:title="@string/credit_create_early_payment" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:id="@+id/pretermType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    app:hint="@string/credit_early_payment_type"
+                    app:selectedItem="@={viewModel.pretermTypeSelected}" />
+
+                <ru.rager.credit.presentation.view.MaterialSpinner
+                    android:id="@+id/pretermPeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    app:hint="@string/credit_early_payment_period_type"
+                    app:selectedItem="@={viewModel.pretermPeriodValueSelected}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/startDateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@{viewModel.isRegular ? @string/credit_create_start_date_early_payment : @string/credit_early_payment_date}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/startDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="date"
+                        android:lines="1"
+                        android:onClick="@{() -> viewModel.onSelectPretermStart()}"
+                        android:text="@{DateBindingConverter.mapCalendarToToDateString(viewModel.pretermStart)}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/endDateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@string/credit_create_end_date_early_payment"
+                    app:isVisible="@{viewModel.isRegular &amp;&amp; !viewModel.pretermIsInfinite}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/endDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:inputType="date"
+                        android:lines="1"
+                        android:onClick="@{() -> viewModel.onSelectPretermEnd()}"
+                        android:text="@{DateBindingConverter.mapCalendarToToDateString(viewModel.pretermEnd)}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:checked="@={viewModel.pretermIsInfinite}"
+                    android:text="@string/credit_create_end_date_early_payment_for_all_terms"
+                    android:textAppearance="@style/Text.Light.16"
+                    app:isVisible="@{viewModel.isRegular}" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/earlyPaymentSumLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:hint="@string/credit_early_payment_sum">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/pretermPaymentSum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal|text"
+                        android:lines="1"
+                        android:maxLength="100"
+                        android:text="@={viewModel.pretermSum}"
+                        android:textAppearance="@style/Text.Light.16" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/save"
+                    style="@style/MaterialButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_marginBottom="@dimen/dp_16"
+                    android:onClick="@{()->viewModel.onSubmit()}"
+                    android:text="@{viewModel.isEdited ? @string/edit : @string/add}" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

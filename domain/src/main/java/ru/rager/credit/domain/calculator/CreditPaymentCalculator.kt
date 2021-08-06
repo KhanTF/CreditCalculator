@@ -1,10 +1,10 @@
 package ru.rager.credit.domain.calculator
 
-import ru.rager.credit.domain.entity.CreditCalculationEntity
-import ru.rager.credit.domain.entity.CreditEarlyPaymentEntity
-import ru.rager.credit.domain.entity.CreditRateChangesEntity
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.EarlyPaymentType
+import ru.rager.credit.domain.entity.CreditDateCalculationEntity
+import ru.rager.credit.domain.entity.CreditPretermPaymentEntity
+import ru.rager.credit.domain.entity.CreditRateChangeEntity
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.PretermType
 import ru.rager.credit.domain.utils.equalsByDate
 import ru.rager.credit.domain.utils.getDaysCount
 import ru.rager.credit.domain.utils.nextDayOfMonth
@@ -20,12 +20,12 @@ abstract class CreditPaymentCalculator {
         creditRate: Double,
         creditTerm: Int,
         isSkipWeekend: Boolean,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
-        creditEarlyPaymentList: List<CreditEarlyPaymentEntity>,
-        creditRateChangesList: List<CreditRateChangesEntity>
-    ): List<CreditCalculationEntity> {
-        val all = mutableListOf<CreditCalculationEntity>()
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
+        creditPretermPaymentList: List<CreditPretermPaymentEntity>,
+        creditRateChangeList: List<CreditRateChangeEntity>
+    ): List<CreditDateCalculationEntity> {
+        val all = mutableListOf<CreditDateCalculationEntity>()
         var step = 0
         val currentCalculationStart = creditStart.clone() as Calendar
         var currentCalculationDate = creditStart.clone() as Calendar
@@ -52,10 +52,6 @@ abstract class CreditPaymentCalculator {
                     currentCalculationDate = currentCalculationDate.nextDayOfMonth()
                 }
                 1 -> {
-                    val p = getPForDate(currentCalculationDate, creditRate, creditRatePeriod)
-                    currentTotalAccruedPercentSum += currentTotalRemainingDebtSum * p
-                }
-                2 -> {
                     val nextPaymentDate = getPaymentDate(
                         calculationStart = currentCalculationStart,
                         creditPaymentPeriod = currentCreditPaymentPeriod,
@@ -85,7 +81,7 @@ abstract class CreditPaymentCalculator {
                         currentTotalAccruedPercentSum -= paidPercentSum
                         currentCalculationPeriodIndex++
                         currentCreditPeriodIndex++
-                        val calculation = CreditCalculationEntity.SchedulePaymentCreditCalculationEntity(
+                        val calculation = CreditDateCalculationEntity.SchedulePaymentCreditDateCalculationEntity(
                             paidPercentSum = paidPercentSum,
                             paidDebtSum = paidDebtSum,
                             calculationDate = currentCalculationDate,
@@ -95,18 +91,18 @@ abstract class CreditPaymentCalculator {
                         all.add(calculation)
                     }
                 }
-                3 -> {
-                    val nextEarlyPaymentList = creditEarlyPaymentList.filter { it.isEarlyPaymentDate(currentCalculationDate, currentIsSkipWeekend) }
+                2 -> {
+                    val nextEarlyPaymentList = creditPretermPaymentList.filter { it.isEarlyPaymentDate(currentCalculationDate, currentIsSkipWeekend) }
                     var nextEarlyPaymentIndex = 0
                     while (nextEarlyPaymentIndex < nextEarlyPaymentList.size && currentTotalAccruedPercentSum > 0 && currentTotalRemainingDebtSum > 0) {
                         val nextEarlyPayment = nextEarlyPaymentList[nextEarlyPaymentIndex++]
-                        val earlyPaymentType = nextEarlyPayment.earlyPaymentType
-                        val earlyPaymentSum = nextEarlyPayment.earlyPaymentSum
+                        val earlyPaymentType = nextEarlyPayment.type
+                        val earlyPaymentSum = nextEarlyPayment.paymentSum
                         val earlyPaidPercentSum = min(currentTotalAccruedPercentSum, earlyPaymentSum)
                         val earlyPaidDebtSum = min(earlyPaymentSum - earlyPaidPercentSum, currentTotalRemainingDebtSum)
 
                         when (earlyPaymentType) {
-                            EarlyPaymentType.EARLY_DECREASE_PAYMENT -> {
+                            PretermType.EARLY_DECREASE_PAYMENT -> {
                                 currentTotalRemainingDebtSum -= earlyPaidDebtSum
                                 currentTotalAccruedPercentSum -= earlyPaidPercentSum
                                 currentCreditSum = currentTotalRemainingDebtSum
@@ -114,7 +110,7 @@ abstract class CreditPaymentCalculator {
                                 currentCreditPeriodIndex = 0
                                 currentCreditMinPaymentSum = 0.0
                             }
-                            EarlyPaymentType.EARLY_DECREASE_TERM -> {
+                            PretermType.EARLY_DECREASE_TERM -> {
                                 currentTotalRemainingDebtSum -= earlyPaidDebtSum
                                 currentTotalAccruedPercentSum -= earlyPaidPercentSum
                                 currentCreditMinPaymentSum = getPayment(
@@ -137,8 +133,8 @@ abstract class CreditPaymentCalculator {
                                 )
                             }
                         }
-                        val calculation = CreditCalculationEntity.EarlyPaymentCreditCalculationEntity(
-                            earlyPaymentType = earlyPaymentType,
+                        val calculation = CreditDateCalculationEntity.EarlyPaymentCreditDateCalculationEntity(
+                            pretermType = earlyPaymentType,
                             earlyPaidPercentSum = earlyPaidPercentSum,
                             earlyPaidDebtSum = earlyPaidDebtSum,
                             calculationDate = currentCalculationDate,
@@ -148,11 +144,11 @@ abstract class CreditPaymentCalculator {
                         all.add(calculation)
                     }
                 }
-                4 -> {
-                    val nextCreditRateChangedList = creditRateChangesList.filter { it.isChangedRate(currentCalculationDate) }
+                3 -> {
+                    val nextCreditRateChangedList = creditRateChangeList.filter { it.isChangedRate(currentCalculationDate) }
                     for (nextCreditRateChange in nextCreditRateChangedList) {
                         currentCreditRate = nextCreditRateChange.changedRate
-                        val calculation = CreditCalculationEntity.RateChangesCreditCalculationEntity(
+                        val calculation = CreditDateCalculationEntity.RateChangesCreditDateCalculationEntity(
                             changedCreditRate = currentCreditRate,
                             calculationDate = currentCalculationDate,
                             currentCreditRemainingDebtSum = currentTotalRemainingDebtSum,
@@ -161,6 +157,10 @@ abstract class CreditPaymentCalculator {
                         all.add(calculation)
                     }
                 }
+                4 -> {
+                    val p = getPForDate(currentCalculationDate, creditRate, creditRatePeriod)
+                    currentTotalAccruedPercentSum += currentTotalRemainingDebtSum * p
+                }
             }
         }
         return all
@@ -168,8 +168,8 @@ abstract class CreditPaymentCalculator {
 
     protected fun getPForPeriod(
         creditRate: Double,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Double {
         return creditRate / 100 / (creditRatePeriod.value / creditPaymentPeriod.value)
     }
@@ -177,7 +177,7 @@ abstract class CreditPaymentCalculator {
     protected fun getPForDate(
         creditCalculationDate: Calendar,
         creditRate: Double,
-        creditRatePeriod: CreditPeriodType,
+        creditRatePeriod: PeriodType,
     ): Double {
         return creditRate / 100 / getDaysInRatePeriod(creditCalculationDate, creditRatePeriod)
     }
@@ -187,8 +187,8 @@ abstract class CreditPaymentCalculator {
         creditMinPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType,
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType,
         currentTotalRemainingDebtSum: Double,
         currentTotalAccruedPercentSum: Double
     ): Double
@@ -198,11 +198,11 @@ abstract class CreditPaymentCalculator {
         creditPaymentSum: Double,
         creditRate: Double,
         creditTerm: Int,
-        creditRatePeriod: CreditPeriodType,
-        creditPaymentPeriod: CreditPeriodType
+        creditRatePeriod: PeriodType,
+        creditPaymentPeriod: PeriodType
     ): Int
 
-    private fun getPaymentDate(calculationStart: Calendar, creditPaymentPeriod: CreditPeriodType, calculationPeriodIndex: Int, isSkipWeekend: Boolean): Calendar {
+    private fun getPaymentDate(calculationStart: Calendar, creditPaymentPeriod: PeriodType, calculationPeriodIndex: Int, isSkipWeekend: Boolean): Calendar {
         val paymentDate = calculationStart.clone() as Calendar
         paymentDate.add(Calendar.MONTH, creditPaymentPeriod.value * (calculationPeriodIndex + 1))
         if (isSkipWeekend) {
@@ -211,10 +211,10 @@ abstract class CreditPaymentCalculator {
         return paymentDate
     }
 
-    private fun getDaysInRatePeriod(date: Calendar, creditRatePeriod: CreditPeriodType): Long {
+    private fun getDaysInRatePeriod(date: Calendar, creditRatePeriod: PeriodType): Long {
         val dateClone = date.clone() as Calendar
         return when (creditRatePeriod) {
-            CreditPeriodType.EVERY_YEAR -> {
+            PeriodType.YEAR -> {
                 dateClone.set(Calendar.MONTH, 0)
                 dateClone.set(Calendar.DAY_OF_MONTH, 1)
                 val startTimeInMillis = dateClone.timeInMillis
@@ -222,7 +222,7 @@ abstract class CreditPaymentCalculator {
                 val endTimeInMillis = dateClone.timeInMillis
                 getDaysCount(startTimeInMillis, endTimeInMillis)
             }
-            CreditPeriodType.EVERY_QUARTER -> {
+            PeriodType.QUARTER -> {
                 val quarter = dateClone.get(Calendar.MONTH) / 4
                 dateClone.set(Calendar.MONTH, quarter * 4)
                 dateClone.set(Calendar.DAY_OF_MONTH, 1)
@@ -231,7 +231,7 @@ abstract class CreditPaymentCalculator {
                 val endTimeInMillis = dateClone.timeInMillis
                 getDaysCount(startTimeInMillis, endTimeInMillis)
             }
-            CreditPeriodType.EVERY_MONTH -> {
+            PeriodType.MONTH -> {
                 dateClone.set(Calendar.DAY_OF_MONTH, 1)
                 val startTimeInMillis = dateClone.timeInMillis
                 dateClone.add(Calendar.MONTH, 1)

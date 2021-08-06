@@ -25,7 +25,7 @@ class CalculationFragment : BaseFragment<CalculationViewModel, FragmentCalculati
                 else -> throw IllegalArgumentException("Incorrect position")
             }
         }
-        viewModel.creditCalculationId.observe { creditCalculationId ->
+        viewModel.calculationId.observe { creditCalculationId ->
             val saveItem = binding.toolbar.menu.findItem(R.id.save)
             val deleteItem = binding.toolbar.menu.findItem(R.id.delete)
             saveItem.isVisible = creditCalculationId <= 0

@@ -1,104 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <attr name="colorMaterialButtonRipple" format="color" />
-    <attr name="labeledTextView" format="reference" />
-    <attr name="materialSpinner" format="reference" />
-
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarSize">@dimen/dp_64</item>
     </style>
 
     <style name="AppTheme.Credit">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_grey_500</item>
-        <item name="colorPrimaryVariant">@color/blue_grey_700</item>
+        <item name="colorPrimary">@color/blue_500</item>
+        <item name="colorPrimaryVariant">@color/blue_500</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/red_600</item>
-        <item name="colorSecondaryVariant">@color/red_700</item>
+        <item name="colorSecondary">@color/green_500</item>
+        <item name="colorSecondaryVariant">@color/green_500</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Surface color. -->
         <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/blue_grey_700</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="colorOnSurface">@color/blue_500</item>
 
-        <item name="colorMaterialButtonRipple">@color/blue_grey_100</item>
-        <item name="android:textColorPrimary">@color/blue_grey_700</item>
-        <item name="android:textColorHint">@color/blue_grey_200</item>
-        <item name="buttonStyle">@style/CreditButton</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@drawable/bg_brand</item>
+
+        <item name="android:textColorPrimary">@color/blue_500</item>
+        <item name="android:textColorHint">@color/blue_200</item>
+
+        <item name="colorMaterialButtonRipple">@color/blue_100</item>
+        <item name="buttonStyle">@style/ButtonStyle</item>
         <item name="labeledTextView">@style/CreditLabeledTextView</item>
         <item name="tabStyle">@style/CreditTabLayout</item>
-        <item name="materialSpinner">@style/CreditMaterialSpinner</item>
+        <item name="materialSpinner">@style/MaterialSpinnerStyle</item>
         <item name="android:dialogTheme">@style/CreditDialog</item>
-        <item name="checkboxStyle">@style/CreditMaterialCheckBox</item>
+        <item name="checkboxStyle">@style/MaterialCheckBoxStyle</item>
         <item name="android:textViewStyle">@style/CreditTextView</item>
-
         <item name="toolbarStyle">@style/CreditToolbar</item>
-        <item name="textInputStyle">@style/CreditTextInputLayout</item>
-        <item name="android:spinnerItemStyle">@style/CreditSpinnerItem</item>
-    </style>
+        <item name="editTextStyle">@style/CreditEditTextStyle</item>
 
-    <style name="AppTheme.Credit.PrimaryWindow">
-        <item name="android:windowBackground">?attr/colorPrimary</item>
-    </style>
-
-    <style name="CreditToolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextColor">@color/white</item>
-        <item name="subtitleTextColor">@color/white</item>
-        <item name="minHeight">64dp</item>
-    </style>
-
-    <style name="CreditTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
-
-    <style name="CreditSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
-        <item name="android:textAppearance">@style/Text.Light.16</item>
-        <item name="android:padding">@dimen/dp_16</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <style name="CreditMaterialSpinner">
-        <item name="android:textAppearance">@style/Text.Light.16</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:drawablePadding">@dimen/dp_8</item>
-        <item name="materialDrawableTint">?attr/colorPrimaryVariant</item>
-    </style>
-
-    <style name="CreditMaterialButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">12dp</item>
-        <item name="rippleColor">@color/selector_material_button_ripple</item>
-    </style>
-
-    <style name="CreditMaterialCheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:textAppearance">@style/Text.Light.16</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <style name="CreditButton" parent="Widget.AppCompat.Button">
-        <item name="backgroundTint">?attr/colorSecondary</item>
-        <item name="android:textColor">?attr/colorOnSecondary</item>
-    </style>
-
-    <style name="CreditLabeledTextView">
-        <item name="android:textAppearance">@style/Text.Regular.18</item>
-        <item name="labelTextAppearance">@style/Text.Light.12</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="labelTextColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <style name="CreditTextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textAppearance">@style/Text.Light.16</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <style name="CreditDialog" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="android:windowMinWidthMajor">50%</item>
-        <item name="android:windowMinWidthMinor">90%</item>
-    </style>
-
-    <style name="CreditTabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabTextColor">@color/selector_material_tab_text_color</item>
+        <item name="textInputStyle">@style/TextInputLayoutStyle</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemStyle</item>
     </style>
 
 </resources>

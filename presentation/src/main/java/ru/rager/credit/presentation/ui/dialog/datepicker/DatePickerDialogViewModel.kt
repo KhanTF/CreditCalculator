@@ -5,7 +5,7 @@ import ru.rager.credit.presentation.ui.base.BaseViewModel
 import javax.inject.Inject
 
 class DatePickerDialogViewModel @Inject constructor(
-    private val arguments: DatePickerDialogFragmentArgs
+    arguments: DatePickerDialogFragmentArgs
 ) : BaseViewModel() {
 
     val minDate = MutableLiveData(arguments.minDate)

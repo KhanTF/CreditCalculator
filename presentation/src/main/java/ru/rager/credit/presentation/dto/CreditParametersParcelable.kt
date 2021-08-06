@@ -3,9 +3,8 @@ package ru.rager.credit.presentation.dto
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import ru.rager.credit.domain.entity.CreditParametersEntity
-import ru.rager.credit.domain.entity.enums.CreditPeriodType
-import ru.rager.credit.domain.entity.enums.CreditRateType
-import ru.rager.credit.domain.entity.enums.CreditStepType
+import ru.rager.credit.domain.entity.enums.PeriodType
+import ru.rager.credit.domain.entity.enums.RateType
 import java.util.*
 
 @Parcelize
@@ -15,13 +14,13 @@ data class CreditParametersParcelable constructor(
     private val creditStartInternal: Calendar,
     private val creditSumInternal: Double,
     private val creditRateInternal: Double,
-    private val creditRateTypeInternal: CreditRateType,
+    private val creditRateTypeInternal: RateType,
     private val creditTermInternal: Int,
     private val creditSkipWeekendInternal: Boolean,
-    private val creditRatePeriodInternal: CreditPeriodType,
-    private val creditPaymentPeriodInternal: CreditPeriodType,
-    private val creditEarlyPaymentEntityListInternal: List<CreditEarlyPaymentParcelable>,
-    private val creditRateChangesListInternal: List<CreditRateChangesParcelable>
+    private val creditRatePeriodInternal: PeriodType,
+    private val creditPaymentPeriodInternal: PeriodType,
+    private val creditEarlyPaymentEntityListInternal: List<CreditPretermPaymentParcelable>,
+    private val creditRateChangesListInternal: List<CreditRateChangeParcelable>
 ) : CreditParametersEntity(
     id = idInternal ?: -1,
     name = nameInternal.orEmpty(),
@@ -33,8 +32,8 @@ data class CreditParametersParcelable constructor(
     creditSkipWeekend = creditSkipWeekendInternal,
     creditRatePeriod = creditRatePeriodInternal,
     creditPaymentPeriod = creditPaymentPeriodInternal,
-    creditEarlyPaymentEntityList = creditEarlyPaymentEntityListInternal,
-    creditRateChangesList = creditRateChangesListInternal
+    creditPretermPaymentEntityList = creditEarlyPaymentEntityListInternal,
+    creditRateChangeList = creditRateChangesListInternal
 ), Parcelable {
 
     constructor(creditParametersEntity: CreditParametersEntity) : this(
@@ -48,8 +47,8 @@ data class CreditParametersParcelable constructor(
         creditParametersEntity.creditSkipWeekend,
         creditParametersEntity.creditRatePeriod,
         creditParametersEntity.creditPaymentPeriod,
-        creditParametersEntity.creditEarlyPaymentEntityList.map(::CreditEarlyPaymentParcelable),
-        creditParametersEntity.creditRateChangesList.map(::CreditRateChangesParcelable)
+        creditParametersEntity.creditPretermPaymentEntityList.map(::CreditPretermPaymentParcelable),
+        creditParametersEntity.creditRateChangeList.map(::CreditRateChangeParcelable)
     )
 
 }

@@ -5,7 +5,7 @@ import ru.rager.credit.presentation.ui.base.BaseViewModel
 import javax.inject.Inject
 
 class SimpleDialogViewModel @Inject constructor(
-    private val arguments: SimpleDialogFragmentArgs
+    arguments: SimpleDialogFragmentArgs
 ) : BaseViewModel() {
 
     val title = MutableLiveData(arguments.title)
